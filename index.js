@@ -1,0 +1,11 @@
+const yeoman = require('yeoman-environment');
+const env = yeoman.createEnv();
+const appGenerator = require.resolve('generator-vulcanjs/generators/app');
+const packageGenerator = require.resolve('generator-vulcanjs/generators/package');
+const modelGenerator = require.resolve('generator-vulcanjs/generators/model');
+const componentGenerator = require.resolve('generator-vulcanjs/generators/component');
+const routeGenerator = require.resolve('generator-vulcanjs/generators/route');
+const remover = require.resolve('generator-vulcanjs/generators/remove');
+env.register(app, 'vulcanjs:app');
+const done = () => { console.log('DONE!'); };
+env.run('vulcanjs:app', done);

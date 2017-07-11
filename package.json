@@ -1,0 +1,30 @@
+{
+  "name": "vulcanjs-cli",
+  "version": "1.0.0",
+  "description": "The official cli scaffolding tool for VulcanJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mechanical-turk/vulcanjs-cli.git"
+  },
+  "keywords": [
+    "vulcan",
+    "generator",
+    "scaffolding",
+    "scaffolder",
+    "scaffold"
+  ],
+  "author": "Kerem Kazan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mechanical-turk/vulcanjs-cli/issues"
+  },
+  "homepage": "https://github.com/mechanical-turk/vulcanjs-cli#readme",
+  "dependencies": {
+    "generator-vulcanjs": "^2.1.0",
+    "yeoman-environment": "^2.0.0"
+  }
+}
