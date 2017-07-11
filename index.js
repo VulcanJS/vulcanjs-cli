@@ -18,10 +18,9 @@ env.register(componentGenerator, 'vulcanjs:component');
 env.register(routeGenerator, 'vulcanjs:route');
 env.register(remover, 'vulcanjs:remove');
 
-const options = parseArgs(process.argv.slice(2));
-
 function runWithOptions (generator, callback) {
-  env.run(generator, options, callback);
+  const optionsForGenerators = parseArgs(process.argv.slice(2));
+  env.run(generator, optionsForGenerators, callback);
 }
 
 runWithOptions('vulcanjs:package');
