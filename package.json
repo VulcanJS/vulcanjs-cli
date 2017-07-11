@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/mechanical-turk/vulcanjs-cli#readme",
   "dependencies": {
-    "generator-vulcanjs": "^2.1.0",
+    "minimist": "^1.2.0",
     "yeoman-environment": "^2.0.0"
   }
 }
