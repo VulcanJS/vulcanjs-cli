@@ -1,4 +1,4 @@
-![banner](pics/logo.png)
+![banner](pics/logo-plain.png)
 
 <h1 align="center">VulcanJS-cli</h1>
 <h4 align="center">The CLI scaffolding tool for <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a>.</h4>
