@@ -1,7 +1,4 @@
-<div align="center">
-  ![banner](pics/logo-plain.png)
-</div>
-
+<img align="center" src="pics/logo-plain.png" alt="banner" />
 <h1 align="center">VulcanJS-cli</h1>
 <h4 align="center">The CLI scaffolding tool for <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a>.</h4>
 
