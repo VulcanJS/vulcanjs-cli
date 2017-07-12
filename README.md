@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">The official CLI scaffolding tool for <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a></h4>
+<h4 align="center">The official CLI scaffolding tool for <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a>.</h4>
 
 
 ## Warning
