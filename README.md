@@ -50,7 +50,7 @@ $ vulcanjs g package <packageName>
 
 Generate new module:
 
-```
+```sh
 $ vulcanjs g module <packageName> <moduleName>
 ```
 
