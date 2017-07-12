@@ -1,8 +1,11 @@
 {
   "name": "vulcanjs-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The official cli scaffolding tool for VulcanJS",
   "main": "index.js",
+  "bin": {
+    "vulcanjs": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +27,8 @@
   },
   "homepage": "https://github.com/mechanical-turk/vulcanjs-cli#readme",
   "dependencies": {
+    "argparse": "^1.0.9",
+    "generator-vulcanjs": "^2.1.1",
     "minimist": "^1.2.0",
     "yeoman-environment": "^2.0.0"
   }

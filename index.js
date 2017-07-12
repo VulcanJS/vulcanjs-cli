@@ -1,6 +1,9 @@
+#!/usr/bin/env node
+
 const yeoman = require('yeoman-environment');
 const parseArgs = require('minimist');
-// const optionsManager = require('generator-vulcanjs/lib/optionsManager');
+
+const argsManager = require('./lib/argsManager');
 
 const appGenerator = require.resolve('generator-vulcanjs/generators/app');
 const packageGenerator = require.resolve('generator-vulcanjs/generators/package');
@@ -11,16 +14,83 @@ const remover = require.resolve('generator-vulcanjs/generators/remove');
 
 const env = yeoman.createEnv();
 
-env.register(appGenerator, 'vulcanjs:app');
-env.register(packageGenerator, 'vulcanjs:package');
-env.register(modelGenerator, 'vulcanjs:model');
-env.register(componentGenerator, 'vulcanjs:component');
-env.register(routeGenerator, 'vulcanjs:route');
-env.register(remover, 'vulcanjs:remove');
-
-function runWithOptions (generator, callback) {
+function runWithOptions (generator, extraOptions, callback) {
   const optionsForGenerators = parseArgs(process.argv.slice(2));
-  env.run(generator, optionsForGenerators, callback);
+  const finalOptions = {};
+  Object.assign(finalOptions, optionsForGenerators, extraOptions);
+  return env.run(generator, finalOptions, callback);
 }
 
-runWithOptions('vulcanjs:package');
+const action = argsManager.getAction();
+
+const componentNamesToGeneratorRegisters = {
+  package: () => { env.register(packageGenerator, 'package'); },
+  app: () => { env.register(appGenerator, 'app'); },
+  model: () => { env.register(modelGenerator, 'model'); },
+  component: () => { env.register(componentGenerator, 'component'); },
+  route: () => { env.register(routeGenerator, 'route'); },
+  remove: () => { env.register(remover, 'remove'); },
+};
+
+function registerGenerator (componentName) {
+  const registerFn = componentNamesToGeneratorRegisters[componentName];
+  registerFn();
+}
+
+if (action.type === 'generate') {
+  if (action.component === 'package') {
+    registerGenerator('package');
+    return runWithOptions('package', {
+      packageName: action.args[0],
+    });
+  } else if (action.component === 'model') {
+    registerGenerator('model');
+    return runWithOptions('model', {
+      packageName: action.args[0],
+      modelName: action.args[1],
+    });
+  } else if (action.component === 'component') {
+    registerGenerator('component');
+    return runWithOptions('component', {
+      packageName: action.args[0],
+      modelName: action.args[1],
+      componentName: action.args[2],
+    });
+  } else if (action.component === 'route') {
+    registerGenerator('route');
+    return runWithOptions('route', {
+      packageName: action.args[0],
+      routeName: action.args[1],
+      routePath: action.args[2],
+      componentName: action.args[3],
+      layoutName: action.args[4],
+    });
+  }
+} else if (action.type === 'remove') {
+  registerGenerator('remove');
+  if (action.component === 'package') {
+    return runWithOptions('remove', {
+      vulcanjsRemovableComponent: 'package',
+      packageName: action.args[0],
+    });
+  } else if (action.component === 'model') {
+    return runWithOptions('remove', {
+      vulcanjsRemovableComponent: 'model',
+      packageName: action.args[0],
+      modelName: action.args[1],
+    });
+  } else if (action.component === 'route') {
+    return runWithOptions('remove', {
+      vulcanjsRemovableComponent: 'route',
+      packageName: action.args[0],
+      routeName: action.args[1],
+    });
+  } else {
+    return runWithOptions('remove');
+  }
+} else if (action.type === 'create') {
+  registerGenerator('app');
+  return runWithOptions('app', {
+    appName: action.args[0],
+  });
+}
