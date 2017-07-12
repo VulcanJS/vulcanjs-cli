@@ -25,7 +25,7 @@ This tool is very new and is still under development. Use with caution. Always c
 ## Background
 <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a> is a full stack javascript framework, built on Meteor, React and GraphQL. If you aren't familiar with VulcanJS, we highly recommend that you check out the website and read the docs.
 
-With this cli, you'll be able to easily generate `packages`, `modules`, `components`, `routes`, `resolvers`, `fragments`, `schemas`, `mutations`, `permissions` and `parameters` for your VulcanJS project.
+With this cli, you'll be able to easily generate `packages`, `models`, `components`, and `routes` for your VulcanJS project.
 
 ## Install
 
@@ -53,10 +53,10 @@ Generate new package:
 $ vulcanjs g package <packageName>
 ```
 
-Generate new module:
+Generate new model:
 
 ```sh
-$ vulcanjs g module <packageName> <moduleName>
+$ vulcanjs g model <packageName> <moduleName>
 ```
 
 Generate new component:
