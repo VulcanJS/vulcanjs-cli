@@ -1,6 +1,8 @@
 <img align="center" src="pics/logo-plain.png" alt="banner" />
-<h1 align="center">VulcanJS-cli</h1>
-<h4 align="center">The CLI scaffolding tool for <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a>.</h4>
+<div style="text-align:center;">
+<h1>VulcanJS-cli</h1>
+<h4>The official CLI scaffolding tool for <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a></h4>
+</div>
 
 
 ## Warning
