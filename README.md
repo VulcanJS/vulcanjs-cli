@@ -94,7 +94,7 @@ $ vulcanjs r route <packageName> <routeName> <routePath>
 
 ## Contribute
 
-See [generator-vulcanjs](https://github.com/mechanical-turk/generator-vulcanjs)!
+See [CONTRIBUTE.md](./CONTRIBUTE.md)!
 
 PRs are always welcome.
 
