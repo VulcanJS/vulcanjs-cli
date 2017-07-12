@@ -4,8 +4,6 @@
 <h4 align="center">The CLI scaffolding tool for <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a>.</h4>
 
 
-***
-
 ## Warning
 
 This tool is very new and is still under development. Use with caution. Always commit your code before using any program that modifies your code.
