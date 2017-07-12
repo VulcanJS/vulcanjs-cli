@@ -6,6 +6,10 @@
 
 ***
 
+## Warning
+
+This tool is very new and is still under development. Use with caution. Always commit your code before using any program that modifies your code.
+
 ## Table of Contents
 
 - [Background](#background)
