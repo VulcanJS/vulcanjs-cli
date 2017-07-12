@@ -28,8 +28,18 @@
   "homepage": "https://github.com/mechanical-turk/vulcanjs-cli#readme",
   "dependencies": {
     "argparse": "^1.0.9",
-    "generator-vulcanjs": "^2.1.4",
+    "camelcase": "^4.1.0",
+    "chalk": "^2.0.1",
+    "dashify": "^0.2.2",
+    "escodegen-wallaby": "^1.6.11",
+    "esprima": "^4.0.0",
+    "gulp-beautify": "^2.0.1",
+    "lodash": "^4.17.4",
     "minimist": "^1.2.0",
-    "yeoman-environment": "^2.0.0"
+    "pascal-case": "^2.0.1",
+    "redux": "^3.7.1",
+    "redux-node-logger": "^0.1.0",
+    "yeoman-environment": "^2.0.0",
+    "yeoman-generator": "^1.1.1"
   }
 }

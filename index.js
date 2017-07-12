@@ -5,12 +5,12 @@ const parseArgs = require('minimist');
 
 const argsManager = require('./lib/argsManager');
 
-const appGenerator = require.resolve('generator-vulcanjs/generators/app');
-const packageGenerator = require.resolve('generator-vulcanjs/generators/package');
-const modelGenerator = require.resolve('generator-vulcanjs/generators/model');
-const componentGenerator = require.resolve('generator-vulcanjs/generators/component');
-const routeGenerator = require.resolve('generator-vulcanjs/generators/route');
-const remover = require.resolve('generator-vulcanjs/generators/remove');
+const appGenerator = require.resolve('./lib/generator-vulcanjs/generators/app');
+const packageGenerator = require.resolve('./lib/generator-vulcanjs/generators/package');
+const modelGenerator = require.resolve('./lib/generator-vulcanjs/generators/model');
+const componentGenerator = require.resolve('./lib/generator-vulcanjs/generators/component');
+const routeGenerator = require.resolve('./lib/generator-vulcanjs/generators/route');
+const remover = require.resolve('./lib/generator-vulcanjs/generators/remove');
 
 const env = yeoman.createEnv();
 
