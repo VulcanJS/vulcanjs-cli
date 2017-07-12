@@ -71,7 +71,7 @@ Remove anything:
 $ vulcanjs r package <packageName>
 ```
 
-```
+```sh
 $ vulcanjs r module <packageName> <moduleName>
 ```
 
