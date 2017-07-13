@@ -12,9 +12,9 @@ module.exports = (grunt) => {
       dist: {
         files: [{
           expand: true,
-          cwd: './lib/generator-vulcanjs/src/',
+          cwd: './src/',
           src: ['**/*.js', '!**/templates/**'],
-          dest: './lib/generator-vulcanjs/',
+          dest: './dist/',
         }],
       },
     },
@@ -22,9 +22,9 @@ module.exports = (grunt) => {
       templates: {
         files: [{
           expand: true,
-          cwd: './lib/generator-vulcanjs/src/',
+          cwd: './src/generator-vulcanjs/',
           src: ['**/templates/**'],
-          dest: './lib/generator-vulcanjs/',
+          dest: './dist/generator-vulcanjs/',
         }],
       },
     },

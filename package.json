@@ -2,9 +2,9 @@
   "name": "vulcanjs-cli",
   "version": "1.0.7",
   "description": "The official cli scaffolding tool for VulcanJS",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "bin": {
-    "vulcanjs": "index.js"
+    "vulcanjs": "./dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
