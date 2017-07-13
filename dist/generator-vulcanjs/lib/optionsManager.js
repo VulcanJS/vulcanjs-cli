@@ -60,6 +60,12 @@ const allOptions = {
     required: false,
     alias: 'vc',
     desc: uiText.descriptions.vulcanjsRemovableComponent
+  },
+  vulcanjsListableComponent: {
+    type: String,
+    required: false,
+    alias: 'vc',
+    desc: uiText.descriptions.vulcanjsListableComponent
   }
 };
 

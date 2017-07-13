@@ -7,7 +7,8 @@ module.exports = class extends VulcanGenerator {
 
   _registerArguments () {
     this._registerOptions(
-      'vulcanjsListableComponent'
+      'vulcanjsListableComponent',
+      'packageName'
     );
   }
 
@@ -26,7 +27,11 @@ module.exports = class extends VulcanGenerator {
 
   composing () {
     const lister = require.resolve(`./listers/${this.props.vulcanjsComponent}`);
-    this.composeWith(lister);
+    this.composeWith(lister, {
+      ...this.props,
+      ...this.options,
+      dontAsk: true,
+    });
   }
 
   end () {

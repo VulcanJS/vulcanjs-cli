@@ -366,7 +366,7 @@ function setup(generatorSetup) {
         message: uiText.messages.vulcanjsListableComponents,
         when: () => when('vulcanjsComponent'),
         choices: common.vulcanjsListableComponents,
-        default: options.vulcanjsListableComponent
+        default: common.getDefaultChoiceIndex(common.vulcanjsListableComponents, options.vulcanjsComponent)
       };
     }
 

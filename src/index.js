@@ -98,7 +98,10 @@ function run () {
     });
   } else if (action.type === 'list') {
     registerGenerator('list');
-    return runWithOptions('list');
+    return runWithOptions('list', {
+      vulcanjsComponent: action.component,
+      packageName: action.args[0],
+    });
   }
 }
 

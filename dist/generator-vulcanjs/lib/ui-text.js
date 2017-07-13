@@ -18,7 +18,6 @@ const descriptions = {
   dontAsk: 'Set to true if you want the generators to skip prompting for the arguments you have supplied from the command line',
   vulcanjsRemovableComponent: 'The part of the app that you want to remove',
   vulcanjsListableComponent: 'The part of the app that you want to list'
-
 };
 
 const messages = {
