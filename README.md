@@ -41,48 +41,69 @@ $ yarn global add vulcanjs-cli
 
 
 ## Usage
-Create new app:
-
+### Create
+Creates a new project with the given app name:
 ```sh
 $ vulcanjs create <appName>
 ```
+![create app](./media/usage/create.gif)
 
-Generate new package:
+### Generate
+Generates a project component
 
+- Package
 ```sh
 $ vulcanjs g package <packageName>
 ```
+![generate package](./media/usage/generate-package.gif)
 
-Generate new model:
-
+- Model
 ```sh
-$ vulcanjs g model <packageName> <moduleName>
+$ vulcanjs g model <packageName> <modelName>
 ```
+![generate model](./media/usage/generate-custom-model.gif)
 
-Generate new component:
 
+- Component
 ```sh
-$ vulcanjs g component <packageName> <moduleName> <componentName>
+$ vulcanjs g component <packageName> <modelName> <componentName>
 ```
+![generate component](./media/usage/generate-component.gif)
 
-Generate new route:
-
+- Route
 ```sh
 $ vulcanjs g route <packageName> <routeName> <routePath>
 ```
+![generate route](./media/usage/generate-route.gif)
 
-Remove anything:
-```sh
-$ vulcanjs r package <packageName>
-```
+### Remove
 
+- Package
 ```sh
-$ vulcanjs r module <packageName> <moduleName>
+$ vulcanjs remove package <packageName>
 ```
+![remove package](./media/usage/remove-package.gif)
 
+- Model
 ```sh
-$ vulcanjs r route <packageName> <routeName> <routePath>
+$ vulcanjs remove model <packageName> <modelName>
 ```
+![remove model](./media/usage/remove-model.gif)
+
+### List
+
+- Packages
+```sh
+$ vulcanjs list packages
+```
+![list package](./media/usage/list-packages.gif)
+
+- Routes
+```sh
+$ vulcanjs list routes
+```
+![list routes](./media/usage/list-routes.gif)
+
 
 ## Maintainers
 
