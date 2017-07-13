@@ -12,6 +12,7 @@ const modelGenerator = require.resolve('./generator-vulcanjs/generators/model');
 const componentGenerator = require.resolve('./generator-vulcanjs/generators/component');
 const routeGenerator = require.resolve('./generator-vulcanjs/generators/route');
 const remover = require.resolve('./generator-vulcanjs/generators/remove');
+const lister = require.resolve('./generator-vulcanjs/generators/list');
 
 const env = yeoman.createEnv();
 
@@ -42,7 +43,11 @@ const componentNamesToGeneratorRegisters = {
   },
   remove: () => {
     env.register(remover, 'remove');
+  },
+  list: () => {
+    env.register(lister, 'list');
   }
+
 };
 
 function registerGenerator(componentName) {
@@ -99,14 +104,16 @@ function run() {
         packageName: action.args[0],
         routeName: action.args[1]
       });
-    } else {
-      return runWithOptions('remove');
     }
+    return runWithOptions('remove');
   } else if (action.type === 'create') {
     registerGenerator('app');
     return runWithOptions('app', {
       appName: action.args[0]
     });
+  } else if (action.type === 'list') {
+    registerGenerator('list');
+    return runWithOptions('list');
   }
 }
 
