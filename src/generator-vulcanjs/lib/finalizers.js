@@ -3,7 +3,7 @@ const camelCase = require('camelcase');
 const filter = require('./filters').filter;
 const pathFinder = require('./path-finder');
 const store = require('./store');
-const styles = require('./styles');
+const flatten = require('lodash/flatten');
 
 const arrayToEjsString = (arr) => {
   const quotedList = arr.map((elem) => `'${elem}'`);
@@ -118,7 +118,7 @@ function setup (generatorSetup) {
       });`;
     }
 
-    function getPrettyPackage (inputPackageName, id) {
+    function prettyPackage (inputPackageName, id) {
       const packageNameRaw = getRaw('packageName', { packageName: inputPackageName });
       return {
         no: id,
@@ -128,17 +128,34 @@ function setup (generatorSetup) {
       };
     }
 
-    function getPrettyPackages (packageNames) {
-      return packageNames.map(getPrettyPackage);
+    function prettyPackages (packageNames) {
+      return packageNames.map(prettyPackage);
     }
 
-    function getPrettyRoutesForPackage (inputPackageName) {
+    function addNo (arr) {
+      return arr.map((obj, index) => ({ no: index, ...obj }));
+    }
+
+    function getPrettyRoutesWithoutNumbers (inputPackageName) {
       const theRoutes = store.get('routes', inputPackageName);
-      return theRoutes.map((theRoute, index) => ({
-        no: index,
+      const prettyRoutes = theRoutes.map((theRoute) => ({
+        package: inputPackageName,
         name: theRoute.name,
         path: theRoute.content.routePath,
       }));
+      return prettyRoutes;
+    }
+
+    function prettyRoutesForPackage (inputPackageName) {
+      const prettyRoutesWithoutNumbers = getPrettyRoutesWithoutNumbers(inputPackageName);
+      return addNo(prettyRoutesWithoutNumbers);
+    }
+
+    function allPrettyRoutes () {
+      const allPackageNames = store.get('packageNames');
+      const prettyRoutes = allPackageNames.map(getPrettyRoutesWithoutNumbers);
+      const flattenedRoutes = flatten(prettyRoutes);
+      return addNo(flattenedRoutes);
     }
 
     switch (propName) {
@@ -159,8 +176,9 @@ function setup (generatorSetup) {
       case 'hasResolver' : return hasResolver(...args);
       case 'addRouteStatement' : return addRouteStatement(...args);
       case 'permissionTo': return permissionTo(...args);
-      case 'prettyPackages': return getPrettyPackages(...args);
-      case 'prettyRoutesForPackage': return getPrettyRoutesForPackage(...args);
+      case 'prettyPackages': return prettyPackages(...args);
+      case 'prettyRoutesForPackage': return prettyRoutesForPackage(...args);
+      case 'allPrettyRoutes': return allPrettyRoutes(...args);
       case 'raw' : return getRaw(...args);
       default: return undefined;
     }

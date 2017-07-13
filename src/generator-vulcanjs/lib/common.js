@@ -45,8 +45,10 @@ const vulcanjsListableComponents = [
 ];
 
 const manualChoiceValue = '__vjs_manual';
-
 const manualChoice = { name: '[MANUAL]', value: manualChoiceValue };
+const allChoiceValue = '__vjs_all';
+const allChoice = { name: '[ALL]', value: allChoiceValue };
+
 
 const getDefaultChoiceIndex = (choices, option) => {
   const index = choices.findIndex((elem) => elem === option);
@@ -67,6 +69,8 @@ const exposed = {
   modelParts,
   manualChoiceValue,
   manualChoice,
+  allChoiceValue,
+  allChoice,
 };
 
 module.exports = exposed;

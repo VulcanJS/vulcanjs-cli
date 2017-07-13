@@ -15,7 +15,7 @@ module.exports = class extends VulcanGenerator {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
       'packageNameWithNumModelsList',
-      'modelNameList'
+      'modelNameWithManualList'
     );
     return this.prompt(questions)
     .then((answers) => {

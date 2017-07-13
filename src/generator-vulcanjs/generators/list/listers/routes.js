@@ -1,5 +1,6 @@
 const VulcanGenerator = require('../../../lib/VulcanGenerator');
 const nodePrint = require('node-print');
+const common = require('../../../lib/common');
 
 module.exports = class extends VulcanGenerator {
   initializing () {
@@ -9,7 +10,7 @@ module.exports = class extends VulcanGenerator {
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameList',
+      'packageNameWithAllList',
       'packageNameIfManual'
     );
     return this.prompt(questions)
@@ -20,12 +21,27 @@ module.exports = class extends VulcanGenerator {
     });
   }
 
-  listing () {
-    const prettyRoutesForPackage = this._finalize(
+  _listRoutesForPackage () {
+    const prettyRoutes = this._finalize(
       'prettyRoutesForPackage',
       this.props.packageName
     );
-    nodePrint.pt(prettyRoutesForPackage);
+    nodePrint.pt(prettyRoutes);
+  }
+
+  _listRoutesForAllPackages () {
+    const prettyRoutes = this._finalize(
+      'allPrettyRoutes'
+    );
+    nodePrint.pt(prettyRoutes);
+  }
+
+  listing () {
+    if (!this._canWrite()) { return false; }
+    if (this.props.packageName === common.allChoiceValue) {
+      return this._listRoutesForAllPackages();
+    }
+    return this._listRoutesForPackage();
   }
 
   end () {

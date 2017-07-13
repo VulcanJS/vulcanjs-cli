@@ -97,7 +97,7 @@ function setup (generatorSetup) {
       };
     }
 
-    function packageNameList (questionOptions) {
+    function packageNameList (questionOptions = {}) {
       return {
         type: 'list',
         name: 'packageName',
@@ -115,7 +115,10 @@ function setup (generatorSetup) {
           } else {
             packageNames = store.get('packageNames');
           }
-          return [...packageNames, common.manualChoice];
+          const preProcessedChoices = [...packageNames];
+          if (questionOptions.isAllAllowed) { preProcessedChoices.push(common.allChoice); }
+          if (questionOptions.isManualAllowed) { preProcessedChoices.push(common.manualChoice); }
+          return preProcessedChoices;
         },
         default: common.getDefaultChoiceIndex(
           store.get('packageNames'),
@@ -124,7 +127,7 @@ function setup (generatorSetup) {
       };
     }
 
-    function modelName (questionOptions) {
+    function modelName (questionOptions = {}) {
       return {
         type: 'input',
         name: 'modelName',
@@ -161,7 +164,7 @@ function setup (generatorSetup) {
       };
     }
 
-    function modelNameList () {
+    function modelNameList (questionOptions = {}) {
       return {
         type: 'list',
         name: 'modelName',
@@ -170,7 +173,11 @@ function setup (generatorSetup) {
         choices: (answers) => {
           const finalPackageName = generator._finalize('packageName', answers);
           const modelNames = store.get('modelNames', finalPackageName);
-          return [...modelNames, common.manualChoice];
+          const preProcessedChoices = [...modelNames];
+          if (questionOptions.isManualAllowed) {
+            preProcessedChoices.push(common.manualChoice);
+          }
+          return [...modelNames];
         },
         default: (answers) => {
           const finalPackageName = generator._finalize('packageName', answers);
@@ -231,7 +238,7 @@ function setup (generatorSetup) {
       };
     }
 
-    function routeName (questionOptions) {
+    function routeName (questionOptions = {}) {
       return {
         type: 'input',
         name: 'routeName',
@@ -418,11 +425,14 @@ function setup (generatorSetup) {
         case 'vulcanDependencies': return vulcanDependencies();
         case 'isPackageAutoAdd': return isPackageAutoAdd();
         case 'packageNameList': return packageNameList();
-        case 'packageNameWithNumModelsList': return packageNameList({ isWithNumModels: true });
+        case 'packageNameWithNumModelsList': return packageNameList({ isWithNumModels: true, isManualAllowed: true });
+        case 'packageNameWithManualList': return packageNameList({ isManualAllowed: true });
+        case 'packageNameWithAllList': return packageNameList({ isAllAllowed: true });
         case 'modelName': return modelName();
         case 'modelNameIfManual': return modelName({ isManual: true });
         case 'modelParts': return modelParts();
         case 'modelNameList': return modelNameList();
+        case 'modelNameWithManualList': return modelNameList({ isManual: true });
         case 'componentName': return componentName();
         case 'componentType': return componentType();
         case 'isRegisterComponent': return isRegisterComponent();

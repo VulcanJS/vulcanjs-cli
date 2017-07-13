@@ -1,9 +1,11 @@
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 const pascalCase = require('pascal-case');
 const camelCase = require('camelcase');
 const filter = require('./filters').filter;
 const pathFinder = require('./path-finder');
 const store = require('./store');
-const styles = require('./styles');
+const flatten = require('lodash/flatten');
 
 const arrayToEjsString = arr => {
   const quotedList = arr.map(elem => `'${elem}'`);
@@ -110,7 +112,7 @@ function setup(generatorSetup) {
       });`;
     }
 
-    function getPrettyPackage(inputPackageName, id) {
+    function prettyPackage(inputPackageName, id) {
       const packageNameRaw = getRaw('packageName', { packageName: inputPackageName });
       return {
         no: id,
@@ -120,17 +122,34 @@ function setup(generatorSetup) {
       };
     }
 
-    function getPrettyPackages(packageNames) {
-      return packageNames.map(getPrettyPackage);
+    function prettyPackages(packageNames) {
+      return packageNames.map(prettyPackage);
     }
 
-    function getPrettyRoutesForPackage(inputPackageName) {
+    function addNo(arr) {
+      return arr.map((obj, index) => _extends({ no: index }, obj));
+    }
+
+    function getPrettyRoutesWithoutNumbers(inputPackageName) {
       const theRoutes = store.get('routes', inputPackageName);
-      return theRoutes.map((theRoute, index) => ({
-        no: index,
+      const prettyRoutes = theRoutes.map(theRoute => ({
+        package: inputPackageName,
         name: theRoute.name,
         path: theRoute.content.routePath
       }));
+      return prettyRoutes;
+    }
+
+    function prettyRoutesForPackage(inputPackageName) {
+      const prettyRoutesWithoutNumbers = getPrettyRoutesWithoutNumbers(inputPackageName);
+      return addNo(prettyRoutesWithoutNumbers);
+    }
+
+    function allPrettyRoutes() {
+      const allPackageNames = store.get('packageNames');
+      const prettyRoutes = allPackageNames.map(getPrettyRoutesWithoutNumbers);
+      const flattenedRoutes = flatten(prettyRoutes);
+      return addNo(flattenedRoutes);
     }
 
     switch (propName) {
@@ -169,9 +188,11 @@ function setup(generatorSetup) {
       case 'permissionTo':
         return permissionTo(...args);
       case 'prettyPackages':
-        return getPrettyPackages(...args);
+        return prettyPackages(...args);
       case 'prettyRoutesForPackage':
-        return getPrettyRoutesForPackage(...args);
+        return prettyRoutesForPackage(...args);
+      case 'allPrettyRoutes':
+        return allPrettyRoutes(...args);
       case 'raw':
         return getRaw(...args);
       default:

@@ -38,8 +38,9 @@ const vulcanjsRemovableComponents = ['route', 'model', 'package'];
 const vulcanjsListableComponents = ['packages', 'routes'];
 
 const manualChoiceValue = '__vjs_manual';
-
 const manualChoice = { name: '[MANUAL]', value: manualChoiceValue };
+const allChoiceValue = '__vjs_all';
+const allChoice = { name: '[ALL]', value: allChoiceValue };
 
 const getDefaultChoiceIndex = (choices, option) => {
   const index = choices.findIndex(elem => elem === option);
@@ -59,7 +60,9 @@ const exposed = {
   vulcanjsListableComponents: vulcanjsListableComponents,
   modelParts: modelParts,
   manualChoiceValue: manualChoiceValue,
-  manualChoice: manualChoice
+  manualChoice: manualChoice,
+  allChoiceValue: allChoiceValue,
+  allChoice: allChoice
 };
 
 module.exports = exposed;
