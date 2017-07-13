@@ -57,6 +57,14 @@ function get(checkType, ...args) {
     return store.getState().packages[packageName];
   }
 
+  function getAllPackages() {
+    const allPackageNames = packageNames();
+    return allPackageNames.map(packageName => ({
+      name: packageName,
+      packageContents: getPackage(packageName)
+    }));
+  }
+
   function modelNames(packageName) {
     const thePackage = getPackage(packageName);
     const models = is('packageExists', packageName) ? thePackage.models : {};
@@ -94,6 +102,8 @@ function get(checkType, ...args) {
       return routeNames(...args);
     case 'package':
       return getPackage(...args);
+    case 'allPackages':
+      return getAllPackages(...args);
     case 'storyBookSetupStatus':
       return storyBookSetupStatus(...args);
     case 'packageNamesWithNumModels':

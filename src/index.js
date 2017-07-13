@@ -33,7 +33,6 @@ const componentNamesToGeneratorRegisters = {
   route: () => { env.register(routeGenerator, 'route'); },
   remove: () => { env.register(remover, 'remove'); },
   list: () => { env.register(lister, 'list'); },
-
 };
 
 function registerGenerator (componentName) {

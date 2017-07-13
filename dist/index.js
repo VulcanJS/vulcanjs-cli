@@ -47,7 +47,6 @@ const componentNamesToGeneratorRegisters = {
   list: () => {
     env.register(lister, 'list');
   }
-
 };
 
 function registerGenerator(componentName) {

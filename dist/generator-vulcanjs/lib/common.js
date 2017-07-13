@@ -35,6 +35,8 @@ const modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permission
 
 const vulcanjsRemovableComponents = ['route', 'model', 'package'];
 
+const vulcanjsListableComponents = ['packages', 'models', 'routes'];
+
 const manualChoiceValue = '__vjs_manual';
 
 const manualChoice = { name: '[MANUAL]', value: manualChoiceValue };
@@ -54,6 +56,7 @@ const exposed = {
   getDefaultChoiceIndex: getDefaultChoiceIndex,
   getSetFromArr: getSetFromArr,
   vulcanjsRemovableComponents: vulcanjsRemovableComponents,
+  vulcanjsListableComponents: vulcanjsListableComponents,
   modelParts: modelParts,
   manualChoiceValue: manualChoiceValue,
   manualChoice: manualChoice

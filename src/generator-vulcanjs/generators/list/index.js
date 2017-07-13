@@ -13,16 +13,20 @@ module.exports = class extends VulcanGenerator {
 
   prompting () {
     if (!this._canPrompt()) { return false; }
-    // const questions = this._getQuestions(
-    //   'vulcanjsListableComponent'
-    // );
-    const questions = [];
+    const questions = this._getQuestions(
+      'vulcanjsListableComponentsList'
+    );
     return this.prompt(questions)
     .then((answers) => {
       this.props = {
-        vulcanjsListableComponent: this._finalize('raw', 'vulcanjsListableComponent', answers),
+        vulcanjsComponent: this._finalize('raw', 'vulcanjsComponent', answers),
       };
     });
+  }
+
+  composing () {
+    const lister = require.resolve(`./listers/${this.props.vulcanjsComponent}`);
+    this.composeWith(lister);
   }
 
   end () {

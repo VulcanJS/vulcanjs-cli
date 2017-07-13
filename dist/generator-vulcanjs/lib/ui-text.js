@@ -16,7 +16,9 @@ const descriptions = {
   vulcanDependencies: 'The vulcan packages that your application depends on',
   isPackageAutoAdd: 'Set to true if you want your package to be added to .meteor/packages',
   dontAsk: 'Set to true if you want the generators to skip prompting for the arguments you have supplied from the command line',
-  vulcanjsRemovableComponent: 'The part of the app that you want to remove'
+  vulcanjsRemovableComponent: 'The part of the app that you want to remove',
+  vulcanjsListableComponent: 'The part of the app that you want to list'
+
 };
 
 const messages = {
@@ -45,7 +47,8 @@ const messages = {
   schemaPropertyViewableBy: 'Property viewable by',
   schemaPropertyInsertableBy: 'Property insertable by',
   schemaPropertyEditableBy: 'Property editable by',
-  vulcanjsRemovableComponents: 'Part to remove'
+  vulcanjsRemovableComponents: 'Part to remove',
+  vulcanjsListableComponents: 'Part to list'
 };
 
 const errors = {

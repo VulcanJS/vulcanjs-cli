@@ -243,32 +243,6 @@ function get(...questionNames) {
       default: options.layoutName || 'Components.Layout'
     };
   }
-  // const storyBookSetup = {
-  //   type: 'list',
-  //   name: 'storyBookSetupStatus',
-  //   message: uiText.messages.storyBookSetupStatus,
-  //   choices: [
-  //     { name: 'Yes, take me to storybook setup after this.', value: 'installing' },
-  //     { name: 'No, ask later.', value: 'pending' },
-  //     { name: 'No, and dont ask again.', value: 'dontask' },
-  //   ],
-  //   when: () => {
-  //     const storyBookSetupStatus = this._getStoryBookSetupStatus();
-  //     const allowedStatuses = {
-  //       pending: true,
-  //       installing: true,
-  //       askagain: true,
-  //     };
-  //     const isStatusAllowsSetupQuestion = allowedStatuses[storyBookSetupStatus];
-  //     return (!options.packageName && isStatusAllowsSetupQuestion);
-  //   },
-  // };
-  // const isAddComponentToStoryBook = {
-  //   type: 'confirm',
-  //   name: 'isAddComponentToStoryBook',
-  //   message: uiText.messages.isAddComponentToStoryBook,
-  //   when: () => (!options.isAddComponentToStoryBook),
-  // };
 
   function isAddCustomSchemaProperty() {
     return {
@@ -378,6 +352,17 @@ function get(...questionNames) {
     };
   }
 
+  function vulcanjsListableComponentsList() {
+    return {
+      type: 'list',
+      name: 'vulcanjsComponent',
+      message: uiText.messages.vulcanjsListableComponents,
+      when: () => when('vulcanjsComponent'),
+      choices: common.vulcanjsListableComponents,
+      default: options.vulcanjsListableComponent
+    };
+  }
+
   function getSingleQuestion(questionName) {
     switch (questionName) {
       case 'appName':
@@ -446,6 +431,8 @@ function get(...questionNames) {
         return isAddAnotherCustomSchemaProperty();
       case 'vulcanjsRemovableComponentsList':
         return vulcanjsRemovableComponentsList();
+      case 'vulcanjsListableComponentsList':
+        return vulcanjsListableComponentsList();
       default:
         return undefined;
     }
