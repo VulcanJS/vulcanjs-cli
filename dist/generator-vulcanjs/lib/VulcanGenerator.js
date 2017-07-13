@@ -6,6 +6,7 @@ const assertions = require('./assertions');
 const storeFactory = require('./store');
 const pathFinder = require('./path-finder');
 const optionsManager = require('./optionsManager');
+const chalk = require('chalk');
 
 let store;
 let errors;
@@ -80,8 +81,8 @@ module.exports = class VulcanGenerator extends Generator {
     const errorKeys = Object.keys(errors);
     const errorsArr = errorKeys.map(errorKey => errors[errorKey]);
     errorsArr.forEach((error, index) => {
-      const errorNo = `Error (${index}):`;
-      const message = `${errorNo}\n\n${error.message}`;
+      const errorNo = `Error (${index})`;
+      const message = `\n${errorNo}: ${chalk.red(error.message)}`;
       this.env.error(message);
     });
   }

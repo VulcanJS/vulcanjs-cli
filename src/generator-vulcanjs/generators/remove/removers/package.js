@@ -18,7 +18,7 @@ module.exports = class extends VulcanGenerator {
     );
     return this.prompt(questions)
     .then((answers) => {
-      this._assert('isDelete');
+      this._assert('isDelete', answers.isDelete);
       this.props = {
         packageName: this._finalize('packageName', answers),
       };
