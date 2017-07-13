@@ -7,7 +7,8 @@
     "vulcanjs": "./dist/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "grunt watch",
+    "build": "grunt build"
   },
   "repository": {
     "type": "git",
