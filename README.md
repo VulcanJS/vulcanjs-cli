@@ -51,26 +51,26 @@ $ vulcanjs create <appName>
 ### Generate
 Generates a project component
 
-- Package
+- Generate Package
 ```sh
 $ vulcanjs g package <packageName>
 ```
 ![generate package](./media/usage/generate-package.gif)
 
-- Model
+- Generate Model
 ```sh
 $ vulcanjs g model <packageName> <modelName>
 ```
 ![generate model](./media/usage/generate-custom-model.gif)
 
 
-- Component
+- Generate Component
 ```sh
 $ vulcanjs g component <packageName> <modelName> <componentName>
 ```
 ![generate component](./media/usage/generate-component.gif)
 
-- Route
+- Generate Route
 ```sh
 $ vulcanjs g route <packageName> <routeName> <routePath>
 ```
@@ -78,13 +78,13 @@ $ vulcanjs g route <packageName> <routeName> <routePath>
 
 ### Remove
 
-- Package
+- Remove Package
 ```sh
 $ vulcanjs remove package <packageName>
 ```
 ![remove package](./media/usage/remove-package.gif)
 
-- Model
+- Remove Model
 ```sh
 $ vulcanjs remove model <packageName> <modelName>
 ```
@@ -92,13 +92,13 @@ $ vulcanjs remove model <packageName> <modelName>
 
 ### List
 
-- Packages
+- List Packages
 ```sh
 $ vulcanjs list packages
 ```
 ![list package](./media/usage/list-packages.gif)
 
-- Routes
+- List Routes
 ```sh
 $ vulcanjs list routes
 ```
