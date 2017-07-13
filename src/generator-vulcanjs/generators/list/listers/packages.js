@@ -1,6 +1,5 @@
 const VulcanGenerator = require('../../../lib/VulcanGenerator');
 const store = require('../../../lib/store');
-const styles = require('../../../lib/styles');
 
 module.exports = class extends VulcanGenerator {
   initializing () {
@@ -8,28 +7,21 @@ module.exports = class extends VulcanGenerator {
   }
 
   prompting () {
-    this.props.allPackages = store.get('allPackages');
+    this.props.packageNames = store.get('packageNames');
   }
 
   listing () {
     if (!this._canWrite()) return false;
-    this.props.allPackages.forEach((thePackage) => {
-      this._printEntirePackage(thePackage);
+    const packageLister = require.resolve('./package');
+    this.props.packageNames.forEach((packageName) => {
+      const newOptions = {
+        ...this.options,
+        ...this.props,
+        packageName,
+        dontAsk: true,
+      };
+      this.composeWith(packageLister, newOptions);
     });
-  }
-
-  _printEntirePackage (thePackage) {
-    this._printPackageName(thePackage);
-    this._printPackageDetails(thePackage);
-  }
-
-  _printPackageDetails (thePackage) {
-    
-  }
-
-  _printPackageName (thePackage) {
-    const title = styles.h1(thePackage.name);
-    this.log(title);
   }
 
   end () {

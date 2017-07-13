@@ -14,8 +14,8 @@ function setup(generatorSetup) {
   const generator = generatorSetup;
 
   function finalize(propName, ...args) {
-    function getRaw(keyBeforeRaw, answers) {
-      return generator.options[keyBeforeRaw] || (generator.props ? generator.props[keyBeforeRaw] : undefined) || answers[keyBeforeRaw];
+    function getRaw(keyBeforeRaw, answers = {}) {
+      return generator.options[keyBeforeRaw] || generator.props[keyBeforeRaw] || answers[keyBeforeRaw];
     }
 
     function permissionTo(permissionType, answers) {
