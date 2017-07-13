@@ -1,7 +1,6 @@
 const pascalCase = require('pascal-case');
 const camelCase = require('camelcase');
 const filter = require('./filters').filter;
-const pathFinder = require('./path-finder');
 const store = require('./store');
 const flatten = require('lodash/flatten');
 
@@ -54,7 +53,7 @@ function setup (generatorSetup) {
     }
 
     function componentPath (answers) {
-      return pathFinder.get(
+      return generator._getPath(
         { isAbsolute: false },
         'modelInComponents',
         componentFileName(answers)

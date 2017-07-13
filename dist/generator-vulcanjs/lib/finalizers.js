@@ -3,7 +3,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 const pascalCase = require('pascal-case');
 const camelCase = require('camelcase');
 const filter = require('./filters').filter;
-const pathFinder = require('./path-finder');
 const store = require('./store');
 const flatten = require('lodash/flatten');
 
@@ -52,7 +51,7 @@ function setup(generatorSetup) {
     }
 
     function componentPath(answers) {
-      return pathFinder.get({ isAbsolute: false }, 'modelInComponents', componentFileName(answers));
+      return generator._getPath({ isAbsolute: false }, 'modelInComponents', componentFileName(answers));
     }
 
     function pascalModelName(answers) {
