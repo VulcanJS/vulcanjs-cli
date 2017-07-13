@@ -28,6 +28,11 @@ module.exports = (grunt) => {
         }],
       },
     },
+    clean: {
+      dist: {
+        src: ['./dist']
+      }
+    },
     watch: {
       src: {
         files: ['src/**/*.*',],
@@ -37,11 +42,6 @@ module.exports = (grunt) => {
         },
       },
     },
-    clean: {
-      dist: {
-        src: ['./dist']
-      }
-    }
   });
 
   grunt.loadNpmTasks('grunt-babel');
