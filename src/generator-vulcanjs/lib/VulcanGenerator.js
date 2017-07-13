@@ -23,15 +23,11 @@ module.exports = class VulcanGenerator extends Generator {
     this.registerTransformStream(
       beautify({ indent_size: 2 })
     );
-    finalizers.setup(this);
-    pathFinder.setup(this);
-    questions.setup(this);
-    optionsManager.setup(this);
-    this._getQuestions = questions.get.bind(this);
-    this._finalize = finalizers.finalize;
     this._assert = assertions.assert;
-    this._getPath = pathFinder.get;
-    this._registerOptions = optionsManager.register;
+    this._registerOptions = optionsManager.setup(this);
+    this._finalize = finalizers.setup(this);
+    this._getPath = pathFinder.setup(this);
+    this._getQuestions = questions.setup(this);
     this._registerOptions('dontAsk');
     this._registerArguments();
     this.inputProps = {};
