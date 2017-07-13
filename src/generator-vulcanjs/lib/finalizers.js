@@ -132,6 +132,15 @@ function setup (generatorSetup) {
       return packageNames.map(getPrettyPackage);
     }
 
+    function getPrettyRoutesForPackage (inputPackageName) {
+      const theRoutes = store.get('routes', inputPackageName);
+      return theRoutes.map((theRoute, index) => ({
+        no: index,
+        name: theRoute.name,
+        path: theRoute.content.routePath,
+      }));
+    }
+
     switch (propName) {
       case 'appName' : return appName(...args);
       case 'packageName' : return packageName(...args);
@@ -151,6 +160,7 @@ function setup (generatorSetup) {
       case 'addRouteStatement' : return addRouteStatement(...args);
       case 'permissionTo': return permissionTo(...args);
       case 'prettyPackages': return getPrettyPackages(...args);
+      case 'prettyRoutesForPackage': return getPrettyRoutesForPackage(...args);
       case 'raw' : return getRaw(...args);
       default: return undefined;
     }

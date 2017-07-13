@@ -10,6 +10,7 @@ module.exports = class extends VulcanGenerator {
   prompting () {
     const packageNames = store.get('packageNames');
     this.props = {
+      packageNames,
       prettyPackages: this._finalize('prettyPackages', packageNames),
     };
   }

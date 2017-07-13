@@ -79,9 +79,18 @@ function get(checkType, ...args) {
 
   function routeNames(packageName) {
     const thePackage = getPackage(packageName);
-    const routes = thePackage.routes;
-    const routeNamesToGet = Object.keys(routes);
+    const theRoutes = thePackage.routes;
+    const routeNamesToGet = Object.keys(theRoutes);
     return routeNamesToGet.sort(common.alphabeticalSort);
+  }
+
+  function getRoutes(packageName) {
+    const thePackage = getPackage(packageName);
+    const theRoutes = thePackage.routes;
+    return routeNames(packageName).map(routeName => ({
+      name: routeName,
+      content: theRoutes[routeName]
+    }));
   }
 
   switch (checkType) {
@@ -95,6 +104,8 @@ function get(checkType, ...args) {
       return routeNames(...args);
     case 'package':
       return getPackage(...args);
+    case 'routes':
+      return getRoutes(...args);
     case 'storyBookSetupStatus':
       return storyBookSetupStatus(...args);
     case 'packageNamesWithNumModels':
