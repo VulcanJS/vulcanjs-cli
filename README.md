@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    <img src="pics/logo-plain.png" alt="vulcanjs-banner" width="200">
+    <img src="media/logo-plain.png" alt="vulcanjs-banner" width="200">
   <br>
   VulcanJS-cli
   <br>
