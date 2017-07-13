@@ -69,8 +69,17 @@ function assert (assertion, ...args) {
     }
   }
 
+  function isDelete (isDeleting) {
+    if (!isDeleting) {
+      errors.hasZeroModels = {
+        message: uiText.errors.isDelete,
+      };
+    }
+  }
+
   switch (assertion) {
     case 'isVulcan' : return isVulcan(...args);
+    case 'isDelete' : return isDelete(...args);
     case 'notVulcan' : return notVulcan(...args);
     case 'isPackageExists' : return isPackageExists(...args);
     case 'notPackageExists' : return notPackageExists(...args);

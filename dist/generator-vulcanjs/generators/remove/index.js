@@ -29,7 +29,9 @@ module.exports = class extends VulcanGenerator {
       return false;
     }
     const remover = require.resolve(`./removers/${this.props.vulcanjsComponent}`);
-    const nextOptions = _extends({}, this.options, this.props);
+    const nextOptions = _extends({}, this.options, this.props, {
+      dontAsk: true
+    });
     return this.composeWith(remover, nextOptions);
   }
 

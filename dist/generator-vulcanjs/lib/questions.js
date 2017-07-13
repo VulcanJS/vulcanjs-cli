@@ -27,6 +27,16 @@ function setup(generatorSetup) {
       };
     }
 
+    function isDelete() {
+      return {
+        type: 'confirm',
+        name: 'isDelete',
+        message: uiText.messages.isDelete,
+        when: () => when('appName'),
+        default: false
+      };
+    }
+
     function reactExtension() {
       return {
         type: 'list',
@@ -355,7 +365,7 @@ function setup(generatorSetup) {
         message: uiText.messages.vulcanjsRemovableComponents,
         when: () => when('vulcanjsComponent'),
         choices: common.vulcanjsRemovableComponents,
-        default: options.vulcanjsRemovableComponent
+        default: common.getDefaultChoiceIndex(common.vulcanjsRemovableComponents, options.vulcanjsComponent)
       };
     }
 
@@ -412,6 +422,8 @@ function setup(generatorSetup) {
           return isRegisterComponent();
         case 'defaultResolvers':
           return defaultResolvers();
+        case 'isDelete':
+          return isDelete();
         case 'routeName':
           return routeName();
         case 'routeNameIfManual':

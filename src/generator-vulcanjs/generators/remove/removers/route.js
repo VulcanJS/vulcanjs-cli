@@ -17,10 +17,12 @@ module.exports = class extends VulcanGenerator {
       'packageNameWithNumModelsList',
       'packageNameIfManual',
       'routeNameList',
-      'routeNameIfManual'
+      'routeNameIfManual',
+      'isDelete'
     );
     return this.prompt(questions)
     .then((answers) => {
+      this._assert('isDelete');
       this.props = {
         packageName: this._finalize('packageName', answers),
         routeName: this._finalize('raw', 'routeName', answers),

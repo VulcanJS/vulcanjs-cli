@@ -88,18 +88,18 @@ function run() {
     registerGenerator('remove');
     if (action.component === 'package') {
       return runWithOptions('remove', {
-        vulcanjsRemovableComponent: 'package',
+        vulcanjsComponent: 'package',
         packageName: action.args[0]
       });
     } else if (action.component === 'model') {
       return runWithOptions('remove', {
-        vulcanjsRemovableComponent: 'model',
+        vulcanjsComponent: 'model',
         packageName: action.args[0],
         modelName: action.args[1]
       });
     } else if (action.component === 'route') {
       return runWithOptions('remove', {
-        vulcanjsRemovableComponent: 'route',
+        vulcanjsComponent: 'route',
         packageName: action.args[0],
         routeName: action.args[1]
       });

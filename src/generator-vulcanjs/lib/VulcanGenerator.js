@@ -84,7 +84,7 @@ module.exports = class VulcanGenerator extends Generator {
     const errorsArr = errorKeys.map(errorKey => errors[errorKey]);
     errorsArr.forEach((error, index) => {
       const errorNo = `Error (${index}):`;
-      const message = `${errorNo} \n\n ${error.message}`;
+      const message = `${errorNo}\n\n${error.message}`;
       this.env.error(message);
     });
   }

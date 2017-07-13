@@ -31,6 +31,7 @@ module.exports = class extends VulcanGenerator {
     const nextOptions = {
       ...this.options,
       ...this.props,
+      dontAsk: true,
     };
     return this.composeWith(remover, nextOptions);
   }

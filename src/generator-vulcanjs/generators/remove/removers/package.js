@@ -13,10 +13,12 @@ module.exports = class extends VulcanGenerator {
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithManualList'
+      'packageNameWithManualList',
+      'isDelete'
     );
     return this.prompt(questions)
     .then((answers) => {
+      this._assert('isDelete');
       this.props = {
         packageName: this._finalize('packageName', answers),
       };

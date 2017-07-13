@@ -47,7 +47,8 @@ const messages = {
   schemaPropertyInsertableBy: 'Property insertable by',
   schemaPropertyEditableBy: 'Property editable by',
   vulcanjsRemovableComponents: 'Part to remove',
-  vulcanjsListableComponents: 'Part to list'
+  vulcanjsListableComponents: 'Part to list',
+  isDelete: `${chalk.red('WARNING:')} You are about to destroy some code. Have you committed your code?`
 };
 
 const errors = {
@@ -59,7 +60,8 @@ const errors = {
   isModelExists: (packageName, modelName) => `A model with the name '${modelName}' under the package '${packageName}' already exists.`,
   isZeroPackages: `The command you just ran requires at least 1 custom package to be present in your app. \nTo create a package, run ${chalk.green('vulcanjs:package')}`,
   hasZeroModels: packageName => `The package '${packageName} has no models.)}`,
-  isEmpty: 'This cannot be empty.'
+  isEmpty: 'This cannot be empty.',
+  isDelete: 'Cannot delete uncommitted code'
 };
 
 module.exports = {
