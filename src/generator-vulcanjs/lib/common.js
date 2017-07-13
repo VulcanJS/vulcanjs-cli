@@ -41,7 +41,6 @@ const vulcanjsRemovableComponents = [
 
 const vulcanjsListableComponents = [
   'packages',
-  'models',
   'routes',
 ];
 

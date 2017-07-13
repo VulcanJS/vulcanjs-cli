@@ -2,7 +2,6 @@ const uiText = require('./ui-text');
 const common = require('./common');
 const store = require('./store');
 const validations = require('./validations');
-const finalize = require('./finalizers').finalize;
 
 function setup(generatorSetup) {
   const generator = generatorSetup;
@@ -109,7 +108,7 @@ function setup(generatorSetup) {
         when: answers => when('modelName', answers, questionOptions),
         default: options.modelName,
         validate: (input, answers) => {
-          const combinedValidator = validations.combineValidators(validations.assertNonEmpty, validations.generateNotModelExists(finalize('packageName', answers)));
+          const combinedValidator = validations.combineValidators(validations.assertNonEmpty, validations.generateNotModelExists(generator._finalize('packageName', answers)));
           return combinedValidator(input, answers);
         }
       };
@@ -133,12 +132,12 @@ function setup(generatorSetup) {
         message: uiText.messages.modelName,
         when: () => when('modelName'),
         choices: answers => {
-          const finalPackageName = finalize('packageName', answers);
+          const finalPackageName = generator._finalize('packageName', answers);
           const modelNames = store.get('modelNames', finalPackageName);
           return [...modelNames, common.manualChoice];
         },
         default: answers => {
-          const finalPackageName = finalize('packageName', answers);
+          const finalPackageName = generator._finalize('packageName', answers);
           const modelNames = store.get('modelNames', finalPackageName);
           return common.getDefaultChoiceIndex(modelNames, options.modelName);
         }
@@ -204,12 +203,12 @@ function setup(generatorSetup) {
         message: uiText.messages.routeName,
         when: () => when('routeName'),
         choices: answers => {
-          const finalPackageName = finalize('packageName', answers);
+          const finalPackageName = generator._finalize('packageName', answers);
           const routeNames = store.get('routeNames', finalPackageName);
           return [...routeNames, common.manualChoice];
         }
         // default: (answers) => {
-        //   const finalPackageName = finalize('packageName', answers);
+        //   const finalPackageName = generator._finalize('packageName', answers);
         //   const modelNames = store.get('modelNames', finalPackageName);
         //   return common.getDefaultChoiceIndex(
         //     modelNames,

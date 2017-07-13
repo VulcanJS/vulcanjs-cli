@@ -35,7 +35,7 @@ const modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permission
 
 const vulcanjsRemovableComponents = ['route', 'model', 'package'];
 
-const vulcanjsListableComponents = ['packages', 'models', 'routes'];
+const vulcanjsListableComponents = ['packages', 'routes'];
 
 const manualChoiceValue = '__vjs_manual';
 

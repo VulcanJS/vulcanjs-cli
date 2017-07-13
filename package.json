@@ -39,6 +39,7 @@
     "gulp-beautify": "^2.0.1",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
+    "node-print": "^0.0.4",
     "pascal-case": "^2.0.1",
     "redux": "^3.7.1",
     "redux-node-logger": "^0.1.0",

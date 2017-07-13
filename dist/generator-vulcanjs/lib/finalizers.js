@@ -3,6 +3,7 @@ const camelCase = require('camelcase');
 const filter = require('./filters').filter;
 const pathFinder = require('./path-finder');
 const store = require('./store');
+const styles = require('./styles');
 
 const arrayToEjsString = arr => {
   const quotedList = arr.map(elem => `'${elem}'`);
@@ -109,6 +110,20 @@ function setup(generatorSetup) {
       });`;
     }
 
+    function getPrettyPackage(inputPackageName, id) {
+      const packageNameRaw = getRaw('packageName', { packageName: inputPackageName });
+      return {
+        no: id,
+        name: packageNameRaw,
+        models: store.num('models', packageNameRaw),
+        routes: store.num('routes', packageNameRaw)
+      };
+    }
+
+    function getPrettyPackages(packageNames) {
+      return packageNames.map(getPrettyPackage);
+    }
+
     switch (propName) {
       case 'appName':
         return appName(...args);
@@ -144,6 +159,8 @@ function setup(generatorSetup) {
         return addRouteStatement(...args);
       case 'permissionTo':
         return permissionTo(...args);
+      case 'prettyPackages':
+        return getPrettyPackages(...args);
       case 'raw':
         return getRaw(...args);
       default:
