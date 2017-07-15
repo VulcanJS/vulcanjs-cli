@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mechanical-turk/vulcanjs-cli.git"
+    "url": "git+https://github.com/VulcanJS/vulcanjs-cli.git"
   },
   "keywords": [
     "vulcan",
@@ -23,9 +23,9 @@
   "author": "Kerem Kazan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mechanical-turk/vulcanjs-cli/issues"
+    "url": "https://github.com/VulcanJS/vulcanjs-cli/issues"
   },
-  "homepage": "https://github.com/mechanical-turk/vulcanjs-cli#readme",
+  "homepage": "https://github.com/VulcanJS/vulcanjs-cli#readme",
   "dependencies": {
     "argparse": "^1.0.9",
     "camelcase": "^4.1.0",
