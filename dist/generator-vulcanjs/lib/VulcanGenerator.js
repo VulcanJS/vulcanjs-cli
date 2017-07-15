@@ -10,7 +10,6 @@ const chalk = require('chalk');
 
 let store;
 let errors;
-
 module.exports = class VulcanGenerator extends Generator {
   constructor(args, options) {
     super(args, options);
@@ -21,7 +20,10 @@ module.exports = class VulcanGenerator extends Generator {
     if (!errors) {
       errors = assertions.errors;
     }
-    this.registerTransformStream(beautify({ indent_size: 2 }));
+    this.registerTransformStream(beautify({
+      indent_size: 2,
+      brace_style: "collapse,preserve-inline"
+    }));
     this._assert = assertions.assert;
     this._registerOptions = optionsManager.setup(this);
     this._finalize = finalizers.setup(this);
