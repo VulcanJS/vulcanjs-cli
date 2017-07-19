@@ -43,7 +43,7 @@ module.exports = class extends VulcanGenerator {
       subjectName: 'mutations',
       subjectPath: `../../../lib/models/${this.props.modelName}/mutations`
     });
-    this.fs.copyTpl(this.templatePath('test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'mutations.js'), testProps);
+    this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'mutations.js'), testProps);
   }
 
   writing() {
