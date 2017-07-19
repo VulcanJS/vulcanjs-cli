@@ -76,7 +76,7 @@ function setup (generatorSetup) {
     function modelTestPath (options, ...args) {
       return modelPath(
         options,
-        'test',
+        'tests',
         ...args
       );
     }
