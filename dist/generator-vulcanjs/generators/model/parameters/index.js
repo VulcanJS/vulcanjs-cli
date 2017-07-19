@@ -33,7 +33,7 @@ module.exports = class extends VulcanGenerator {
   _writeTestParameters() {
     const testFragmentsProps = _extends({}, this.props, {
       subjectName: 'parameters',
-      subjectPath: '../parameters'
+      subjectPath: `../../../lib/models/${this.props.modelName}/parameters`
     });
     this.fs.copyTpl(this.templatePath('test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'parameters.js'), testFragmentsProps);
   }

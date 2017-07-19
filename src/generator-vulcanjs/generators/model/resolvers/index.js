@@ -17,8 +17,8 @@ module.exports = class extends VulcanGenerator {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
       'packageNameWithNumModelsList',
-      'modelNameList',
-      'defaultResolvers'
+      'modelNameList'
+      // 'defaultResolvers'
     );
     return this.prompt(questions)
     .then((answers) => {
@@ -29,9 +29,9 @@ module.exports = class extends VulcanGenerator {
         listResolverName: this._finalize('resolverName', 'List', answers),
         singleResolverName: this._finalize('resolverName', 'Single', answers),
         totalResolverName: this._finalize('resolverName', 'Total', answers),
-        hasListResolver: this._finalize('hasResolver', 'list', answers),
-        hasSingleResolver: this._finalize('hasResolver', 'single', answers),
-        hasTotalResolver: this._finalize('hasResolver', 'total', answers),
+        hasListResolver: true,
+        hasSingleResolver: true,
+        hasTotalResolver: true,
       };
     });
   }
@@ -52,7 +52,7 @@ module.exports = class extends VulcanGenerator {
     const testProps = {
       ...this.props,
       subjectName: 'resolvers',
-      subjectPath: '../resolvers',
+      subjectPath: `../../../lib/models/${this.props.modelName}/resolvers`,
     };
     this.fs.copyTpl(
       this.templatePath('test.js'),
