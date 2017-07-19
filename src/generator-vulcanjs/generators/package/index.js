@@ -107,6 +107,18 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
+  _writeTestsIndex () {
+    this.fs.copyTpl(
+      this.templatePath('tests-index.js'),
+      this._getPath(
+        { isAbsolute: true },
+        'packageTests',
+        'index.js'
+      ),
+      this.props
+    );
+  }
+
   writing () {
     if (!this._canWrite()) { return; }
     this._writePackageJs();
@@ -114,6 +126,7 @@ module.exports = class extends VulcanGenerator {
     this._writeServerMain();
     this._writeServerSeed();
     this._writeModelsIndex();
+    this._writeTestsIndex();
     this._writeRoutes();
   }
 
