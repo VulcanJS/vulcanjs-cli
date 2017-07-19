@@ -52,7 +52,7 @@ module.exports = class extends VulcanGenerator {
       this._getPath(
         { isAbsolute: true },
         'modelTest',
-        'fragments.js'
+        'fragments.spec.js'
       ),
       testProps
     );
