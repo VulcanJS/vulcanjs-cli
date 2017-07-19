@@ -55,6 +55,12 @@ module.exports = (grunt) => {
       'clean',
       'babel',
       'copy',
+      'chmod'
     ]
   );
+  grunt.registerTask('chmod', 'Fixes permissions', function() {
+    var fs = require('fs');
+    fs.chmodSync('./dist/index.js', '775');
+  });
+
 };
