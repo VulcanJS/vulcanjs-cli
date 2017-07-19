@@ -1,4 +1,6 @@
 const minimist = require('minimist');
+const _ = require('lodash');
+const chalk = require('chalk');
 
 const recognizedActions = {
   generate: 'generate',
@@ -9,6 +11,10 @@ const recognizedActions = {
   r: 'remove',
   list: 'list',
   l: 'list',
+};
+
+const errors = {
+  unrecognizedCommand: 'Command not recognized. Try: create, generate and remove'
 };
 
 const genericProcessor = (args) => {
@@ -39,15 +45,35 @@ const argsProcessors = {
   create: createProcessor,
 };
 
-const errors = {
-  unrecognizedCommand: 'Command not recognized. Try: create, generate and remove',
-};
+function usage(){
+    const values = _.uniq(_.values(recognizedActions))
+    console.log(chalk.green('\nvulcanjs usage:'))
+    console.log(chalk.grey('\nSynopsis'))
+    console.log('  vulcanjs <action> <object> <...>\n');
+    console.log('    <action>   Operation to perform ');
+    console.log('    <object>   Asset type (contextual to action)');
+    console.log('    <...>      Parameters. If not provided, interactively entered');
+    console.log(chalk.grey('\nProject initialisation'))
+    console.log('  vulcanjs create <appName>');
+    console.log(chalk.grey('\nAssets creation'))
+    console.log('  vulcanjs (generate|g) package <packageName>');
+    console.log('  vulcanjs (generate|g) model <packageName> <modelName>');
+    console.log('  vulcanjs (generate|g) component <packageName> <modelName> <componentName>');
+    console.log('  vulcanjs (generate|g) route <packageName> <routeName> <routePath>');
+    console.log(chalk.grey('\nAssets removal'))
+    console.log('  vulcanjs (remove|r) package');
+    console.log('  vulcanjs (remove|r) model');
+    console.log(chalk.grey('\nAssets listing'))
+    console.log('  vulcanjs (list|l) routes');
+    console.log('  vulcanjs (list|l) packages');
+    process.exit();
+}
 
 function getAction () {
   const args = minimist(process.argv.slice(2))._;
 
   if (!recognizedActions[args[0]]) {
-    throw new Error(errors.unrecognizedCommand);
+      usage();
   }
   const actionName = recognizedActions[args[0]];
   const actionObj = argsProcessors[actionName](args);
