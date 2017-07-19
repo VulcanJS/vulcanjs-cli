@@ -73,10 +73,20 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelTestPath (options, ...args) {
-      return modelPath(
+    function packageTestsPath (options, ...args) {
+      return packagePath(
         options,
         'tests',
+        ...args
+      );
+    }
+
+    function modelTestPath (options, ...args) {
+      return packageTestsPath(
+        options,
+        'tests',
+        'models',
+        generator.props.modelName,
         ...args
       );
     }
