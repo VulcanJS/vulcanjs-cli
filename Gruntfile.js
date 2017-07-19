@@ -57,4 +57,9 @@ module.exports = (grunt) => {
       'copy',
     ]
   );
+  grunt.registerTask('chmod', 'Fixes permissions', function() {
+    var fs = require('fs');
+    fs.chmodSync('./build/index.js', '775');
+  });
+
 };
