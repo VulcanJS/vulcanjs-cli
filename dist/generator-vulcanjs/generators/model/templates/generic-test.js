@@ -1,3 +1,4 @@
+import assert from 'assert';
 import <%= subjectName %> from '<%= subjectPath %>';
 
 describe('The <%= subjectName %> for: <%= modelName %>', () => {
