@@ -16,12 +16,10 @@ module.exports = class extends VulcanGenerator {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
       'packageName'
-      // 'vulcanDependencies'
     );
     return this.prompt(questions).then((answers) => {
       this.props = {
         packageName: this._finalize('packageName', answers),
-        // vulcanDependencies: this._finalize('vulcanDependencies', answers),
         vulcanDependencies: ['\'vulcan:core\''],
         isPackageAutoAdd: this._finalize('raw', 'isPackageAutoAdd', answers),
       };
@@ -109,6 +107,18 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
+  _writeTestsIndex () {
+    this.fs.copyTpl(
+      this.templatePath('tests-index.js'),
+      this._getPath(
+        { isAbsolute: true },
+        'packageTests',
+        'index.js'
+      ),
+      this.props
+    );
+  }
+
   writing () {
     if (!this._canWrite()) { return; }
     this._writePackageJs();
@@ -116,6 +126,7 @@ module.exports = class extends VulcanGenerator {
     this._writeServerMain();
     this._writeServerSeed();
     this._writeModelsIndex();
+    this._writeTestsIndex();
     this._writeRoutes();
   }
 

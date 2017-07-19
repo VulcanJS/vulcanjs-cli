@@ -81,11 +81,17 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelTestPath (options, ...args) {
+    function modelTestsPath (options, ...args) {
       return packageTestsPath(
         options,
-        'tests',
         'models',
+        ...args
+      );
+    }
+
+    function modelTestPath (options, ...args) {
+      return modelTestsPath(
+        options,
         generator.props.modelName,
         ...args
       );
@@ -135,6 +141,7 @@ function setup (generatorSetup) {
       case 'package': return packagePath(wrappedOptions, ...wrappedArgs);
       case 'lib': return libPath(wrappedOptions, ...wrappedArgs);
       case 'models': return modelsPath(wrappedOptions, ...wrappedArgs);
+      case 'packageTests': return packageTestsPath(wrappedOptions, ...wrappedArgs);
       case 'modelsIndex': return modelsIndexPath(wrappedOptions, ...wrappedArgs);
       case 'model': return modelPath(wrappedOptions, ...wrappedArgs);
       case 'components': return componentsPath(wrappedOptions, ...wrappedArgs);

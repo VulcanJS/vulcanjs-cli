@@ -42,8 +42,16 @@ function setup(generatorSetup) {
       return libPath(options, 'components', ...args);
     }
 
+    function packageTestsPath(options, ...args) {
+      return packagePath(options, 'tests', ...args);
+    }
+
+    function modelTestsPath(options, ...args) {
+      return packageTestsPath(options, 'models', ...args);
+    }
+
     function modelTestPath(options, ...args) {
-      return modelPath(options, 'test', ...args);
+      return modelTestsPath(options, generator.props.modelName, ...args);
     }
 
     function packageStoriesPath(options, ...args) {
@@ -75,6 +83,8 @@ function setup(generatorSetup) {
         return libPath(wrappedOptions, ...wrappedArgs);
       case 'models':
         return modelsPath(wrappedOptions, ...wrappedArgs);
+      case 'packageTests':
+        return packageTestsPath(wrappedOptions, ...wrappedArgs);
       case 'modelsIndex':
         return modelsIndexPath(wrappedOptions, ...wrappedArgs);
       case 'model':
