@@ -11,6 +11,8 @@ const recognizedActions = {
   r: 'remove',
   list: 'list',
   l: 'list',
+  i: 'init',
+  init: 'init',
 };
 
 const errors = {
@@ -39,6 +41,7 @@ const createProcessor = (args) => ({
 });
 
 const argsProcessors = {
+  init: genericProcessor,
   generate: genericProcessor,
   remove: genericProcessor,
   list: genericProcessor,
