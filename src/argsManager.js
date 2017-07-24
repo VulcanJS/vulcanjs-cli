@@ -58,6 +58,7 @@ function usage(){
     console.log('    <...>      Parameters. If not provided, interactively entered');
     console.log(chalk.grey('\nProject initialisation'))
     console.log('  vulcanjs create <appName>');
+    console.log('  vulcanjs init <appName>');
     console.log(chalk.grey('\nAssets creation'))
     console.log('  vulcanjs (generate|g) package <packageName>');
     console.log('  vulcanjs (generate|g) model <packageName> <modelName>');
