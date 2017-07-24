@@ -1,6 +1,5 @@
 const chalk = require('chalk');
 const VulcanGenerator = require('../../lib/VulcanGenerator');
-const git = require('simple-git')();
 
 module.exports = class extends VulcanGenerator {
   _registerArguments() {
