@@ -25,6 +25,8 @@ const getSetFromArr = arr => {
 
 const reactExtensions = ['jsx', 'js'];
 
+const cloningOptions = ['fast', 'complete'];
+
 const packageManagers = ['yarn', 'npm'];
 
 const visitorTypes = ['guest', 'member', 'admin'];
@@ -62,7 +64,8 @@ const exposed = {
   manualChoiceValue: manualChoiceValue,
   manualChoice: manualChoice,
   allChoiceValue: allChoiceValue,
-  allChoice: allChoice
+  allChoice: allChoice,
+  cloningOptions: cloningOptions
 };
 
 module.exports = exposed;
