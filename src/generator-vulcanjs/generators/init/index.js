@@ -8,6 +8,9 @@ module.exports = class extends VulcanGenerator {
       'packageManager'
     );
   }
+  initializing () {
+    this._assert('notVulcan');
+  }
 
   prompting () {
     if (!this._canPrompt()) { return false; }
@@ -25,10 +28,6 @@ module.exports = class extends VulcanGenerator {
 
   writing () {
     if (!this._canWrite()) { return; }
-// This should work, yet it does not
-//	if( this._assert('isVulcan') ){
-//		return chalk.red( "Already initialized!" );
-//	}
     this.destinationRoot(
       this.destinationPath()
     );
@@ -45,6 +44,11 @@ module.exports = class extends VulcanGenerator {
     });
     debugger
     this._commitStore();
+  }
+  
+  end () {
+    this._end();
+    if (!this._hasNoErrors()) { return; }
   }
 };
 
