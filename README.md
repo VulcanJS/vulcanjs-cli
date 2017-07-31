@@ -46,7 +46,6 @@ Creates a new project with the given app name:
 ```sh
 $ vulcan create <appName>
 ```
-![create app](./media/usage/create.gif)
 
 ### Generate
 Generates a project component
@@ -55,26 +54,21 @@ Generates a project component
 ```sh
 $ vulcan g package <packageName>
 ```
-![generate package](./media/usage/generate-package.gif)
 
 - Generate Model
 ```sh
 $ vulcan g model <packageName> <modelName>
 ```
-![generate model](./media/usage/generate-custom-model.gif)
-
 
 - Generate Component
 ```sh
 $ vulcan g component <packageName> <modelName> <componentName>
 ```
-![generate component](./media/usage/generate-component.gif)
 
 - Generate Route
 ```sh
 $ vulcan g route <packageName> <routeName> <routePath>
 ```
-![generate route](./media/usage/generate-route.gif)
 
 ### Remove
 
@@ -82,13 +76,11 @@ $ vulcan g route <packageName> <routeName> <routePath>
 ```sh
 $ vulcan remove package <packageName>
 ```
-![remove package](./media/usage/remove-package.gif)
 
 - Remove Model
 ```sh
 $ vulcan remove model <packageName> <modelName>
 ```
-![remove model](./media/usage/remove-model.gif)
 
 ### List
 
@@ -96,13 +88,11 @@ $ vulcan remove model <packageName> <modelName>
 ```sh
 $ vulcan list packages
 ```
-![list package](./media/usage/list-packages.gif)
 
 - List Routes
 ```sh
 $ vulcan list routes
 ```
-![list routes](./media/usage/list-routes.gif)
 
 
 ## Maintainers
