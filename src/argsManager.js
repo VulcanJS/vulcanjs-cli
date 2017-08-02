@@ -17,7 +17,6 @@ const recognizedActions = {
   unshallow: 'unshallow',
 };
 
-
 const genericProcessor = (args) => {
   const argsToProcess = args.slice(1);
   const action = {
@@ -48,37 +47,37 @@ const argsProcessors = {
   unshallow: genericProcessor,
 };
 
-function usage(){
-    const values = _.uniq(_.values(recognizedActions))
-    console.log(chalk.green('\nvulcanjs usage:'))
-    console.log(chalk.grey('\nSynopsis'))
-    console.log('  vulcanjs <action> <object> <...>\n');
-    console.log('    <action>   Operation to perform ');
-    console.log('    <object>   Asset type (contextual to action)');
-    console.log('    <...>      Parameters. If not provided, interactively entered');
-    console.log(chalk.grey('\nProject initialisation'))
-    console.log('  vulcanjs create <appName>');
-    console.log('  vulcanjs init <appName>');
-    console.log('  vulcanjs unshallow ');
-    console.log(chalk.grey('\nAssets creation'))
-    console.log('  vulcanjs (generate|g) package <packageName>');
-    console.log('  vulcanjs (generate|g) model <packageName> <modelName>');
-    console.log('  vulcanjs (generate|g) component <packageName> <modelName> <componentName>');
-    console.log('  vulcanjs (generate|g) route <packageName> <routeName> <routePath>');
-    console.log(chalk.grey('\nAssets removal'))
-    console.log('  vulcanjs (remove|r) package');
-    console.log('  vulcanjs (remove|r) model');
-    console.log(chalk.grey('\nAssets listing'))
-    console.log('  vulcanjs (list|l) routes');
-    console.log('  vulcanjs (list|l) packages');
-    process.exit();
+function usage () {
+  const values = _.uniq(_.values(recognizedActions));
+  console.log(chalk.green('\nvulcan usage:'));
+  console.log(chalk.grey('\nSynopsis'));
+  console.log('  vulcan <action> <object> <...>\n');
+  console.log('    <action>   Operation to perform ');
+  console.log('    <object>   Asset type (contextual to action)');
+  console.log('    <...>      Parameters. If not provided, interactively entered');
+  console.log(chalk.grey('\nProject initialisation'));
+  console.log('  vulcan create <appName>');
+  console.log('  vulcan init <appName>');
+  console.log('  vulcan unshallow ');
+  console.log(chalk.grey('\nAssets creation'));
+  console.log('  vulcan (generate|g) package <packageName>');
+  console.log('  vulcan (generate|g) model <packageName> <modelName>');
+  console.log('  vulcan (generate|g) component <packageName> <modelName> <componentName>');
+  console.log('  vulcan (generate|g) route <packageName> <routeName> <routePath>');
+  console.log(chalk.grey('\nAssets removal'));
+  console.log('  vulcan (remove|r) package');
+  console.log('  vulcan (remove|r) model');
+  console.log(chalk.grey('\nAssets listing'));
+  console.log('  vulcan (list|l) routes');
+  console.log('  vulcan (list|l) packages');
+  process.exit();
 }
 
 function getAction () {
   const args = minimist(process.argv.slice(2))._;
 
   if (!recognizedActions[args[0]]) {
-      usage();
+    usage();
   }
   const actionName = recognizedActions[args[0]];
   const actionObj = argsProcessors[actionName](args);

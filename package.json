@@ -1,9 +1,9 @@
 {
   "name": "vulcanjs-cli",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "The official cli scaffolding tool for VulcanJS",
   "bin": {
-    "vulcanjs": "./dist/index.js"
+    "vulcan": "./dist/index.js"
   },
   "scripts": {
     "watch": "grunt watch",

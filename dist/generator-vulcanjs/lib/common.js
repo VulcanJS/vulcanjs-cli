@@ -29,7 +29,7 @@ const cloningOptions = ['fast', 'complete'];
 
 const packageManagers = ['yarn', 'npm'];
 
-const visitorTypes = ['guest', 'member', 'admin'];
+const visitorTypes = ['guests', 'members', 'admins'];
 
 const schemaPropertyTypes = ['String', 'Number', 'Array', 'Object', 'Custom'];
 
