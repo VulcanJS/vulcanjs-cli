@@ -1,56 +1,56 @@
 #!/usr/bin/env node
+'use strict';
 
+var yeoman = require('yeoman-environment');
+var parseArgs = require('minimist');
 
-const yeoman = require('yeoman-environment');
-const parseArgs = require('minimist');
+var argsManager = require('./argsManager');
 
-const argsManager = require('./argsManager');
+var appGenerator = require.resolve('./generator-vulcanjs/generators/app');
+var packageGenerator = require.resolve('./generator-vulcanjs/generators/package');
+var modelGenerator = require.resolve('./generator-vulcanjs/generators/model');
+var componentGenerator = require.resolve('./generator-vulcanjs/generators/component');
+var routeGenerator = require.resolve('./generator-vulcanjs/generators/route');
+var remover = require.resolve('./generator-vulcanjs/generators/remove');
+var lister = require.resolve('./generator-vulcanjs/generators/list');
 
-const appGenerator = require.resolve('./generator-vulcanjs/generators/app');
-const packageGenerator = require.resolve('./generator-vulcanjs/generators/package');
-const modelGenerator = require.resolve('./generator-vulcanjs/generators/model');
-const componentGenerator = require.resolve('./generator-vulcanjs/generators/component');
-const routeGenerator = require.resolve('./generator-vulcanjs/generators/route');
-const remover = require.resolve('./generator-vulcanjs/generators/remove');
-const lister = require.resolve('./generator-vulcanjs/generators/list');
-
-const env = yeoman.createEnv();
+var env = yeoman.createEnv();
 
 function runWithOptions(generator, extraOptions, callback) {
-  const optionsForGenerators = parseArgs(process.argv.slice(2));
-  const finalOptions = {};
+  var optionsForGenerators = parseArgs(process.argv.slice(2));
+  var finalOptions = {};
   Object.assign(finalOptions, optionsForGenerators, extraOptions);
   return env.run(generator, finalOptions, callback);
 }
 
-const action = argsManager.getAction();
+var action = argsManager.getAction();
 
-const componentNamesToGeneratorRegisters = {
-  package: () => {
+var componentNamesToGeneratorRegisters = {
+  package: function _package() {
     env.register(packageGenerator, 'package');
   },
-  app: () => {
+  app: function app() {
     env.register(appGenerator, 'app');
   },
-  model: () => {
+  model: function model() {
     env.register(modelGenerator, 'model');
   },
-  component: () => {
+  component: function component() {
     env.register(componentGenerator, 'component');
   },
-  route: () => {
+  route: function route() {
     env.register(routeGenerator, 'route');
   },
-  remove: () => {
+  remove: function remove() {
     env.register(remover, 'remove');
   },
-  list: () => {
+  list: function list() {
     env.register(lister, 'list');
   }
 };
 
 function registerGenerator(componentName) {
-  const registerFn = componentNamesToGeneratorRegisters[componentName];
+  var registerFn = componentNamesToGeneratorRegisters[componentName];
   registerFn();
 }
 

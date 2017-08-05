@@ -1,53 +1,59 @@
+'use strict';
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-const pascalCase = require('pascal-case');
-const camelCase = require('camelcase');
-const filter = require('./filters').filter;
-const store = require('./store');
-const flatten = require('lodash/flatten');
+var pascalCase = require('pascal-case');
+var camelCase = require('camelcase');
+var filter = require('./filters').filter;
+var store = require('./store');
+var flatten = require('lodash/flatten');
 
-const arrayToEjsString = arr => {
-  const quotedList = arr.map(elem => `'${elem}'`);
-  const quotedAndCsv = quotedList.join(',');
-  return `[${quotedAndCsv}]`;
+var arrayToEjsString = function arrayToEjsString(arr) {
+  var quotedList = arr.map(function (elem) {
+    return '\'' + elem + '\'';
+  });
+  var quotedAndCsv = quotedList.join(',');
+  return '[' + quotedAndCsv + ']';
 };
 
 function setup(generatorSetup) {
-  const generator = generatorSetup;
+  var generator = generatorSetup;
 
-  function finalize(propName, ...args) {
-    function getRaw(keyBeforeRaw, answers = {}) {
+  function finalize(propName) {
+    function getRaw(keyBeforeRaw) {
+      var answers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
       return generator.options[keyBeforeRaw] || generator.props[keyBeforeRaw] || answers[keyBeforeRaw];
     }
 
     function permissionTo(permissionType, answers) {
-      const permissionsArr = answers[permissionType];
+      var permissionsArr = answers[permissionType];
       return arrayToEjsString(permissionsArr);
     }
 
     function appName(answers) {
-      const appNameRaw = getRaw.bind(this)('appName', answers);
+      var appNameRaw = getRaw.bind(this)('appName', answers);
       return filter('appName', appNameRaw);
     }
 
     function packageName(answers) {
-      const packageNameRaw = getRaw('packageName', answers);
+      var packageNameRaw = getRaw('packageName', answers);
       return filter('packageName', packageNameRaw);
     }
 
     function modelName(answers) {
-      const modelNameRaw = getRaw('modelName', answers);
+      var modelNameRaw = getRaw('modelName', answers);
       return filter('modelName', modelNameRaw);
     }
 
     function componentName(answers) {
-      const componentNameRaw = getRaw('componentName', answers);
+      var componentNameRaw = getRaw('componentName', answers);
       return filter('componentName', componentNameRaw);
     }
 
     function componentFileName(answers) {
-      const filteredComponentName = filter('componentName', answers.componentName);
-      return `${filteredComponentName}.${store.get('reactExtension')}`;
+      var filteredComponentName = filter('componentName', answers.componentName);
+      return filteredComponentName + '.' + store.get('reactExtension');
     }
 
     function componentPath(answers) {
@@ -55,12 +61,12 @@ function setup(generatorSetup) {
     }
 
     function pascalModelName(answers) {
-      const modelNameRaw = getRaw('modelName', answers);
+      var modelNameRaw = getRaw('modelName', answers);
       return pascalCase(modelNameRaw);
     }
 
     function camelModelName(answers) {
-      const modelNameRaw = getRaw('modelName', answers);
+      var modelNameRaw = getRaw('modelName', answers);
       return camelCase(modelNameRaw);
     }
 
@@ -73,47 +79,45 @@ function setup(generatorSetup) {
     }
 
     function mutationName(mutationType, answers) {
-      const modelNamePart = camelModelName(answers);
-      return `${modelNamePart}${mutationType}`;
+      var modelNamePart = camelModelName(answers);
+      return '' + modelNamePart + mutationType;
     }
 
     function permissionName(permission, answers) {
-      const camelModelNamePart = camelModelName(answers);
-      const permissionAppendage = permission.join('.');
-      return `${camelModelNamePart}.${permissionAppendage}`;
+      var camelModelNamePart = camelModelName(answers);
+      var permissionAppendage = permission.join('.');
+      return camelModelNamePart + '.' + permissionAppendage;
     }
 
     function vulcanDependencies(answers) {
-      const rawDependencies = getRaw('vulcanDependencies', answers);
-      return rawDependencies.map(dep => `'${dep}'`);
+      var rawDependencies = getRaw('vulcanDependencies', answers);
+      return rawDependencies.map(function (dep) {
+        return '\'' + dep + '\'';
+      });
     }
 
     function resolverName(resolverType, answers) {
-      const resolverNamePart = camelModelName(answers);
-      return `${resolverNamePart}${resolverType}`;
+      var resolverNamePart = camelModelName(answers);
+      return '' + resolverNamePart + resolverType;
     }
 
     function hasResolver(resolverType, answers) {
-      const defaultResolvers = getRaw('defaultResolvers', answers);
+      var defaultResolvers = getRaw('defaultResolvers', answers);
       return defaultResolvers[resolverType];
     }
 
     function addRouteStatement(answers) {
-      const routeName = getRaw('routeName', answers);
-      const routePath = getRaw('routePath', answers);
+      var routeName = getRaw('routeName', answers);
+      var routePath = getRaw('routePath', answers);
       // const layoutName = getRaw('layoutName', answers);
-      const routeComponentName = componentName(answers);
-      return `addRoute({
-        name: '${routeName}',
-        path: '${routePath}',
-        component: '${routeComponentName}',
-      });`;
+      var routeComponentName = componentName(answers);
+      return 'addRoute({\n        name: \'' + routeName + '\',\n        path: \'' + routePath + '\',\n        component: \'' + routeComponentName + '\',\n      });';
 
       // layoutName: '${layoutName}',
     }
 
     function prettyPackage(inputPackageName, id) {
-      const packageNameRaw = getRaw('packageName', { packageName: inputPackageName });
+      var packageNameRaw = getRaw('packageName', { packageName: inputPackageName });
       return {
         no: id,
         name: packageNameRaw,
@@ -127,74 +131,82 @@ function setup(generatorSetup) {
     }
 
     function addNo(arr) {
-      return arr.map((obj, index) => _extends({ no: index }, obj));
+      return arr.map(function (obj, index) {
+        return _extends({ no: index }, obj);
+      });
     }
 
     function getPrettyRoutesWithoutNumbers(inputPackageName) {
-      const theRoutes = store.get('routes', inputPackageName);
-      const prettyRoutes = theRoutes.map(theRoute => ({
-        package: inputPackageName,
-        name: theRoute.name,
-        path: theRoute.content.routePath
-      }));
+      var theRoutes = store.get('routes', inputPackageName);
+      var prettyRoutes = theRoutes.map(function (theRoute) {
+        return {
+          package: inputPackageName,
+          name: theRoute.name,
+          path: theRoute.content.routePath
+        };
+      });
       return prettyRoutes;
     }
 
     function prettyRoutesForPackage(inputPackageName) {
-      const prettyRoutesWithoutNumbers = getPrettyRoutesWithoutNumbers(inputPackageName);
+      var prettyRoutesWithoutNumbers = getPrettyRoutesWithoutNumbers(inputPackageName);
       return addNo(prettyRoutesWithoutNumbers);
     }
 
     function allPrettyRoutes() {
-      const allPackageNames = store.get('packageNames');
-      const prettyRoutes = allPackageNames.map(getPrettyRoutesWithoutNumbers);
-      const flattenedRoutes = flatten(prettyRoutes);
+      var allPackageNames = store.get('packageNames');
+      var prettyRoutes = allPackageNames.map(getPrettyRoutesWithoutNumbers);
+      var flattenedRoutes = flatten(prettyRoutes);
       return addNo(flattenedRoutes);
+    }
+
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
     }
 
     switch (propName) {
       case 'appName':
-        return appName(...args);
+        return appName.apply(undefined, args);
       case 'packageName':
-        return packageName(...args);
+        return packageName.apply(undefined, args);
       case 'modelName':
-        return modelName(...args);
+        return modelName.apply(undefined, args);
       case 'modelParts':
-        return modelParts(...args);
+        return modelParts.apply(undefined, args);
       case 'componentName':
-        return componentName(...args);
+        return componentName.apply(undefined, args);
       case 'componentFileName':
-        return componentFileName(...args);
+        return componentFileName.apply(undefined, args);
       case 'componentPath':
-        return componentPath(...args);
+        return componentPath.apply(undefined, args);
       case 'pascalModelName':
-        return pascalModelName(...args);
+        return pascalModelName.apply(undefined, args);
       case 'camelModelName':
-        return camelModelName(...args);
+        return camelModelName.apply(undefined, args);
       case 'collectionName':
-        return collectionName(...args);
+        return collectionName.apply(undefined, args);
       case 'mutationName':
-        return mutationName(...args);
+        return mutationName.apply(undefined, args);
       case 'permissionName':
-        return permissionName(...args);
+        return permissionName.apply(undefined, args);
       case 'vulcanDependencies':
-        return vulcanDependencies(...args);
+        return vulcanDependencies.apply(undefined, args);
       case 'resolverName':
-        return resolverName(...args);
+        return resolverName.apply(undefined, args);
       case 'hasResolver':
-        return hasResolver(...args);
+        return hasResolver.apply(undefined, args);
       case 'addRouteStatement':
-        return addRouteStatement(...args);
+        return addRouteStatement.apply(undefined, args);
       case 'permissionTo':
-        return permissionTo(...args);
+        return permissionTo.apply(undefined, args);
       case 'prettyPackages':
-        return prettyPackages(...args);
+        return prettyPackages.apply(undefined, args);
       case 'prettyRoutesForPackage':
-        return prettyRoutesForPackage(...args);
+        return prettyRoutesForPackage.apply(undefined, args);
       case 'allPrettyRoutes':
-        return allPrettyRoutes(...args);
+        return allPrettyRoutes.apply(undefined, args);
       case 'raw':
-        return getRaw(...args);
+        return getRaw.apply(undefined, args);
       default:
         return undefined;
     }

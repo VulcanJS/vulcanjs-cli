@@ -1,46 +1,76 @@
-const VulcanGenerator = require('../../lib/VulcanGenerator');
+'use strict';
 
-module.exports = class extends VulcanGenerator {
-  initializing() {
-    this._assert('isVulcan');
-    this._assert('hasNonZeroPackages');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var VulcanGenerator = require('../../lib/VulcanGenerator');
+
+module.exports = function (_VulcanGenerator) {
+  _inherits(_class, _VulcanGenerator);
+
+  function _class() {
+    _classCallCheck(this, _class);
+
+    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
   }
 
-  _registerArguments() {
-    this._registerOptions('packageName', 'modelName', 'componentName');
-  }
-
-  prompting() {
-    if (!this._canPrompt()) {
-      return false;
+  _createClass(_class, [{
+    key: 'initializing',
+    value: function initializing() {
+      this._assert('isVulcan');
+      this._assert('hasNonZeroPackages');
     }
-    const questions = this._getQuestions('packageNameWithNumModelsList', 'packageNameIfManual', 'modelNameList', 'modelNameIfManual', 'componentName', 'componentType', 'isRegisterComponent');
-    return this.prompt(questions).then(answers => {
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        modelName: this._finalize('modelName', answers),
-        componentName: this._finalize('componentName', answers),
-        componentFileName: this._finalize('componentFileName', answers),
-        componentType: this._finalize('raw', 'componentType', answers),
-        isRegister: this._finalize('raw', 'isRegister', answers)
-      };
-      this.props.componentPath = this._finalize('componentPath', answers);
-    });
-  }
-
-  _writeComponent() {
-    const templatePath = this.props.componentType === 'pure' ? this.templatePath('pureFunctionComponent.js') : this.templatePath('classComponent.js');
-    this.fs.copyTpl(templatePath, this._getPath({ isAbsolute: true }, 'modelInComponents', this.props.componentFileName), this.props);
-  }
-
-  writing() {
-    if (!this._canWrite()) {
-      return;
+  }, {
+    key: '_registerArguments',
+    value: function _registerArguments() {
+      this._registerOptions('packageName', 'modelName', 'componentName');
     }
-    this._writeComponent();
-  }
+  }, {
+    key: 'prompting',
+    value: function prompting() {
+      var _this2 = this;
 
-  end() {
-    this._end();
-  }
-};
+      if (!this._canPrompt()) {
+        return false;
+      }
+      var questions = this._getQuestions('packageNameWithNumModelsList', 'packageNameIfManual', 'modelNameList', 'modelNameIfManual', 'componentName', 'componentType', 'isRegisterComponent');
+      return this.prompt(questions).then(function (answers) {
+        _this2.props = {
+          packageName: _this2._finalize('packageName', answers),
+          modelName: _this2._finalize('modelName', answers),
+          componentName: _this2._finalize('componentName', answers),
+          componentFileName: _this2._finalize('componentFileName', answers),
+          componentType: _this2._finalize('raw', 'componentType', answers),
+          isRegister: _this2._finalize('raw', 'isRegister', answers)
+        };
+        _this2.props.componentPath = _this2._finalize('componentPath', answers);
+      });
+    }
+  }, {
+    key: '_writeComponent',
+    value: function _writeComponent() {
+      var templatePath = this.props.componentType === 'pure' ? this.templatePath('pureFunctionComponent.js') : this.templatePath('classComponent.js');
+      this.fs.copyTpl(templatePath, this._getPath({ isAbsolute: true }, 'modelInComponents', this.props.componentFileName), this.props);
+    }
+  }, {
+    key: 'writing',
+    value: function writing() {
+      if (!this._canWrite()) {
+        return;
+      }
+      this._writeComponent();
+    }
+  }, {
+    key: 'end',
+    value: function end() {
+      this._end();
+    }
+  }]);
+
+  return _class;
+}(VulcanGenerator);

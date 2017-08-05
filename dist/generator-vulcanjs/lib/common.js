@@ -1,53 +1,57 @@
-const alphabeticalSort = (a, b) => {
-  const aLower = a.toLowerCase();
-  const bLower = b.toLowerCase();
+'use strict';
+
+var alphabeticalSort = function alphabeticalSort(a, b) {
+  var aLower = a.toLowerCase();
+  var bLower = b.toLowerCase();
   if (aLower < bLower) return -1;
   if (aLower > bLower) return 1;
   return 0;
 };
 
-const numModelsSort = (a, b) => {
-  const aHasNonZero = a.numModels > 0;
-  const bHasNonZero = b.numModels > 0;
+var numModelsSort = function numModelsSort(a, b) {
+  var aHasNonZero = a.numModels > 0;
+  var bHasNonZero = b.numModels > 0;
   if (aHasNonZero && bHasNonZero) return 0;
   if (!aHasNonZero && !bHasNonZero) return 0;
   if (!aHasNonZero && bHasNonZero) return 1;
   /* if (aHasNonZero && !bHasNonZero)*/return -1;
 };
 
-const getSetFromArr = arr => {
-  const set = {};
-  arr.forEach(elem => {
+var getSetFromArr = function getSetFromArr(arr) {
+  var set = {};
+  arr.forEach(function (elem) {
     set[elem] = true;
   });
   return set;
 };
 
-const reactExtensions = ['jsx', 'js'];
+var reactExtensions = ['jsx', 'js'];
 
-const packageManagers = ['yarn', 'npm'];
+var packageManagers = ['yarn', 'npm'];
 
-const visitorTypes = ['guests', 'members', 'admins'];
+var visitorTypes = ['guests', 'members', 'admins'];
 
-const schemaPropertyTypes = ['String', 'Number', 'Array', 'Object', 'Custom'];
+var schemaPropertyTypes = ['String', 'Number', 'Array', 'Object', 'Custom'];
 
-const modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
+var modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
 
-const vulcanjsRemovableComponents = ['route', 'model', 'package'];
+var vulcanjsRemovableComponents = ['route', 'model', 'package'];
 
-const vulcanjsListableComponents = ['packages', 'routes'];
+var vulcanjsListableComponents = ['packages', 'routes'];
 
-const manualChoiceValue = '__vjs_manual';
-const manualChoice = { name: '[MANUAL]', value: manualChoiceValue };
-const allChoiceValue = '__vjs_all';
-const allChoice = { name: '[ALL]', value: allChoiceValue };
+var manualChoiceValue = '__vjs_manual';
+var manualChoice = { name: '[MANUAL]', value: manualChoiceValue };
+var allChoiceValue = '__vjs_all';
+var allChoice = { name: '[ALL]', value: allChoiceValue };
 
-const getDefaultChoiceIndex = (choices, option) => {
-  const index = choices.findIndex(elem => elem === option);
+var getDefaultChoiceIndex = function getDefaultChoiceIndex(choices, option) {
+  var index = choices.findIndex(function (elem) {
+    return elem === option;
+  });
   return Math.max(index, 0);
 };
 
-const exposed = {
+var exposed = {
   alphabeticalSort: alphabeticalSort,
   numModelsSort: numModelsSort,
   reactExtensions: reactExtensions,

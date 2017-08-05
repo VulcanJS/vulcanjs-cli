@@ -1,8 +1,10 @@
-const minimist = require('minimist');
-const _ = require('lodash');
-const chalk = require('chalk');
+'use strict';
 
-const recognizedActions = {
+var minimist = require('minimist');
+var _ = require('lodash');
+var chalk = require('chalk');
+
+var recognizedActions = {
   generate: 'generate',
   g: 'generate',
   create: 'create',
@@ -13,13 +15,13 @@ const recognizedActions = {
   l: 'list'
 };
 
-const errors = {
+var errors = {
   unrecognizedCommand: 'Command not recognized. Try: create, generate and remove'
 };
 
-const genericProcessor = args => {
-  const argsToProcess = args.slice(1);
-  const action = {
+var genericProcessor = function genericProcessor(args) {
+  var argsToProcess = args.slice(1);
+  var action = {
     type: recognizedActions[args[0]],
     args: []
   };
@@ -33,12 +35,14 @@ const genericProcessor = args => {
   return action;
 };
 
-const createProcessor = args => ({
-  type: 'create',
-  args: args.slice(1)
-});
+var createProcessor = function createProcessor(args) {
+  return {
+    type: 'create',
+    args: args.slice(1)
+  };
+};
 
-const argsProcessors = {
+var argsProcessors = {
   generate: genericProcessor,
   remove: genericProcessor,
   list: genericProcessor,
@@ -46,7 +50,7 @@ const argsProcessors = {
 };
 
 function usage() {
-  const values = _.uniq(_.values(recognizedActions));
+  var values = _.uniq(_.values(recognizedActions));
   console.log(chalk.green('\nvulcanjs usage:'));
   console.log(chalk.grey('\nSynopsis'));
   console.log('  vulcan <action> <object> <...>\n');
@@ -70,13 +74,13 @@ function usage() {
 }
 
 function getAction() {
-  const args = minimist(process.argv.slice(2))._;
+  var args = minimist(process.argv.slice(2))._;
 
   if (!recognizedActions[args[0]]) {
     usage();
   }
-  const actionName = recognizedActions[args[0]];
-  const actionObj = argsProcessors[actionName](args);
+  var actionName = recognizedActions[args[0]];
+  var actionObj = argsProcessors[actionName](args);
   return actionObj;
 }
 

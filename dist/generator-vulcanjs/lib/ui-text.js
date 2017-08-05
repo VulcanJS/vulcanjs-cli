@@ -1,6 +1,8 @@
-const chalk = require('chalk');
+'use strict';
 
-const descriptions = {
+var chalk = require('chalk');
+
+var descriptions = {
   appName: 'The name of your app',
   reactExtension: 'Default react component extension',
   packageManager: 'Preferred package manager',
@@ -20,7 +22,7 @@ const descriptions = {
   vulcanjsListableComponent: 'The part of the app that you want to list'
 };
 
-const messages = {
+var messages = {
   appName: 'App name',
   reactExtension: 'React extension',
   packageManager: 'Package manager',
@@ -48,18 +50,28 @@ const messages = {
   schemaPropertyEditableBy: 'Property editable by',
   vulcanjsRemovableComponents: 'Part to remove',
   vulcanjsListableComponents: 'Part to list',
-  isDelete: `${chalk.red('WARNING:')} You are about to destroy some code. Have you committed your code?`
+  isDelete: chalk.red('WARNING:') + ' You are about to destroy some code. Have you committed your code?'
 };
 
-const errors = {
+var errors = {
   notVulcan: 'This is not a Vulcan.js project directory. \nYou cannot run Vulcan.js generators outside of a Vulcan.js project directory.',
   isVulcan: 'You are already in a Vulcan.js project directory. \nYou may not run this command inside a Vulcan.js project directory.',
-  notPackageExists: packageName => `The package ${packageName} does not exist. \nIf you'd like to work on this package, you should create it first by running: ${chalk.green(`vulcanjs g package ${packageName}`)}`,
-  isPackageExists: packageName => `A package with the name: '${packageName}' already exists.`,
-  notModelExists: (packageName, modelName) => `A model with the name: '${modelName}' under the package '${packageName}' does not exist. \nIf you'd like to work on this model, you should first run ${chalk.green(`vulcanjs g model ${packageName} ${modelName}`)}.`,
-  isModelExists: (packageName, modelName) => `A model with the name '${modelName}' under the package '${packageName}' already exists.`,
-  isZeroPackages: `The command you just ran requires at least 1 custom package to be present in your app. \nTo create a package, run ${chalk.green('vulcanjs g package')}`,
-  hasZeroModels: packageName => `The package '${packageName} has no models.)}`,
+  notPackageExists: function notPackageExists(packageName) {
+    return 'The package ' + packageName + ' does not exist. \nIf you\'d like to work on this package, you should create it first by running: ' + chalk.green('vulcanjs g package ' + packageName);
+  },
+  isPackageExists: function isPackageExists(packageName) {
+    return 'A package with the name: \'' + packageName + '\' already exists.';
+  },
+  notModelExists: function notModelExists(packageName, modelName) {
+    return 'A model with the name: \'' + modelName + '\' under the package \'' + packageName + '\' does not exist. \nIf you\'d like to work on this model, you should first run ' + chalk.green('vulcanjs g model ' + packageName + ' ' + modelName) + '.';
+  },
+  isModelExists: function isModelExists(packageName, modelName) {
+    return 'A model with the name \'' + modelName + '\' under the package \'' + packageName + '\' already exists.';
+  },
+  isZeroPackages: 'The command you just ran requires at least 1 custom package to be present in your app. \nTo create a package, run ' + chalk.green('vulcanjs g package'),
+  hasZeroModels: function hasZeroModels(packageName) {
+    return 'The package \'' + packageName + ' has no models.)}';
+  },
   isEmpty: 'This cannot be empty.',
   isDelete: 'Cannot delete uncommitted code'
 };

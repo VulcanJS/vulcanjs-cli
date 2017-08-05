@@ -1,6 +1,8 @@
-const uiText = require('./ui-text');
+'use strict';
 
-const allOptions = {
+var uiText = require('./ui-text');
+
+var allOptions = {
   appName: {
     type: String,
     required: false,
@@ -70,13 +72,17 @@ const allOptions = {
 };
 
 function setup(generatorSetup) {
-  const generator = generatorSetup;
-  function register(...optionNames) {
+  var generator = generatorSetup;
+  function register() {
     function registerSingleOption(optionName) {
       generator.option(optionName, allOptions[optionName]);
     }
 
-    optionNames.forEach(optionName => {
+    for (var _len = arguments.length, optionNames = Array(_len), _key = 0; _key < _len; _key++) {
+      optionNames[_key] = arguments[_key];
+    }
+
+    optionNames.forEach(function (optionName) {
       registerSingleOption(optionName);
     });
   }
