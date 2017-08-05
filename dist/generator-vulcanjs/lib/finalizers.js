@@ -7,6 +7,7 @@ var camelCase = require('camelcase');
 var filter = require('./filters').filter;
 var store = require('./store');
 var flatten = require('lodash/flatten');
+var pluralize = require('pluralize');
 
 var arrayToEjsString = function arrayToEjsString(arr) {
   var quotedList = arr.map(function (elem) {
@@ -67,6 +68,18 @@ function setup(generatorSetup) {
       return pascalCase(modelNameRaw);
     }
 
+    function typeName(answers) {
+      var modelNameRaw = getRaw('modelName', answers);
+      var singularModelName = pluralize.singular(modelNameRaw);
+      return pascalCase(singularModelName);
+    }
+
+    function collectionName(answers) {
+      var modelNameRaw = getRaw('modelName', answers);
+      var pluralModelName = pluralize.plural(modelNameRaw);
+      return pascalCase(pluralModelName);
+    }
+
     function camelModelName(answers) {
       var modelNameRaw = getRaw('modelName', answers);
       return camelCase(modelNameRaw);
@@ -76,13 +89,12 @@ function setup(generatorSetup) {
       return Object.keys(answers.modelParts);
     }
 
-    function collectionName(answers) {
-      return pascalModelName(answers);
-    }
-
     function mutationName(mutationType, answers) {
-      var modelNamePart = camelModelName(answers);
-      return '' + modelNamePart + mutationType;
+      var modelNameRaw = getRaw('modelName', answers);
+      var singularModelName = pluralize.singular(modelNameRaw);
+      var modelNamePart = camelCase(singularModelName);
+      var mutationTypePart = pascalCase(mutationType);
+      return '' + modelNamePart + mutationTypePart;
     }
 
     function permissionName(permission, answers) {
@@ -180,6 +192,8 @@ function setup(generatorSetup) {
         return componentFileName.apply(undefined, args);
       case 'componentPath':
         return componentPath.apply(undefined, args);
+      case 'typeName':
+        return typeName.apply(undefined, args);
       case 'pascalModelName':
         return pascalModelName.apply(undefined, args);
       case 'camelModelName':

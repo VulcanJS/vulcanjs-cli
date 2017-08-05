@@ -24,7 +24,7 @@ module.exports = class extends VulcanGenerator {
       this.props = {
         packageName: this._finalize('packageName', answers),
         modelName: this._finalize('modelName', answers),
-        typeName: this._finalize('pascalModelName', answers),
+        typeName: this._finalize('typeName', answers),
       };
     });
   }

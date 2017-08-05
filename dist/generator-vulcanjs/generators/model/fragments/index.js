@@ -45,7 +45,7 @@ module.exports = function (_VulcanGenerator) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
           modelName: _this2._finalize('modelName', answers),
-          typeName: _this2._finalize('pascalModelName', answers)
+          typeName: _this2._finalize('typeName', answers)
         };
       });
     }

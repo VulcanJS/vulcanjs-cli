@@ -57,18 +57,18 @@ var errors = {
   notVulcan: 'This is not a Vulcan.js project directory. \nYou cannot run Vulcan.js generators outside of a Vulcan.js project directory.',
   isVulcan: 'You are already in a Vulcan.js project directory. \nYou may not run this command inside a Vulcan.js project directory.',
   notPackageExists: function notPackageExists(packageName) {
-    return 'The package ' + packageName + ' does not exist. \nIf you\'d like to work on this package, you should create it first by running: ' + chalk.green('vulcanjs g package ' + packageName);
+    return 'The package ' + packageName + ' does not exist. \nIf you\'d like to work on this package, you should create it first by running: ' + chalk.green('vulcan g package ' + packageName);
   },
   isPackageExists: function isPackageExists(packageName) {
     return 'A package with the name: \'' + packageName + '\' already exists.';
   },
   notModelExists: function notModelExists(packageName, modelName) {
-    return 'A model with the name: \'' + modelName + '\' under the package \'' + packageName + '\' does not exist. \nIf you\'d like to work on this model, you should first run ' + chalk.green('vulcanjs g model ' + packageName + ' ' + modelName) + '.';
+    return 'A model with the name: \'' + modelName + '\' under the package \'' + packageName + '\' does not exist. \nIf you\'d like to work on this model, you should first run ' + chalk.green('vulcan g model ' + packageName + ' ' + modelName) + '.';
   },
   isModelExists: function isModelExists(packageName, modelName) {
     return 'A model with the name \'' + modelName + '\' under the package \'' + packageName + '\' already exists.';
   },
-  isZeroPackages: 'The command you just ran requires at least 1 custom package to be present in your app. \nTo create a package, run ' + chalk.green('vulcanjs g package'),
+  isZeroPackages: 'The command you just ran requires at least 1 custom package to be present in your app. \nTo create a package, run ' + chalk.green('vulcan g package'),
   hasZeroModels: function hasZeroModels(packageName) {
     return 'The package \'' + packageName + ' has no models.)}';
   },

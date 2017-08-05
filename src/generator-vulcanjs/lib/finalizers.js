@@ -3,6 +3,7 @@ const camelCase = require('camelcase');
 const filter = require('./filters').filter;
 const store = require('./store');
 const flatten = require('lodash/flatten');
+const pluralize = require('pluralize');
 
 const arrayToEjsString = (arr) => {
   const quotedList = arr.map((elem) => `'${elem}'`);
@@ -65,6 +66,18 @@ function setup (generatorSetup) {
       return pascalCase(modelNameRaw);
     }
 
+    function typeName (answers) {
+      const modelNameRaw = getRaw('modelName', answers);
+      const singularModelName = pluralize.singular(modelNameRaw);
+      return pascalCase(singularModelName);
+    }
+
+    function collectionName (answers) {
+      const modelNameRaw = getRaw('modelName', answers);
+      const pluralModelName = pluralize.plural(modelNameRaw);
+      return pascalCase(pluralModelName);
+    }
+
     function camelModelName (answers) {
       const modelNameRaw = getRaw('modelName', answers);
       return camelCase(modelNameRaw);
@@ -74,13 +87,12 @@ function setup (generatorSetup) {
       return Object.keys(answers.modelParts);
     }
 
-    function collectionName (answers) {
-      return pascalModelName(answers);
-    }
-
     function mutationName (mutationType, answers) {
-      const modelNamePart = camelModelName(answers);
-      return `${modelNamePart}${mutationType}`;
+      const modelNameRaw = getRaw('modelName', answers);
+      const singularModelName = pluralize.singular(modelNameRaw);
+      const modelNamePart = camelCase(singularModelName);
+      const mutationTypePart = pascalCase(mutationType);
+      return `${modelNamePart}${mutationTypePart}`;
     }
 
     function permissionName (permission, answers) {
@@ -166,6 +178,7 @@ function setup (generatorSetup) {
       case 'componentName' : return componentName(...args);
       case 'componentFileName' : return componentFileName(...args);
       case 'componentPath' : return componentPath(...args);
+      case 'typeName' : return typeName(...args);
       case 'pascalModelName' : return pascalModelName(...args);
       case 'camelModelName' : return camelModelName(...args);
       case 'collectionName' : return collectionName(...args);

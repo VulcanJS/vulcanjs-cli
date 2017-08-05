@@ -49,11 +49,11 @@ module.exports = function (_VulcanGenerator) {
           newMutationName: _this2._finalize('mutationName', 'new', answers),
           editMutationName: _this2._finalize('mutationName', 'edit', answers),
           removeMutationName: _this2._finalize('mutationName', 'remove', answers),
-          newPermission: _this2._finalize('mutationName', ['new'], answers),
-          editOwnPermission: _this2._finalize('mutationName', ['edit', 'own'], answers),
-          editAllPermission: _this2._finalize('mutationName', ['edit', 'all'], answers),
-          removeOwnPermission: _this2._finalize('mutationName', ['remove', 'own'], answers),
-          removeAllPermission: _this2._finalize('mutationName', ['remove', 'all'], answers)
+          newPermission: _this2._finalize('permissionName', ['new'], answers),
+          editOwnPermission: _this2._finalize('permissionName', ['edit', 'own'], answers),
+          editAllPermission: _this2._finalize('permissionName', ['edit', 'all'], answers),
+          removeOwnPermission: _this2._finalize('permissionName', ['remove', 'own'], answers),
+          removeAllPermission: _this2._finalize('permissionName', ['remove', 'all'], answers)
         };
       });
     }
