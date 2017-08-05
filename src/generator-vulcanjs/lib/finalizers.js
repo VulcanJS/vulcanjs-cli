@@ -107,15 +107,15 @@ function setup (generatorSetup) {
     function addRouteStatement (answers) {
       const routeName = getRaw('routeName', answers);
       const routePath = getRaw('routePath', answers);
-      // const layoutName = getRaw('layoutName', answers);
+      const layoutName = getRaw('layoutName', answers);
       const routeComponentName = componentName(answers);
+      const layoutNameKeyValuePair = layoutName ? `layoutName: '${layoutName}',` : '';
       return `addRoute({
         name: '${routeName}',
         path: '${routePath}',
         componentName: '${routeComponentName}',
+        ${layoutNameKeyValuePair}
       });`;
-
-      // layoutName: '${layoutName}',
     }
 
     function prettyPackage (inputPackageName, id) {

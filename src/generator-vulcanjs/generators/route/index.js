@@ -13,7 +13,7 @@ module.exports = class extends VulcanGenerator {
       'routeName',
       'routePath',
       'componentName',
-      // 'layoutName'
+      'layoutName'
     );
   }
 
@@ -25,7 +25,7 @@ module.exports = class extends VulcanGenerator {
       'routeName',
       'routePath',
       'componentName',
-      // 'layoutName'
+      'layoutName'
       // ,'parentRoute'
     );
     return this.prompt(questions)
@@ -35,7 +35,7 @@ module.exports = class extends VulcanGenerator {
         componentName: this._finalize('componentName', answers),
         routeName: this._finalize('raw', 'routeName', answers),
         routePath: this._finalize('raw', 'routePath', answers),
-        // layoutName: this._finalize('raw', 'layoutName', answers),
+        layoutName: this._finalize('raw', 'layoutName', answers),
         addRouteStatement: this._finalize('addRouteStatement', answers),
       };
     });

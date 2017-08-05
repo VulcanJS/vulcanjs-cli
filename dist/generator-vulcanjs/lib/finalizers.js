@@ -109,11 +109,10 @@ function setup(generatorSetup) {
     function addRouteStatement(answers) {
       var routeName = getRaw('routeName', answers);
       var routePath = getRaw('routePath', answers);
-      // const layoutName = getRaw('layoutName', answers);
+      var layoutName = getRaw('layoutName', answers);
       var routeComponentName = componentName(answers);
-      return 'addRoute({\n        name: \'' + routeName + '\',\n        path: \'' + routePath + '\',\n        componentName: \'' + routeComponentName + '\',\n      });';
-
-      // layoutName: '${layoutName}',
+      var layoutNameKeyValuePair = layoutName ? 'layoutName: \'' + layoutName + '\',' : '';
+      return 'addRoute({\n        name: \'' + routeName + '\',\n        path: \'' + routePath + '\',\n        componentName: \'' + routeComponentName + '\',\n        ' + layoutNameKeyValuePair + '\n      });';
     }
 
     function prettyPackage(inputPackageName, id) {

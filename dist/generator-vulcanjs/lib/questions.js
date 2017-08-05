@@ -303,8 +303,7 @@ function setup(generatorSetup) {
         name: 'layoutName',
         message: uiText.messages.layoutName,
         when: _when('layoutName'),
-        validate: validations.assertNonEmpty,
-        default: options.layoutName || 'Components.Layout'
+        default: options.layoutName
       };
     }
 

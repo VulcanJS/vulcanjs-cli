@@ -298,8 +298,7 @@ function setup (generatorSetup) {
         name: 'layoutName',
         message: uiText.messages.layoutName,
         when: when('layoutName'),
-        validate: validations.assertNonEmpty,
-        default: options.layoutName || 'Components.Layout',
+        default: options.layoutName,
       };
     }
 
