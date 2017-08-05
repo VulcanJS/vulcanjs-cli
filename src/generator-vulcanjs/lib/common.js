@@ -27,7 +27,7 @@ const reactExtensions = ['jsx', 'js'];
 
 const packageManagers = ['yarn', 'npm'];
 
-const visitorTypes = ['guests', 'members', 'admins'];
+const visitorTypes = ['Guests', 'Members', 'Admins'];
 
 const schemaPropertyTypes = ['String', 'Number', 'Array', 'Object', 'Custom'];
 

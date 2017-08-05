@@ -29,7 +29,7 @@ var reactExtensions = ['jsx', 'js'];
 
 var packageManagers = ['yarn', 'npm'];
 
-var visitorTypes = ['guests', 'members', 'admins'];
+var visitorTypes = ['Guests', 'Members', 'Admins'];
 
 var schemaPropertyTypes = ['String', 'Number', 'Array', 'Object', 'Custom'];
 

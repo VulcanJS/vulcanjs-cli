@@ -23,7 +23,7 @@ function setup (generatorSetup) {
     }
 
     function permissionTo (permissionType, answers) {
-      const permissionsArr = answers[permissionType];
+      const permissionsArr = answers[permissionType].map((s) => s.toLowerCase());
       return arrayToEjsString(permissionsArr);
     }
 
