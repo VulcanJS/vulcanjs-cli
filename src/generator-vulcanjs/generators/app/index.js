@@ -36,8 +36,6 @@ module.exports = class extends VulcanGenerator {
     this.spawnCommandSync('git', [
       'clone',
       'https://github.com/Vulcanjs/Vulcan',
-      '--depth',
-      '1',
       this.props.appName,
     ]);
     this.destinationRoot(

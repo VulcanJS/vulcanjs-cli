@@ -56,7 +56,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this.log(chalk.green('\nPulling the most up to date git repository... \n'));
-      this.spawnCommandSync('git', ['clone', 'https://github.com/Vulcanjs/Vulcan', '--depth', '1', this.props.appName]);
+      this.spawnCommandSync('git', ['clone', 'https://github.com/Vulcanjs/Vulcan', this.props.appName]);
       this.destinationRoot(this.destinationPath(this.props.appName));
       this.installDependencies({
         npm: this.props.packageManager === 'npm',
