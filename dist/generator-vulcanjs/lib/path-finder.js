@@ -56,6 +56,10 @@ function setup(generatorSetup) {
       return modelsPath(options, 'registered-components.js');
     }
 
+    function collectionsPath(options) {
+      return modelsPath(options, 'collections.js');
+    }
+
     function routesPath(options) {
       return modelsPath(options, 'routes.js');
     }
@@ -155,6 +159,8 @@ function setup(generatorSetup) {
         return modelsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'registeredComponents':
         return registeredComponentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'collections':
+        return collectionsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'model':
         return modelPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'components':

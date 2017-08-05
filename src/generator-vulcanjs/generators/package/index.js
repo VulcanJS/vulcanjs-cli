@@ -106,6 +106,17 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
+  _writeCollections () {
+    this.fs.copyTpl(
+      this.templatePath('collections.js'),
+      this._getPath(
+        { isAbsolute: true },
+        'collections'
+      ),
+      this.props
+    );
+  }
+
   _writeRoutes () {
     this.fs.copyTpl(
       this.templatePath('routes.js'),
@@ -139,6 +150,7 @@ module.exports = class extends VulcanGenerator {
     // this._writeTestsIndex();
     this._writeRegisteredComponents();
     this._writeRoutes();
+    this._writeCollections();
   }
 
   end () {
