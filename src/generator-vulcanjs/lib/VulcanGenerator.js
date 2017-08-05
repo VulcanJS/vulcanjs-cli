@@ -22,9 +22,9 @@ module.exports = class VulcanGenerator extends Generator {
     }
     this.registerTransformStream(
       beautify({
-		indent_size: 2,
-		brace_style: "collapse,preserve-inline",
-	  })
+        indent_size: 2,
+        brace_style: 'collapse, preserve-inline',
+      })
     );
     this._assert = assertions.assert;
     this._registerOptions = optionsManager.setup(this);

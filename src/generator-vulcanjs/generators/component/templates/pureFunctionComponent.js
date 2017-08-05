@@ -1,7 +1,7 @@
 import React from 'react';
 <%if (isRegister) { %><% include ./partials/registerComponentImport.js -%><%} -%>
 
-const <%= componentName %> = ({}) => (
+const <%= componentName %> = () => (
   <div>
     Find me at <%= componentPath %>
   </div>

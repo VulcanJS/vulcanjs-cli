@@ -1,4 +1,5 @@
 const VulcanGenerator = require('../../lib/VulcanGenerator');
+const ast = require('../../lib/ast');
 
 module.exports = class extends VulcanGenerator {
   initializing () {
@@ -9,7 +10,7 @@ module.exports = class extends VulcanGenerator {
   _registerArguments () {
     this._registerOptions(
       'packageName',
-      'modelName',
+      // 'modelName',
       'componentName'
     );
   }
@@ -17,10 +18,10 @@ module.exports = class extends VulcanGenerator {
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithNumModelsList',
+      'packageNameList',
       'packageNameIfManual',
-      'modelNameList',
-      'modelNameIfManual',
+      // 'modelNameList',
+      // 'modelNameIfManual',
       'componentName',
       'componentType',
       'isRegisterComponent'
@@ -29,7 +30,7 @@ module.exports = class extends VulcanGenerator {
     .then((answers) => {
       this.props = {
         packageName: this._finalize('packageName', answers),
-        modelName: this._finalize('modelName', answers),
+        // modelName: this._finalize('modelName', answers),
         componentName: this._finalize('componentName', answers),
         componentFileName: this._finalize('componentFileName', answers),
         componentType: this._finalize('raw', 'componentType', answers),
@@ -47,16 +48,34 @@ module.exports = class extends VulcanGenerator {
       templatePath,
       this._getPath(
         { isAbsolute: true },
-        'modelInComponents',
+        'components',
         this.props.componentFileName
       ),
       this.props
     );
   }
 
+  _updateRegisteredComponents () {
+    if (!this.props.isRegister) return;
+    const registeredComponentsPath = this._getPath(
+      { isAbsolute: true },
+      'registeredComponents'
+    );
+    const fileText = this.fs.read(registeredComponentsPath);
+    const fileWithImportText = ast.addImportStatement(
+      fileText,
+      `../components/${this.props.componentFileName}`
+    );
+    this.fs.write(
+      registeredComponentsPath,
+      fileWithImportText
+    );
+  }
+
   writing () {
     if (!this._canWrite()) { return; }
     this._writeComponent();
+    this._updateRegisteredComponents();
   }
 
   end () {

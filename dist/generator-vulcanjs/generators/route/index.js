@@ -29,7 +29,9 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName', 'routeName', 'routePath', 'componentName', 'layoutName');
+      this._registerOptions('packageName', 'routeName', 'routePath', 'componentName'
+      // 'layoutName'
+      );
     }
   }, {
     key: 'prompting',
@@ -39,7 +41,8 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameList', 'packageNameIfManual', 'routeName', 'routePath', 'componentName', 'layoutName'
+      var questions = this._getQuestions('packageNameList', 'packageNameIfManual', 'routeName', 'routePath', 'componentName'
+      // 'layoutName'
       // ,'parentRoute'
       );
       return this.prompt(questions).then(function (answers) {
@@ -48,7 +51,7 @@ module.exports = function (_VulcanGenerator) {
           componentName: _this2._finalize('componentName', answers),
           routeName: _this2._finalize('raw', 'routeName', answers),
           routePath: _this2._finalize('raw', 'routePath', answers),
-          layoutName: _this2._finalize('raw', 'layoutName', answers),
+          // layoutName: this._finalize('raw', 'layoutName', answers),
           addRouteStatement: _this2._finalize('addRouteStatement', answers)
         };
       });

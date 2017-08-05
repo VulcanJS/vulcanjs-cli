@@ -38,7 +38,7 @@ function setup (generatorSetup) {
     function modelsPath (options, ...args) {
       return libPath(
         options,
-        'models',
+        'modules',
         ...args
       );
     }
@@ -47,6 +47,13 @@ function setup (generatorSetup) {
       return modelsPath(
         options,
         'index.js'
+      );
+    }
+
+    function registeredComponentsPath (options) {
+      return modelsPath(
+        options,
+        'registered-components.js'
       );
     }
 
@@ -143,6 +150,7 @@ function setup (generatorSetup) {
       case 'models': return modelsPath(wrappedOptions, ...wrappedArgs);
       case 'packageTests': return packageTestsPath(wrappedOptions, ...wrappedArgs);
       case 'modelsIndex': return modelsIndexPath(wrappedOptions, ...wrappedArgs);
+      case 'registeredComponents': return registeredComponentsPath(wrappedOptions, ...wrappedArgs);
       case 'model': return modelPath(wrappedOptions, ...wrappedArgs);
       case 'components': return componentsPath(wrappedOptions, ...wrappedArgs);
       case 'modelTest': return modelTestPath(wrappedOptions, ...wrappedArgs);

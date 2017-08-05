@@ -83,18 +83,31 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_writeModelsIndex',
     value: function _writeModelsIndex() {
-      this.fs.copyTpl(this.templatePath('model.js'), this._getPath({ isAbsolute: true }, 'models', 'index.js'), this.props);
+      this.fs.copyTpl(this.templatePath('module.index.js'), this._getPath({ isAbsolute: true }, 'modelsIndex'), this.props);
+    }
+  }, {
+    key: '_writeRegisteredComponents',
+    value: function _writeRegisteredComponents() {
+      this.fs.copyTpl(this.templatePath('registered-components.js'), this._getPath({ isAbsolute: true }, 'registeredComponents'), this.props);
     }
   }, {
     key: '_writeRoutes',
     value: function _writeRoutes() {
       this.fs.copyTpl(this.templatePath('routes.js'), this._getPath({ isAbsolute: true }, 'routes'), this.props);
     }
-  }, {
-    key: '_writeTestsIndex',
-    value: function _writeTestsIndex() {
-      this.fs.copyTpl(this.templatePath('tests-index.js'), this._getPath({ isAbsolute: true }, 'packageTests', 'index.js'), this.props);
-    }
+
+    // _writeTestsIndex () {
+    //   this.fs.copyTpl(
+    //     this.templatePath('tests-index.js'),
+    //     this._getPath(
+    //       { isAbsolute: true },
+    //       'packageTests',
+    //       'index.js'
+    //     ),
+    //     this.props
+    //   );
+    // }
+
   }, {
     key: 'writing',
     value: function writing() {
@@ -106,7 +119,8 @@ module.exports = function (_VulcanGenerator) {
       this._writeServerMain();
       this._writeServerSeed();
       this._writeModelsIndex();
-      this._writeTestsIndex();
+      // this._writeTestsIndex();
+      this._writeRegisteredComponents();
       this._writeRoutes();
     }
   }, {

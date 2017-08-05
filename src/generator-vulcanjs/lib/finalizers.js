@@ -55,7 +55,7 @@ function setup (generatorSetup) {
     function componentPath (answers) {
       return generator._getPath(
         { isAbsolute: false },
-        'modelInComponents',
+        'components',
         componentFileName(answers)
       );
     }
@@ -112,7 +112,7 @@ function setup (generatorSetup) {
       return `addRoute({
         name: '${routeName}',
         path: '${routePath}',
-        component: '${routeComponentName}',
+        componentName: '${routeComponentName}',
       });`;
 
       // layoutName: '${layoutName}',

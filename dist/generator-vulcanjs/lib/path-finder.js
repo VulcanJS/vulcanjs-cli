@@ -45,11 +45,15 @@ function setup(generatorSetup) {
         args[_key6 - 1] = arguments[_key6];
       }
 
-      return libPath.apply(undefined, [options, 'models'].concat(args));
+      return libPath.apply(undefined, [options, 'modules'].concat(args));
     }
 
     function modelsIndexPath(options) {
       return modelsPath(options, 'index.js');
+    }
+
+    function registeredComponentsPath(options) {
+      return modelsPath(options, 'registered-components.js');
     }
 
     function routesPath(options) {
@@ -149,6 +153,8 @@ function setup(generatorSetup) {
         return packageTestsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modelsIndex':
         return modelsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'registeredComponents':
+        return registeredComponentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'model':
         return modelPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'components':

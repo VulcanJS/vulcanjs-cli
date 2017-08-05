@@ -57,7 +57,7 @@ function setup(generatorSetup) {
     }
 
     function componentPath(answers) {
-      return generator._getPath({ isAbsolute: false }, 'modelInComponents', componentFileName(answers));
+      return generator._getPath({ isAbsolute: false }, 'components', componentFileName(answers));
     }
 
     function pascalModelName(answers) {
@@ -111,7 +111,7 @@ function setup(generatorSetup) {
       var routePath = getRaw('routePath', answers);
       // const layoutName = getRaw('layoutName', answers);
       var routeComponentName = componentName(answers);
-      return 'addRoute({\n        name: \'' + routeName + '\',\n        path: \'' + routePath + '\',\n        component: \'' + routeComponentName + '\',\n      });';
+      return 'addRoute({\n        name: \'' + routeName + '\',\n        path: \'' + routePath + '\',\n        componentName: \'' + routeComponentName + '\',\n      });';
 
       // layoutName: '${layoutName}',
     }

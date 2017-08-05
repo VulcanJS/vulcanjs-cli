@@ -9,6 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var VulcanGenerator = require('../../lib/VulcanGenerator');
+var ast = require('../../lib/ast');
 
 module.exports = function (_VulcanGenerator) {
   _inherits(_class, _VulcanGenerator);
@@ -28,7 +29,9 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName', 'modelName', 'componentName');
+      this._registerOptions('packageName',
+      // 'modelName',
+      'componentName');
     }
   }, {
     key: 'prompting',
@@ -38,11 +41,14 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithNumModelsList', 'packageNameIfManual', 'modelNameList', 'modelNameIfManual', 'componentName', 'componentType', 'isRegisterComponent');
+      var questions = this._getQuestions('packageNameList', 'packageNameIfManual',
+      // 'modelNameList',
+      // 'modelNameIfManual',
+      'componentName', 'componentType', 'isRegisterComponent');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          modelName: _this2._finalize('modelName', answers),
+          // modelName: this._finalize('modelName', answers),
           componentName: _this2._finalize('componentName', answers),
           componentFileName: _this2._finalize('componentFileName', answers),
           componentType: _this2._finalize('raw', 'componentType', answers),
@@ -55,7 +61,16 @@ module.exports = function (_VulcanGenerator) {
     key: '_writeComponent',
     value: function _writeComponent() {
       var templatePath = this.props.componentType === 'pure' ? this.templatePath('pureFunctionComponent.js') : this.templatePath('classComponent.js');
-      this.fs.copyTpl(templatePath, this._getPath({ isAbsolute: true }, 'modelInComponents', this.props.componentFileName), this.props);
+      this.fs.copyTpl(templatePath, this._getPath({ isAbsolute: true }, 'components', this.props.componentFileName), this.props);
+    }
+  }, {
+    key: '_updateRegisteredComponents',
+    value: function _updateRegisteredComponents() {
+      if (!this.props.isRegister) return;
+      var registeredComponentsPath = this._getPath({ isAbsolute: true }, 'registeredComponents');
+      var fileText = this.fs.read(registeredComponentsPath);
+      var fileWithImportText = ast.addImportStatement(fileText, '../components/' + this.props.componentFileName);
+      this.fs.write(registeredComponentsPath, fileWithImportText);
     }
   }, {
     key: 'writing',
@@ -64,6 +79,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writeComponent();
+      this._updateRegisteredComponents();
     }
   }, {
     key: 'end',

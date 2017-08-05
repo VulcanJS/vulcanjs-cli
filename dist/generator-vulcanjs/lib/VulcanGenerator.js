@@ -37,7 +37,7 @@ module.exports = function (_Generator) {
     }
     _this.registerTransformStream(beautify({
       indent_size: 2,
-      brace_style: "collapse,preserve-inline"
+      brace_style: 'collapse, preserve-inline'
     }));
     _this._assert = assertions.assert;
     _this._registerOptions = optionsManager.setup(_this);
