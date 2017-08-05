@@ -35,7 +35,7 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelsPath (options, ...args) {
+    function modulesPath (options, ...args) {
       return libPath(
         options,
         'modules',
@@ -43,29 +43,38 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelsIndexPath (options) {
+    function modelsPath (options, ...args) {
+      return modulesPath(
+        options,
+        'models',
+        ...args
+      );
+    }
+
+    function modelsIndexPath (options, ...args) {
       return modelsPath(
+        options,
+        'index.js',
+        ...args
+      );
+    }
+
+    function modulesIndexPath (options) {
+      return modulesPath(
         options,
         'index.js'
       );
     }
 
     function registeredComponentsPath (options) {
-      return modelsPath(
+      return modulesPath(
         options,
         'registered-components.js'
       );
     }
 
-    function collectionsPath (options) {
-      return modelsPath(
-        options,
-        'collections.js'
-      );
-    }
-
     function routesPath (options) {
-      return modelsPath(
+      return modulesPath(
         options,
         'routes.js'
       );
@@ -155,10 +164,11 @@ function setup (generatorSetup) {
       case 'package': return packagePath(wrappedOptions, ...wrappedArgs);
       case 'lib': return libPath(wrappedOptions, ...wrappedArgs);
       case 'models': return modelsPath(wrappedOptions, ...wrappedArgs);
+      case 'modules': return modulesPath(wrappedOptions, ...wrappedArgs);
       case 'packageTests': return packageTestsPath(wrappedOptions, ...wrappedArgs);
+      case 'modulesIndex': return modulesIndexPath(wrappedOptions, ...wrappedArgs);
       case 'modelsIndex': return modelsIndexPath(wrappedOptions, ...wrappedArgs);
       case 'registeredComponents': return registeredComponentsPath(wrappedOptions, ...wrappedArgs);
-      case 'collections': return collectionsPath(wrappedOptions, ...wrappedArgs);
       case 'model': return modelPath(wrappedOptions, ...wrappedArgs);
       case 'components': return componentsPath(wrappedOptions, ...wrappedArgs);
       case 'modelTest': return modelTestPath(wrappedOptions, ...wrappedArgs);

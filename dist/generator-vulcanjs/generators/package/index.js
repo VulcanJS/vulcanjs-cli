@@ -81,9 +81,9 @@ module.exports = function (_VulcanGenerator) {
       this.fs.copyTpl(this.templatePath('seed.js'), this._getPath({ isAbsolute: true }, 'server', 'seed.js'), this.props);
     }
   }, {
-    key: '_writeModelsIndex',
-    value: function _writeModelsIndex() {
-      this.fs.copyTpl(this.templatePath('module.index.js'), this._getPath({ isAbsolute: true }, 'modelsIndex'), this.props);
+    key: '_writeModulesIndex',
+    value: function _writeModulesIndex() {
+      this.fs.copyTpl(this.templatePath('modules.index.js'), this._getPath({ isAbsolute: true }, 'modulesIndex'), this.props);
     }
   }, {
     key: '_writeRegisteredComponents',
@@ -91,9 +91,9 @@ module.exports = function (_VulcanGenerator) {
       this.fs.copyTpl(this.templatePath('registered-components.js'), this._getPath({ isAbsolute: true }, 'registeredComponents'), this.props);
     }
   }, {
-    key: '_writeCollections',
-    value: function _writeCollections() {
-      this.fs.copyTpl(this.templatePath('collections.js'), this._getPath({ isAbsolute: true }, 'collections'), this.props);
+    key: '_writeModelsIndex',
+    value: function _writeModelsIndex() {
+      this.fs.copyTpl(this.templatePath('models.index.js'), this._getPath({ isAbsolute: true }, 'modelsIndex'), this.props);
     }
   }, {
     key: '_writeRoutes',
@@ -123,11 +123,11 @@ module.exports = function (_VulcanGenerator) {
       this._writeClientMain();
       this._writeServerMain();
       this._writeServerSeed();
-      this._writeModelsIndex();
+      this._writeModulesIndex();
       // this._writeTestsIndex();
       this._writeRegisteredComponents();
       this._writeRoutes();
-      this._writeCollections();
+      this._writeModelsIndex();
     }
   }, {
     key: 'end',

@@ -94,12 +94,12 @@ module.exports = function (_VulcanGenerator) {
       this.fs.copyTpl(this.templatePath('generic-test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'collection.spec.js'), testProps);
     }
   }, {
-    key: '_updateCollections',
-    value: function _updateCollections() {
-      var collectionsPath = this._getPath({ isAbsolute: true }, 'collections');
-      var fileText = this.fs.read(collectionsPath);
+    key: '_updateModelsIndex',
+    value: function _updateModelsIndex() {
+      var modelsIndexPath = this._getPath({ isAbsolute: true }, 'modelsIndex');
+      var fileText = this.fs.read(modelsIndexPath);
       var fileWithImportText = ast.addImportStatement(fileText, './' + this.props.modelName + '/collection.js');
-      this.fs.write(collectionsPath, fileWithImportText);
+      this.fs.write(modelsIndexPath, fileWithImportText);
     }
   }, {
     key: 'writing',
@@ -108,7 +108,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writeCollection();
-      this._updateCollections();
+      this._updateModelsIndex();
       this._writeTestCollection();
     }
   }, {
