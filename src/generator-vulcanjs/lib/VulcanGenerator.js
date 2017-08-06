@@ -7,6 +7,7 @@ const storeFactory = require('./store');
 const pathFinder = require('./path-finder');
 const optionsManager = require('./optionsManager');
 const chalk = require('chalk');
+const gulpFilter = require('gulp-filter');
 
 let store;
 let errors;
@@ -20,12 +21,16 @@ module.exports = class VulcanGenerator extends Generator {
     if (!errors) {
       errors = assertions.errors;
     }
-    this.registerTransformStream(
-      beautify({
-        indent_size: 2,
-        brace_style: 'collapse, preserve-inline',
-      })
-    );
+    const beautified = beautify({
+      indent_size: 2,
+      brace_style: 'collapse, preserve-inline',
+    });
+    const jsxFilter = gulpFilter(['!**/*.jsx'], { restore: true });
+    this.registerTransformStream([
+      jsxFilter,
+      beautified,
+      jsxFilter.restore,
+    ]);
     this._assert = assertions.assert;
     this._registerOptions = optionsManager.setup(this);
     this._finalize = finalizers.setup(this);

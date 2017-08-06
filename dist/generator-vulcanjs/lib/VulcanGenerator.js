@@ -17,6 +17,7 @@ var storeFactory = require('./store');
 var pathFinder = require('./path-finder');
 var optionsManager = require('./optionsManager');
 var chalk = require('chalk');
+var gulpFilter = require('gulp-filter');
 
 var store = void 0;
 var errors = void 0;
@@ -35,10 +36,12 @@ module.exports = function (_Generator) {
     if (!errors) {
       errors = assertions.errors;
     }
-    _this.registerTransformStream(beautify({
+    var beautified = beautify({
       indent_size: 2,
       brace_style: 'collapse, preserve-inline'
-    }));
+    });
+    var jsxFilter = gulpFilter(['!**/*.jsx'], { restore: true });
+    _this.registerTransformStream([jsxFilter, beautified, jsxFilter.restore]);
     _this._assert = assertions.assert;
     _this._registerOptions = optionsManager.setup(_this);
     _this._finalize = finalizers.setup(_this);

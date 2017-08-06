@@ -36,6 +36,7 @@
     "esprima": "^4.0.0",
     "grunt": "^1.0.1",
     "gulp-beautify": "^2.0.1",
+    "gulp-filter": "^5.0.1",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
     "node-print": "^0.0.4",
