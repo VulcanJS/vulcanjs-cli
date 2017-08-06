@@ -38,13 +38,10 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('appName',
-      // 'reactExtension',
-      'packageManager');
+      var questions = this._getQuestions('appName', 'packageManager');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           appName: _this2._finalize('appName', answers),
-          // reactExtension: this._finalize('raw', 'reactExtension', answers),
           packageManager: _this2._finalize('raw', 'packageManager', answers)
         };
       });
@@ -73,10 +70,6 @@ module.exports = function (_VulcanGenerator) {
         type: 'SET_APP_NAME',
         appName: this.props.appName
       });
-      // this._dispatch({
-      //   type: 'SET_REACT_EXTENSION',
-      //   reactExtension: this.props.reactExtension,
-      // });
       this._dispatch({
         type: 'SET_PACKAGE_MANAGER',
         packageManager: this.props.packageManager
