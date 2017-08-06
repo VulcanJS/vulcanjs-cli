@@ -28,18 +28,18 @@ module.exports = class extends VulcanGenerator {
     });
   }
 
-  _updateCollections () {
-    const collectionsPath = this._getPath(
+  _updateModelsIndex () {
+    const modelsIndexPath = this._getPath(
       { isAbsolute: true },
-      'collections'
+      'modelsIndex'
     );
-    const fileText = this.fs.read(collectionsPath);
+    const fileText = this.fs.read(modelsIndexPath);
     const fileWithImportText = ast.removeImportStatement(
       fileText,
       `./${this.props.modelName}/collection.js`
     );
     this.fs.write(
-      collectionsPath,
+      modelsIndexPath,
       fileWithImportText
     );
   }
@@ -60,7 +60,7 @@ module.exports = class extends VulcanGenerator {
       modelName: this.props.modelName,
     });
     this._removeModelDir();
-    this._updateCollections();
+    this._updateModelsIndex();
     return this._commitStore();
   }
 
