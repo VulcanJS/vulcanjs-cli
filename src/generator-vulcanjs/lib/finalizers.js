@@ -29,6 +29,12 @@ function setup (generatorSetup) {
       return pascalCase(pluralModelName);
     }
 
+    function singularPascalModelName (answers) {
+      const modelNameRaw = getRaw('modelName', answers);
+      const pluralModelName = pluralize.singular(modelNameRaw);
+      return pascalCase(pluralModelName);
+    }
+
     function permissionTo (permissionType, answers) {
       const permissionsArr = answers[permissionType].map((s) => s.toLowerCase());
       return arrayToEjsString(permissionsArr);
@@ -73,9 +79,7 @@ function setup (generatorSetup) {
     }
 
     function typeName (answers) {
-      const modelNameRaw = getRaw('modelName', answers);
-      const singularModelName = pluralize.singular(modelNameRaw);
-      return pascalCase(singularModelName);
+      return singularPascalModelName(answers);
     }
 
     function collectionName (answers) {

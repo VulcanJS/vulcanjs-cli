@@ -33,6 +33,12 @@ function setup(generatorSetup) {
       return pascalCase(pluralModelName);
     }
 
+    function singularPascalModelName(answers) {
+      var modelNameRaw = getRaw('modelName', answers);
+      var pluralModelName = pluralize.singular(modelNameRaw);
+      return pascalCase(pluralModelName);
+    }
+
     function permissionTo(permissionType, answers) {
       var permissionsArr = answers[permissionType].map(function (s) {
         return s.toLowerCase();
@@ -75,9 +81,7 @@ function setup(generatorSetup) {
     }
 
     function typeName(answers) {
-      var modelNameRaw = getRaw('modelName', answers);
-      var singularModelName = pluralize.singular(modelNameRaw);
-      return pascalCase(singularModelName);
+      return singularPascalModelName(answers);
     }
 
     function collectionName(answers) {
