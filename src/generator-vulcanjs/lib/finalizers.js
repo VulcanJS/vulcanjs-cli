@@ -60,9 +60,20 @@ function setup (generatorSetup) {
       return filter('componentName', componentNameRaw);
     }
 
+    function containerName (answers) {
+      const componentNameRaw = getRaw('componentName', answers);
+      const filteredComponentName = filter('componentName', componentNameRaw);
+      return `${filteredComponentName}Container`;
+    }
+
     function componentFileName (answers) {
       const filteredComponentName = filter('componentName', answers.componentName);
       return `${filteredComponentName}.${store.get('reactExtension')}`;
+    }
+
+    function containerFileName (answers) {
+      const filteredComponentName = filter('componentName', answers.componentName);
+      return `${filteredComponentName}.js`;
     }
 
     function componentPath (answers) {
@@ -182,7 +193,9 @@ function setup (generatorSetup) {
       case 'modelName' : return modelName(...args);
       case 'modelParts': return modelParts(...args);
       case 'componentName' : return componentName(...args);
+      case 'containerName' : return containerName(...args);
       case 'componentFileName' : return componentFileName(...args);
+      case 'containerFileName' : return containerFileName(...args);
       case 'componentPath' : return componentPath(...args);
       case 'typeName' : return typeName(...args);
       case 'pascalModelName' : return pascalModelName(...args);

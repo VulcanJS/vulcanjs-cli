@@ -233,17 +233,30 @@ function setup(generatorSetup) {
         message: uiText.messages.componentType,
         choices: [{ name: 'Pure Function', value: 'pure' }, { name: 'Class Component', value: 'class' }],
         when: function when() {
-          return _when('appName');
+          return _when('componentType');
         }
       };
     }
 
-    function isRegisterComponent() {
+    function isContainer() {
+      return {
+        type: 'confirm',
+        name: 'isContainer',
+        message: uiText.messages.isContainer,
+        when: function when() {
+          return _when('isContainer');
+        }
+      };
+    }
+
+    function isRegister() {
       return {
         type: 'confirm',
         name: 'isRegister',
-        message: uiText.messages.isRegisterComponent,
-        when: _when('appName')
+        message: uiText.messages.isRegister,
+        when: function when(answers) {
+          return answers.isContainer && _when('isRegister');
+        }
       };
     }
 
@@ -488,8 +501,10 @@ function setup(generatorSetup) {
           return componentName();
         case 'componentType':
           return componentType();
-        case 'isRegisterComponent':
-          return isRegisterComponent();
+        case 'isRegister':
+          return isRegister();
+        case 'isContainer':
+          return isContainer();
         case 'defaultResolvers':
           return defaultResolvers();
         case 'isDelete':

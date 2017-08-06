@@ -29,9 +29,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName',
-      // 'modelName',
-      'componentName');
+      this._registerOptions('packageName', 'componentName');
     }
   }, {
     key: 'prompting',
@@ -41,17 +39,16 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameList', 'packageNameIfManual',
-      // 'modelNameList',
-      // 'modelNameIfManual',
-      'componentName', 'componentType', 'isRegisterComponent');
+      var questions = this._getQuestions('packageNameList', 'packageNameIfManual', 'componentName', 'componentType', 'isContainer', 'isRegister');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          // modelName: this._finalize('modelName', answers),
           componentName: _this2._finalize('componentName', answers),
+          containerName: _this2._finalize('containerName', answers),
           componentFileName: _this2._finalize('componentFileName', answers),
+          containerFileName: _this2._finalize('containerFileName', answers),
           componentType: _this2._finalize('raw', 'componentType', answers),
+          isContainer: _this2._finalize('raw', 'isContainer', answers),
           isRegister: _this2._finalize('raw', 'isRegister', answers)
         };
         _this2.props.componentPath = _this2._finalize('componentPath', answers);
@@ -64,13 +61,20 @@ module.exports = function (_VulcanGenerator) {
       this.fs.copyTpl(templatePath, this._getPath({ isAbsolute: true }, 'components', this.props.componentFileName), this.props);
     }
   }, {
-    key: '_updateComponentsIndex',
-    value: function _updateComponentsIndex() {
+    key: '_writeContainer',
+    value: function _writeContainer() {
+      if (!this.props.isContainer) return;
+      var templatePath = this.templatePath('container.js');
+      this.fs.copyTpl(templatePath, this._getPath({ isAbsolute: true }, 'containers', this.props.containerFileName), this.props);
+    }
+  }, {
+    key: '_updateContainersIndex',
+    value: function _updateContainersIndex() {
       if (!this.props.isRegister) return;
-      var componentsIndexPath = this._getPath({ isAbsolute: true }, 'componentsIndex');
-      var fileText = this.fs.read(componentsIndexPath);
-      var fileWithImportText = ast.addImportStatement(fileText, './' + this.props.componentFileName);
-      this.fs.write(componentsIndexPath, fileWithImportText);
+      var containersIndexPath = this._getPath({ isAbsolute: true }, 'containersIndex');
+      var fileText = this.fs.read(containersIndexPath);
+      var fileWithImportText = ast.addImportStatement(fileText, './' + this.props.containerFileName);
+      this.fs.write(containersIndexPath, fileWithImportText);
     }
   }, {
     key: 'writing',
@@ -79,7 +83,8 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writeComponent();
-      this._updateComponentsIndex();
+      this._writeContainer();
+      this._updateContainersIndex();
     }
   }, {
     key: 'end',

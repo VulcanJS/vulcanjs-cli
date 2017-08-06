@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-<%if (isRegister) { %><% include ./partials/registerComponentImport.js -%><%} -%>
 
 class <%= componentName %> extends Component {
   render() {
@@ -10,6 +9,5 @@ class <%= componentName %> extends Component {
     );
   }
 }
-<%if (isRegister) { %><% include ./partials/registerComponent.js -%><%} -%>
 
 export default <%= componentName %>;

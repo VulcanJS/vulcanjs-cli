@@ -66,9 +66,20 @@ function setup(generatorSetup) {
       return filter('componentName', componentNameRaw);
     }
 
+    function containerName(answers) {
+      var componentNameRaw = getRaw('componentName', answers);
+      var filteredComponentName = filter('componentName', componentNameRaw);
+      return filteredComponentName + 'Container';
+    }
+
     function componentFileName(answers) {
       var filteredComponentName = filter('componentName', answers.componentName);
       return filteredComponentName + '.' + store.get('reactExtension');
+    }
+
+    function containerFileName(answers) {
+      var filteredComponentName = filter('componentName', answers.componentName);
+      return filteredComponentName + '.js';
     }
 
     function componentPath(answers) {
@@ -194,8 +205,12 @@ function setup(generatorSetup) {
         return modelParts.apply(undefined, args);
       case 'componentName':
         return componentName.apply(undefined, args);
+      case 'containerName':
+        return containerName.apply(undefined, args);
       case 'componentFileName':
         return componentFileName.apply(undefined, args);
+      case 'containerFileName':
+        return containerFileName.apply(undefined, args);
       case 'componentPath':
         return componentPath.apply(undefined, args);
       case 'typeName':

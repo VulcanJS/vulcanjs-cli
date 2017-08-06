@@ -89,8 +89,16 @@ function setup (generatorSetup) {
       );
     }
 
-    function componentsIndexPath (options) {
-      return componentsPath(
+    function containersPath (options, ...args) {
+      return libPath(
+        options,
+        'containers',
+        ...args
+      );
+    }
+
+    function containersIndexPath (options) {
+      return containersPath(
         options,
         'index.js'
       );
@@ -168,9 +176,10 @@ function setup (generatorSetup) {
       case 'packageTests': return packageTestsPath(wrappedOptions, ...wrappedArgs);
       case 'modulesIndex': return modulesIndexPath(wrappedOptions, ...wrappedArgs);
       case 'modelsIndex': return modelsIndexPath(wrappedOptions, ...wrappedArgs);
-      case 'componentsIndex': return componentsIndexPath(wrappedOptions, ...wrappedArgs);
+      case 'containersIndex': return containersIndexPath(wrappedOptions, ...wrappedArgs);
       case 'model': return modelPath(wrappedOptions, ...wrappedArgs);
       case 'components': return componentsPath(wrappedOptions, ...wrappedArgs);
+      case 'containers': return containersPath(wrappedOptions, ...wrappedArgs);
       case 'modelTest': return modelTestPath(wrappedOptions, ...wrappedArgs);
       case 'packageStories': return packageStoriesPath(wrappedOptions, ...wrappedArgs);
       case 'modelInComponents': return modelInComponentsPath(wrappedOptions, ...wrappedArgs);

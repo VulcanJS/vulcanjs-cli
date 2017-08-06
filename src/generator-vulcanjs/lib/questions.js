@@ -235,16 +235,25 @@ function setup (generatorSetup) {
           { name: 'Pure Function', value: 'pure' },
           { name: 'Class Component', value: 'class' },
         ],
-        when: () => when('appName'),
+        when: () => when('componentType'),
       };
     }
 
-    function isRegisterComponent () {
+    function isContainer () {
+      return {
+        type: 'confirm',
+        name: 'isContainer',
+        message: uiText.messages.isContainer,
+        when: () => when('isContainer'),
+      };
+    }
+
+    function isRegister () {
       return {
         type: 'confirm',
         name: 'isRegister',
-        message: uiText.messages.isRegisterComponent,
-        when: when('appName'),
+        message: uiText.messages.isRegister,
+        when: (answers) => answers.isContainer && when('isRegister'),
       };
     }
 
@@ -450,7 +459,8 @@ function setup (generatorSetup) {
         case 'modelNameWithManualList': return modelNameList({ isManual: true });
         case 'componentName': return componentName();
         case 'componentType': return componentType();
-        case 'isRegisterComponent': return isRegisterComponent();
+        case 'isRegister': return isRegister();
+        case 'isContainer': return isContainer();
         case 'defaultResolvers': return defaultResolvers();
         case 'isDelete': return isDelete();
         case 'routeName': return routeName();

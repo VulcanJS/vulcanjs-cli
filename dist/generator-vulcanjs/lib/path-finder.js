@@ -88,45 +88,53 @@ function setup(generatorSetup) {
       return libPath.apply(undefined, [options, 'components'].concat(args));
     }
 
-    function componentsIndexPath(options) {
-      return componentsPath(options, 'index.js');
+    function containersPath(options) {
+      for (var _len11 = arguments.length, args = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
+        args[_key11 - 1] = arguments[_key11];
+      }
+
+      return libPath.apply(undefined, [options, 'containers'].concat(args));
+    }
+
+    function containersIndexPath(options) {
+      return containersPath(options, 'index.js');
     }
 
     function packageTestsPath(options) {
-      for (var _len11 = arguments.length, args = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
-        args[_key11 - 1] = arguments[_key11];
+      for (var _len12 = arguments.length, args = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
+        args[_key12 - 1] = arguments[_key12];
       }
 
       return packagePath.apply(undefined, [options, 'tests'].concat(args));
     }
 
     function modelTestsPath(options) {
-      for (var _len12 = arguments.length, args = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
-        args[_key12 - 1] = arguments[_key12];
+      for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
+        args[_key13 - 1] = arguments[_key13];
       }
 
       return packageTestsPath.apply(undefined, [options, 'models'].concat(args));
     }
 
     function modelTestPath(options) {
-      for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
-        args[_key13 - 1] = arguments[_key13];
+      for (var _len14 = arguments.length, args = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
+        args[_key14 - 1] = arguments[_key14];
       }
 
       return modelTestsPath.apply(undefined, [options, generator.props.modelName].concat(args));
     }
 
     function packageStoriesPath(options) {
-      for (var _len14 = arguments.length, args = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
-        args[_key14 - 1] = arguments[_key14];
+      for (var _len15 = arguments.length, args = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
+        args[_key15 - 1] = arguments[_key15];
       }
 
       return componentsPath.apply(undefined, [options, '.stories.js'].concat(args));
     }
 
     function modelInComponentsPath(options) {
-      for (var _len15 = arguments.length, args = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
-        args[_key15 - 1] = arguments[_key15];
+      for (var _len16 = arguments.length, args = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
+        args[_key16 - 1] = arguments[_key16];
       }
 
       return componentsPath.apply(undefined, [options, generator.props.modelName].concat(args));
@@ -137,16 +145,16 @@ function setup(generatorSetup) {
     }
 
     function clientPath(options) {
-      for (var _len16 = arguments.length, args = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
-        args[_key16 - 1] = arguments[_key16];
+      for (var _len17 = arguments.length, args = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
+        args[_key17 - 1] = arguments[_key17];
       }
 
       return libPath.apply(undefined, [options, 'client'].concat(args));
     }
 
     function serverPath(options) {
-      for (var _len17 = arguments.length, args = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
-        args[_key17 - 1] = arguments[_key17];
+      for (var _len18 = arguments.length, args = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
+        args[_key18 - 1] = arguments[_key18];
       }
 
       return libPath.apply(undefined, [options, 'server'].concat(args));
@@ -173,12 +181,14 @@ function setup(generatorSetup) {
         return modulesIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modelsIndex':
         return modelsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'componentsIndex':
-        return componentsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'containersIndex':
+        return containersIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'model':
         return modelPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'components':
         return componentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'containers':
+        return containersPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modelTest':
         return modelTestPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'packageStories':
