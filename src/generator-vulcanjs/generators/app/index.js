@@ -21,15 +21,11 @@ module.exports = class extends VulcanGenerator {
     }
     const questions = this._getQuestions(
       'appName',
-      // 'doShallowClone',
-      // 'reactExtension',
       'packageManager'
       );
     return this.prompt(questions).then((answers) => {
       this.props = {
         appName: this._finalize('appName', answers),
-        // reactExtension: this._finalize('raw', 'reactExtension', answers),
-        // doShallowClone: this._finalize('raw', 'doShallowClone', answers),
         packageManager: this._finalize('raw', 'packageManager', answers),
       };
     });
