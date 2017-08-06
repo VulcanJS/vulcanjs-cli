@@ -29,7 +29,7 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this.destinationRoot(
-      this.destinationPath(this.props.appName)
+      this.destinationPath()
     );
     this._dispatch({
       type: 'SET_IS_VULCAN_TRUE',
