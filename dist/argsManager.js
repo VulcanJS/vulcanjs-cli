@@ -12,9 +12,7 @@ const recognizedActions = {
   list: 'list',
   l: 'list',
   i: 'init',
-  init: 'init',
-  un: 'unshallow',
-  unshallow: 'unshallow'
+  init: 'init'
 };
 
 const genericProcessor = args => {
@@ -43,8 +41,7 @@ const argsProcessors = {
   generate: genericProcessor,
   remove: genericProcessor,
   list: genericProcessor,
-  create: createProcessor,
-  unshallow: genericProcessor
+  create: createProcessor
 };
 
 function usage() {
@@ -58,7 +55,6 @@ function usage() {
   console.log(chalk.grey('\nProject initialisation'));
   console.log('  vulcan create <appName>');
   console.log('  vulcan init <appName>');
-  console.log('  vulcan unshallow ');
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
   console.log('  vulcan (generate|g) model <packageName> <modelName>');
