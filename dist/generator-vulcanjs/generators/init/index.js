@@ -26,7 +26,7 @@ module.exports = class extends VulcanGenerator {
     if (!this._canWrite()) {
       return;
     }
-    this.destinationRoot(this.destinationPath(this.props.appName));
+    this.destinationRoot(this.destinationPath());
     this._dispatch({
       type: 'SET_IS_VULCAN_TRUE'
     });
