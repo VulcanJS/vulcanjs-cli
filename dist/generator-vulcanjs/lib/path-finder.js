@@ -68,10 +68,6 @@ function setup(generatorSetup) {
       return modulesPath(options, 'index.js');
     }
 
-    function registeredComponentsPath(options) {
-      return modulesPath(options, 'registered-components.js');
-    }
-
     function routesPath(options) {
       return modulesPath(options, 'routes.js');
     }
@@ -90,6 +86,10 @@ function setup(generatorSetup) {
       }
 
       return libPath.apply(undefined, [options, 'components'].concat(args));
+    }
+
+    function componentsIndexPath(options) {
+      return componentsPath(options, 'index.js');
     }
 
     function packageTestsPath(options) {
@@ -173,8 +173,8 @@ function setup(generatorSetup) {
         return modulesIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modelsIndex':
         return modelsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'registeredComponents':
-        return registeredComponentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'componentsIndex':
+        return componentsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'model':
         return modelPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'components':

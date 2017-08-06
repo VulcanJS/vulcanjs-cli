@@ -27,6 +27,12 @@ function setup(generatorSetup) {
       return generator.options[keyBeforeRaw] || generator.props[keyBeforeRaw] || answers[keyBeforeRaw];
     }
 
+    function pluralPascalModelName(answers) {
+      var modelNameRaw = getRaw('modelName', answers);
+      var pluralModelName = pluralize.plural(modelNameRaw);
+      return pascalCase(pluralModelName);
+    }
+
     function permissionTo(permissionType, answers) {
       var permissionsArr = answers[permissionType].map(function (s) {
         return s.toLowerCase();
@@ -75,9 +81,7 @@ function setup(generatorSetup) {
     }
 
     function collectionName(answers) {
-      var modelNameRaw = getRaw('modelName', answers);
-      var pluralModelName = pluralize.plural(modelNameRaw);
-      return pascalCase(pluralModelName);
+      return pluralPascalModelName(answers);
     }
 
     function camelModelName(answers) {
@@ -90,17 +94,15 @@ function setup(generatorSetup) {
     }
 
     function mutationName(mutationType, answers) {
-      var modelNameRaw = getRaw('modelName', answers);
-      var singularModelName = pluralize.singular(modelNameRaw);
-      var modelNamePart = camelCase(singularModelName);
+      var modelNamePart = pluralPascalModelName(answers);
       var mutationTypePart = pascalCase(mutationType);
       return '' + modelNamePart + mutationTypePart;
     }
 
     function permissionName(permission, answers) {
-      var camelModelNamePart = camelModelName(answers);
+      var modelNamePart = pluralPascalModelName(answers);
       var permissionAppendage = permission.join('.');
-      return camelModelNamePart + '.' + permissionAppendage;
+      return modelNamePart + '.' + permissionAppendage;
     }
 
     function vulcanDependencies(answers) {
@@ -111,8 +113,8 @@ function setup(generatorSetup) {
     }
 
     function resolverName(resolverType, answers) {
-      var resolverNamePart = camelModelName(answers);
-      return '' + resolverNamePart + resolverType;
+      var modelNamePart = pluralPascalModelName(answers);
+      return '' + modelNamePart + resolverType;
     }
 
     function hasResolver(resolverType, answers) {

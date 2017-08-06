@@ -97,7 +97,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writeSchema();
-      this._writeTestSchema();
+      // this._writeTestSchema();
     }
   }, {
     key: 'end',

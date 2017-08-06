@@ -23,6 +23,12 @@ function setup (generatorSetup) {
       );
     }
 
+    function pluralPascalModelName (answers) {
+      const modelNameRaw = getRaw('modelName', answers);
+      const pluralModelName = pluralize.plural(modelNameRaw);
+      return pascalCase(pluralModelName);
+    }
+
     function permissionTo (permissionType, answers) {
       const permissionsArr = answers[permissionType].map((s) => s.toLowerCase());
       return arrayToEjsString(permissionsArr);
@@ -73,9 +79,7 @@ function setup (generatorSetup) {
     }
 
     function collectionName (answers) {
-      const modelNameRaw = getRaw('modelName', answers);
-      const pluralModelName = pluralize.plural(modelNameRaw);
-      return pascalCase(pluralModelName);
+      return pluralPascalModelName(answers);
     }
 
     function camelModelName (answers) {
@@ -88,17 +92,15 @@ function setup (generatorSetup) {
     }
 
     function mutationName (mutationType, answers) {
-      const modelNameRaw = getRaw('modelName', answers);
-      const singularModelName = pluralize.singular(modelNameRaw);
-      const modelNamePart = camelCase(singularModelName);
+      const modelNamePart = pluralPascalModelName(answers);
       const mutationTypePart = pascalCase(mutationType);
       return `${modelNamePart}${mutationTypePart}`;
     }
 
     function permissionName (permission, answers) {
-      const camelModelNamePart = camelModelName(answers);
+      const modelNamePart = pluralPascalModelName(answers);
       const permissionAppendage = permission.join('.');
-      return `${camelModelNamePart}.${permissionAppendage}`;
+      return `${modelNamePart}.${permissionAppendage}`;
     }
 
     function vulcanDependencies (answers) {
@@ -107,8 +109,8 @@ function setup (generatorSetup) {
     }
 
     function resolverName (resolverType, answers) {
-      const resolverNamePart = camelModelName(answers);
-      return `${resolverNamePart}${resolverType}`;
+      const modelNamePart = pluralPascalModelName(answers);
+      return `${modelNamePart}${resolverType}`;
     }
 
     function hasResolver (resolverType, answers) {

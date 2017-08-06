@@ -1,3 +1,3 @@
 import './routes';
-import './registered-components';
+import './components';
 import './models';

@@ -74,7 +74,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writePermissions();
-      this._writeTestPermissions();
+      // this._writeTestPermissions();
     }
   }, {
     key: 'end',

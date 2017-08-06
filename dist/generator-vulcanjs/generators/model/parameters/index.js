@@ -70,7 +70,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writeParameters();
-      this._writeTestParameters();
+      // this._writeTestParameters();
     }
   }, {
     key: 'end',

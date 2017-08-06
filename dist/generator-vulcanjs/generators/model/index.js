@@ -12,7 +12,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var VulcanGenerator = require('../../lib/VulcanGenerator');
 var ast = require('../../lib/ast');
-var common = require('../../lib/common');
 
 module.exports = function (_VulcanGenerator) {
   _inherits(_class, _VulcanGenerator);
@@ -58,7 +57,8 @@ module.exports = function (_VulcanGenerator) {
     value: function _composeGenerators() {
       var _this3 = this;
 
-      common.modelParts.forEach(function (modelPart) {
+      var modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
+      modelParts.forEach(function (modelPart) {
         var generator = require.resolve('./' + modelPart);
         var nextOptions = _extends({}, _this3.options, _this3.props, {
           dontAsk: true
@@ -109,7 +109,7 @@ module.exports = function (_VulcanGenerator) {
       }
       this._writeCollection();
       this._updateModelsIndex();
-      this._writeTestCollection();
+      // this._writeTestCollection();
     }
   }, {
     key: 'end',

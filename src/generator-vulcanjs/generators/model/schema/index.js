@@ -97,7 +97,7 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this._writeSchema();
-    this._writeTestSchema();
+    // this._writeTestSchema();
   }
 
   end () {

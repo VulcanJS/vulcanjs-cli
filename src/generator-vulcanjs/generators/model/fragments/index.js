@@ -25,6 +25,7 @@ module.exports = class extends VulcanGenerator {
         packageName: this._finalize('packageName', answers),
         modelName: this._finalize('modelName', answers),
         typeName: this._finalize('typeName', answers),
+        collectionName: this._finalize('collectionName', answers),
       };
     });
   }
@@ -61,7 +62,7 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this._writeFragments();
-    this._writeTestFragments();
+    // this._writeTestFragments();
   }
 
   end () {

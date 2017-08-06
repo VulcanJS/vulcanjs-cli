@@ -95,12 +95,12 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeRegisteredComponents () {
+  _writeComponentsIndex () {
     this.fs.copyTpl(
-      this.templatePath('registered-components.js'),
+      this.templatePath('components.index.js'),
       this._getPath(
         { isAbsolute: true },
-        'registeredComponents'
+        'componentsIndex'
       ),
       this.props
     );
@@ -148,7 +148,7 @@ module.exports = class extends VulcanGenerator {
     this._writeServerSeed();
     this._writeModulesIndex();
     // this._writeTestsIndex();
-    this._writeRegisteredComponents();
+    this._writeComponentsIndex();
     this._writeRoutes();
     this._writeModelsIndex();
   }

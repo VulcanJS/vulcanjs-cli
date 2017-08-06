@@ -78,7 +78,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writeResolvers();
-      this._writeTestResolvers();
+      // this._writeTestResolvers();
     }
   }, {
     key: 'end',

@@ -55,19 +55,19 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _updateRegisteredComponents () {
+  _updateComponentsIndex () {
     if (!this.props.isRegister) return;
-    const registeredComponentsPath = this._getPath(
+    const componentsIndexPath = this._getPath(
       { isAbsolute: true },
-      'registeredComponents'
+      'componentsIndex'
     );
-    const fileText = this.fs.read(registeredComponentsPath);
+    const fileText = this.fs.read(componentsIndexPath);
     const fileWithImportText = ast.addImportStatement(
       fileText,
-      `../components/${this.props.componentFileName}`
+      `./${this.props.componentFileName}`
     );
     this.fs.write(
-      registeredComponentsPath,
+      componentsIndexPath,
       fileWithImportText
     );
   }
@@ -75,7 +75,7 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this._writeComponent();
-    this._updateRegisteredComponents();
+    this._updateComponentsIndex();
   }
 
   end () {

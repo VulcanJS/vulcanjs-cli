@@ -69,7 +69,7 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this._writeMutations();
-    this._writeTestMutations();
+    // this._writeTestMutations();
   }
 
   end () {

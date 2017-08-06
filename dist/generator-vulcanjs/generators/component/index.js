@@ -64,13 +64,13 @@ module.exports = function (_VulcanGenerator) {
       this.fs.copyTpl(templatePath, this._getPath({ isAbsolute: true }, 'components', this.props.componentFileName), this.props);
     }
   }, {
-    key: '_updateRegisteredComponents',
-    value: function _updateRegisteredComponents() {
+    key: '_updateComponentsIndex',
+    value: function _updateComponentsIndex() {
       if (!this.props.isRegister) return;
-      var registeredComponentsPath = this._getPath({ isAbsolute: true }, 'registeredComponents');
-      var fileText = this.fs.read(registeredComponentsPath);
-      var fileWithImportText = ast.addImportStatement(fileText, '../components/' + this.props.componentFileName);
-      this.fs.write(registeredComponentsPath, fileWithImportText);
+      var componentsIndexPath = this._getPath({ isAbsolute: true }, 'componentsIndex');
+      var fileText = this.fs.read(componentsIndexPath);
+      var fileWithImportText = ast.addImportStatement(fileText, './' + this.props.componentFileName);
+      this.fs.write(componentsIndexPath, fileWithImportText);
     }
   }, {
     key: 'writing',
@@ -79,7 +79,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writeComponent();
-      this._updateRegisteredComponents();
+      this._updateComponentsIndex();
     }
   }, {
     key: 'end',

@@ -45,7 +45,8 @@ module.exports = function (_VulcanGenerator) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
           modelName: _this2._finalize('modelName', answers),
-          typeName: _this2._finalize('typeName', answers)
+          typeName: _this2._finalize('typeName', answers),
+          collectionName: _this2._finalize('collectionName', answers)
         };
       });
     }
@@ -70,7 +71,7 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._writeFragments();
-      this._writeTestFragments();
+      // this._writeTestFragments();
     }
   }, {
     key: 'end',
