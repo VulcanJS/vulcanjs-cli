@@ -37,7 +37,9 @@ function setup(generatorSetup) {
       return {
         type: 'list',
         name: 'doShallowClone',
-        when: () => when('reactExtension'),
+        when: function when() {
+          return _when('reactExtension');
+        },
         message: uiText.messages.doShallowClone,
         choices: common.cloningOptions
       };
