@@ -37,18 +37,16 @@ module.exports = class extends VulcanGenerator {
     this._dispatch({
       type: 'SET_APP_NAME',
       appName: this.props.appName,
-    }); 
+    });
     this._dispatch({
       type: 'SET_PACKAGE_MANAGER',
       packageManager: this.props.packageManager,
     });
-    debugger
     this._commitStore();
   }
-  
+
   end () {
     this._end();
     if (!this._hasNoErrors()) { return; }
   }
 };
-

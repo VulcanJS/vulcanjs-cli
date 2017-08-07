@@ -38,7 +38,6 @@ module.exports = class extends VulcanGenerator {
       type: 'SET_PACKAGE_MANAGER',
       packageManager: this.props.packageManager
     });
-    debugger;
     this._commitStore();
   }
 
