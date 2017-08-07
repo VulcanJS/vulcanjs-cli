@@ -21,15 +21,11 @@ module.exports = class extends VulcanGenerator {
     }
     const questions = this._getQuestions(
       'appName',
-      'doShallowClone',
-      // 'reactExtension',
       'packageManager'
       );
     return this.prompt(questions).then((answers) => {
       this.props = {
         appName: this._finalize('appName', answers),
-        // reactExtension: this._finalize('raw', 'reactExtension', answers),
-        doShallowClone: this._finalize('raw', 'doShallowClone', answers),
         packageManager: this._finalize('raw', 'packageManager', answers),
       };
     });
@@ -41,12 +37,11 @@ module.exports = class extends VulcanGenerator {
     }
 
     this.log(chalk.green('\nPulling the most up to date git repository... \n'));
-    if ("fast" === this.props.doShallowClone) {
-      var gitArgs = ['clone', 'https://github.com/Vulcanjs/Vulcan', '--depth', '1', this.props.appName];
-    } else {
-      var gitArgs = ['clone', 'https://github.com/Vulcanjs/Vulcan', this.props.appName];
-    }
-    this.spawnCommandSync('git', gitArgs);
+    this.spawnCommandSync('git', [
+      'clone',
+      'https://github.com/Vulcanjs/Vulcan',
+      this.props.appName,
+    ]);
     this.destinationRoot(
       this.destinationPath(this.props.appName)
       );
@@ -65,10 +60,6 @@ module.exports = class extends VulcanGenerator {
       type: 'SET_APP_NAME',
       appName: this.props.appName,
     });
-    // this._dispatch({
-    //   type: 'SET_REACT_EXTENSION',
-    //   reactExtension: this.props.reactExtension,
-    // });
     this._dispatch({
       type: 'SET_PACKAGE_MANAGER',
       packageManager: this.props.packageManager,

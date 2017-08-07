@@ -1,6 +1,5 @@
 const VulcanGenerator = require('../../lib/VulcanGenerator');
 const ast = require('../../lib/ast');
-const common = require('../../lib/common');
 
 module.exports = class extends VulcanGenerator {
   initializing () {
@@ -35,7 +34,8 @@ module.exports = class extends VulcanGenerator {
   }
 
   _composeGenerators () {
-    common.modelParts.forEach((modelPart) => {
+    const modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
+    modelParts.forEach((modelPart) => {
       const generator = require.resolve(`./${modelPart}`);
       const nextOptions = {
         ...this.options,
@@ -85,18 +85,18 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _updateModelsIndex () {
-    const modelsIndexPath = this._getPath(
+  _updateModulesIndex () {
+    const modulesIndexPath = this._getPath(
       { isAbsolute: true },
-      'modelsIndex'
+      'modulesIndex'
     );
-    const fileText = this.fs.read(modelsIndexPath);
+    const fileText = this.fs.read(modulesIndexPath);
     const fileWithImportText = ast.addImportStatement(
       fileText,
       `./${this.props.modelName}/collection.js`
     );
     this.fs.write(
-      modelsIndexPath,
+      modulesIndexPath,
       fileWithImportText
     );
   }
@@ -104,8 +104,8 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this._writeCollection();
-    this._updateModelsIndex();
-    this._writeTestCollection();
+    this._updateModulesIndex();
+    // this._writeTestCollection();
   }
 
   end () {

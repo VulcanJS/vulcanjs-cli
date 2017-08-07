@@ -1,4 +1,6 @@
-let generator;
+"use strict";
+
+var generator = void 0;
 
 function setup(generatorSetup) {
   generator = generatorSetup;

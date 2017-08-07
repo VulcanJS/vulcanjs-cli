@@ -1,6 +1,8 @@
-const dashify = require('dashify');
-const camelCase = require('camelcase');
-const pascalCase = require('pascal-case');
+'use strict';
+
+var dashify = require('dashify');
+var camelCase = require('camelcase');
+var pascalCase = require('pascal-case');
 
 function packageName(toFilter) {
   return dashify(toFilter);

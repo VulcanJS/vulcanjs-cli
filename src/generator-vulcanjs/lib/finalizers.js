@@ -3,6 +3,7 @@ const camelCase = require('camelcase');
 const filter = require('./filters').filter;
 const store = require('./store');
 const flatten = require('lodash/flatten');
+const pluralize = require('pluralize');
 
 const arrayToEjsString = (arr) => {
   const quotedList = arr.map((elem) => `'${elem}'`);
@@ -22,8 +23,20 @@ function setup (generatorSetup) {
       );
     }
 
+    function pluralPascalModelName (answers) {
+      const modelNameRaw = getRaw('modelName', answers);
+      const pluralModelName = pluralize.plural(modelNameRaw);
+      return pascalCase(pluralModelName);
+    }
+
+    function singularPascalModelName (answers) {
+      const modelNameRaw = getRaw('modelName', answers);
+      const pluralModelName = pluralize.singular(modelNameRaw);
+      return pascalCase(pluralModelName);
+    }
+
     function permissionTo (permissionType, answers) {
-      const permissionsArr = answers[permissionType];
+      const permissionsArr = answers[permissionType].map((s) => s.toLowerCase());
       return arrayToEjsString(permissionsArr);
     }
 
@@ -55,7 +68,7 @@ function setup (generatorSetup) {
     function componentPath (answers) {
       return generator._getPath(
         { isAbsolute: false },
-        'modelInComponents',
+        'components',
         componentFileName(answers)
       );
     }
@@ -63,6 +76,14 @@ function setup (generatorSetup) {
     function pascalModelName (answers) {
       const modelNameRaw = getRaw('modelName', answers);
       return pascalCase(modelNameRaw);
+    }
+
+    function typeName (answers) {
+      return singularPascalModelName(answers);
+    }
+
+    function collectionName (answers) {
+      return pluralPascalModelName(answers);
     }
 
     function camelModelName (answers) {
@@ -74,19 +95,16 @@ function setup (generatorSetup) {
       return Object.keys(answers.modelParts);
     }
 
-    function collectionName (answers) {
-      return pascalModelName(answers);
-    }
-
     function mutationName (mutationType, answers) {
-      const modelNamePart = camelModelName(answers);
-      return `${modelNamePart}${mutationType}`;
+      const modelNamePart = pluralPascalModelName(answers);
+      const mutationTypePart = pascalCase(mutationType);
+      return `${modelNamePart}${mutationTypePart}`;
     }
 
     function permissionName (permission, answers) {
-      const camelModelNamePart = camelModelName(answers);
+      const modelNamePart = pluralPascalModelName(answers);
       const permissionAppendage = permission.join('.');
-      return `${camelModelNamePart}.${permissionAppendage}`;
+      return `${modelNamePart}.${permissionAppendage}`;
     }
 
     function vulcanDependencies (answers) {
@@ -95,8 +113,8 @@ function setup (generatorSetup) {
     }
 
     function resolverName (resolverType, answers) {
-      const resolverNamePart = camelModelName(answers);
-      return `${resolverNamePart}${resolverType}`;
+      const modelNamePart = pluralPascalModelName(answers);
+      return `${modelNamePart}${resolverType}`;
     }
 
     function hasResolver (resolverType, answers) {
@@ -107,15 +125,15 @@ function setup (generatorSetup) {
     function addRouteStatement (answers) {
       const routeName = getRaw('routeName', answers);
       const routePath = getRaw('routePath', answers);
-      // const layoutName = getRaw('layoutName', answers);
+      const layoutName = getRaw('layoutName', answers);
       const routeComponentName = componentName(answers);
+      const layoutNameKeyValuePair = layoutName ? `layoutName: '${layoutName}',` : '';
       return `addRoute({
         name: '${routeName}',
         path: '${routePath}',
-        component: '${routeComponentName}',
+        componentName: '${routeComponentName}',
+        ${layoutNameKeyValuePair}
       });`;
-
-      // layoutName: '${layoutName}',
     }
 
     function prettyPackage (inputPackageName, id) {
@@ -166,6 +184,7 @@ function setup (generatorSetup) {
       case 'componentName' : return componentName(...args);
       case 'componentFileName' : return componentFileName(...args);
       case 'componentPath' : return componentPath(...args);
+      case 'typeName' : return typeName(...args);
       case 'pascalModelName' : return pascalModelName(...args);
       case 'camelModelName' : return camelModelName(...args);
       case 'collectionName' : return collectionName(...args);

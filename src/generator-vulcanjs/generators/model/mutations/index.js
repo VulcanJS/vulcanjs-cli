@@ -28,11 +28,11 @@ module.exports = class extends VulcanGenerator {
         newMutationName: this._finalize('mutationName', 'new', answers),
         editMutationName: this._finalize('mutationName', 'edit', answers),
         removeMutationName: this._finalize('mutationName', 'remove', answers),
-        newPermission: this._finalize('mutationName', ['new'], answers),
-        editOwnPermission: this._finalize('mutationName', ['edit', 'own'], answers),
-        editAllPermission: this._finalize('mutationName', ['edit', 'all'], answers),
-        removeOwnPermission: this._finalize('mutationName', ['remove', 'own'], answers),
-        removeAllPermission: this._finalize('mutationName', ['remove', 'all'], answers),
+        newPermission: this._finalize('permissionName', ['new'], answers),
+        editOwnPermission: this._finalize('permissionName', ['edit', 'own'], answers),
+        editAllPermission: this._finalize('permissionName', ['edit', 'all'], answers),
+        removeOwnPermission: this._finalize('permissionName', ['remove', 'own'], answers),
+        removeAllPermission: this._finalize('permissionName', ['remove', 'all'], answers),
       };
     });
   }
@@ -69,7 +69,7 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this._writeMutations();
-    this._writeTestMutations();
+    // this._writeTestMutations();
   }
 
   end () {

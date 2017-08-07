@@ -1,9 +1,14 @@
+'use strict';
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-const Redux = require('redux');
-const _ = require('lodash');
+var Redux = require('redux');
+var _ = require('lodash');
 
-const modelReducer = (state = {}, action) => {
+var modelReducer = function modelReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
     case 'ADD_MODEL':
       return state;
@@ -12,61 +17,79 @@ const modelReducer = (state = {}, action) => {
   }
 };
 
-const modelsReducer = (state = {}, action) => {
+var modelsReducer = function modelsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
     case 'ADD_MODEL':
       {
-        const partialNext = {};
+        var partialNext = {};
         partialNext[action.modelName] = modelReducer(undefined, action);
         return _extends({}, state, partialNext);
       }
 
     case 'REMOVE_MODEL':
       {
-        return _.pickBy(state, (value, key) => key !== action.modelName);
+        return _.pickBy(state, function (value, key) {
+          return key !== action.modelName;
+        });
       }
     default:
       return state;
   }
 };
 
-const routeReducer = (state = {}, action) => {
+var routeReducer = function routeReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
     case 'ADD_ROUTE':
       return { routePath: action.routePath };
     case 'REMOVE_ROUTE':
       {
-        return _.pickBy(state, (value, key) => key !== action.routeName);
+        return _.pickBy(state, function (value, key) {
+          return key !== action.routeName;
+        });
       }
     default:
       return state;
   }
 };
 
-const routesReducer = (state = {}, action) => {
+var routesReducer = function routesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
     case 'ADD_ROUTE':
       {
-        const partialNext = {};
+        var partialNext = {};
         partialNext[action.routeName] = routeReducer(undefined, action);
         return _extends({}, state, partialNext);
       }
 
     case 'REMOVE_ROUTE':
       {
-        return _.pickBy(state, (value, key) => key !== action.routeName);
+        return _.pickBy(state, function (value, key) {
+          return key !== action.routeName;
+        });
       }
     default:
       return state;
   }
 };
 
-const packageReducer = (state = { models: {}, routes: {} }, action) => {
+var packageReducer = function packageReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { models: {}, routes: {} };
+  var action = arguments[1];
+
   switch (action.type) {
 
     case 'ADD_ROUTE':
       {
-        const prevRoutes = state.routes;
+        var prevRoutes = state.routes;
         return _extends({}, state, {
           routes: routesReducer(prevRoutes, action)
         });
@@ -74,15 +97,15 @@ const packageReducer = (state = { models: {}, routes: {} }, action) => {
 
     case 'REMOVE_ROUTE':
       {
-        const prevRoutes = state.routes;
+        var _prevRoutes = state.routes;
         return _extends({}, state, {
-          routes: routesReducer(prevRoutes, action)
+          routes: routesReducer(_prevRoutes, action)
         });
       }
 
     case 'ADD_MODEL':
       {
-        const prevModels = state.models;
+        var prevModels = state.models;
         return _extends({}, state, {
           models: modelsReducer(prevModels, action)
         });
@@ -90,9 +113,9 @@ const packageReducer = (state = { models: {}, routes: {} }, action) => {
 
     case 'REMOVE_MODEL':
       {
-        const prevModels = state.models;
+        var _prevModels = state.models;
         return _extends({}, state, {
-          models: modelsReducer(prevModels, action)
+          models: modelsReducer(_prevModels, action)
         });
       }
     default:
@@ -100,50 +123,55 @@ const packageReducer = (state = { models: {}, routes: {} }, action) => {
   }
 };
 
-const packages = (state = {}, action) => {
+var packages = function packages() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
   switch (action.type) {
     case 'ADD_PACKAGE':
       {
-        const partialNext = {};
+        var partialNext = {};
         partialNext[action.packageName] = packageReducer(undefined, {});
         return _extends({}, state, partialNext);
       }
 
     case 'ADD_ROUTE':
       {
-        const prevPackage = state[action.packageName];
-        const partialNext = {};
-        partialNext[action.packageName] = packageReducer(prevPackage, action);
-        return _extends({}, state, partialNext);
+        var prevPackage = state[action.packageName];
+        var _partialNext = {};
+        _partialNext[action.packageName] = packageReducer(prevPackage, action);
+        return _extends({}, state, _partialNext);
       }
 
     case 'ADD_MODEL':
       {
-        const prevPackage = state[action.packageName];
-        const partialNext = {};
-        partialNext[action.packageName] = packageReducer(prevPackage, action);
-        return _extends({}, state, partialNext);
+        var _prevPackage = state[action.packageName];
+        var _partialNext2 = {};
+        _partialNext2[action.packageName] = packageReducer(_prevPackage, action);
+        return _extends({}, state, _partialNext2);
       }
 
     case 'REMOVE_PACKAGE':
       {
-        return _.pickBy(state, (value, key) => key !== action.packageName);
+        return _.pickBy(state, function (value, key) {
+          return key !== action.packageName;
+        });
       }
 
     case 'REMOVE_MODEL':
       {
-        const packageToWork = state[action.packageName];
-        const partialNext = {};
-        partialNext[action.packageName] = packageReducer(packageToWork, action);
-        return _extends({}, state, partialNext);
+        var packageToWork = state[action.packageName];
+        var _partialNext3 = {};
+        _partialNext3[action.packageName] = packageReducer(packageToWork, action);
+        return _extends({}, state, _partialNext3);
       }
 
     case 'REMOVE_ROUTE':
       {
-        const packageToWork = state[action.packageName];
-        const partialNext = {};
-        partialNext[action.packageName] = packageReducer(packageToWork, action);
-        return _extends({}, state, partialNext);
+        var _packageToWork = state[action.packageName];
+        var _partialNext4 = {};
+        _partialNext4[action.packageName] = packageReducer(_packageToWork, action);
+        return _extends({}, state, _partialNext4);
       }
 
     default:
@@ -151,7 +179,10 @@ const packages = (state = {}, action) => {
   }
 };
 
-const appName = (state = '', action) => {
+var appName = function appName() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var action = arguments[1];
+
   switch (action.type) {
     case 'SET_APP_NAME':
       return action.appName;
@@ -160,7 +191,10 @@ const appName = (state = '', action) => {
   }
 };
 
-const isVulcan = (state = false, action) => {
+var isVulcan = function isVulcan() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var action = arguments[1];
+
   switch (action.type) {
     case 'SET_IS_VULCAN_TRUE':
       return true;
@@ -169,7 +203,10 @@ const isVulcan = (state = false, action) => {
   }
 };
 
-const packageManager = (state = 'yarn', action) => {
+var packageManager = function packageManager() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'yarn';
+  var action = arguments[1];
+
   switch (action.type) {
     case 'SET_PACKAGE_MANAGER':
       return action.packageManager;
@@ -178,7 +215,10 @@ const packageManager = (state = 'yarn', action) => {
   }
 };
 
-const reactExtension = (state = 'jsx', action) => {
+var reactExtension = function reactExtension() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'jsx';
+  var action = arguments[1];
+
   switch (action.type) {
     case 'SET_REACT_EXTENSION':
       return action.reactExtension;
@@ -187,7 +227,10 @@ const reactExtension = (state = 'jsx', action) => {
   }
 };
 
-const storyBookSetupStatus = (state = 'pending', action) => {
+var storyBookSetupStatus = function storyBookSetupStatus() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'pending';
+  var action = arguments[1];
+
   switch (action.type) {
     case 'SET_STORYBOOK_PENDING':
       return 'pending';
@@ -202,16 +245,19 @@ const storyBookSetupStatus = (state = 'pending', action) => {
   }
 };
 
-const defaultStoryBookState = {
+var defaultStoryBookState = {
   isUsed: 'pending',
   setupStatus: 'pending'
 };
 
-const storyBook = (state = defaultStoryBookState, action) => {
+var storyBook = function storyBook() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultStoryBookState;
+  var action = arguments[1];
+
   switch (action.type) {
     case 'SET_STORYBOOK_SETUP_STATUS':
       {
-        const actions = {
+        var actions = {
           pending: 'SET_STORYBOOK_PENDING',
           installing: 'SET_STORYBOOK_INSTALLING',
           dontask: 'SET_STORYBOOK_DONTASK',
@@ -228,7 +274,7 @@ const storyBook = (state = defaultStoryBookState, action) => {
   }
 };
 
-const reducers = Redux.combineReducers({
+var reducers = Redux.combineReducers({
   appName: appName,
   isVulcan: isVulcan,
   packageManager: packageManager,

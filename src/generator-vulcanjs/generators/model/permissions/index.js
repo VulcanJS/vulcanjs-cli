@@ -65,7 +65,7 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this._writePermissions();
-    this._writeTestPermissions();
+    // this._writeTestPermissions();
   }
 
   end () {

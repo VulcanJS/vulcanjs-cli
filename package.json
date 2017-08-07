@@ -1,6 +1,6 @@
 {
   "name": "vulcanjs-cli",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "The official cli scaffolding tool for VulcanJS",
   "bin": {
     "vulcan": "./dist/index.js"
@@ -36,10 +36,12 @@
     "esprima": "^4.0.0",
     "grunt": "^1.0.1",
     "gulp-beautify": "^2.0.1",
+    "gulp-filter": "^5.0.1",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
     "node-print": "^0.0.4",
     "pascal-case": "^2.0.1",
+    "pluralize": "^6.0.0",
     "redux": "^3.7.1",
     "redux-node-logger": "^0.1.0",
     "yeoman-environment": "^2.0.0",

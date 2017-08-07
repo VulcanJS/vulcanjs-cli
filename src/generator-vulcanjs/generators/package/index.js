@@ -84,13 +84,23 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeModelsIndex () {
+  _writeModulesIndex () {
     this.fs.copyTpl(
-      this.templatePath('model.js'),
+      this.templatePath('modules.index.js'),
       this._getPath(
         { isAbsolute: true },
-        'models',
-        'index.js'
+        'modulesIndex'
+      ),
+      this.props
+    );
+  }
+
+  _writeComponentsIndex () {
+    this.fs.copyTpl(
+      this.templatePath('components.index.js'),
+      this._getPath(
+        { isAbsolute: true },
+        'componentsIndex'
       ),
       this.props
     );
@@ -107,17 +117,17 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeTestsIndex () {
-    this.fs.copyTpl(
-      this.templatePath('tests-index.js'),
-      this._getPath(
-        { isAbsolute: true },
-        'packageTests',
-        'index.js'
-      ),
-      this.props
-    );
-  }
+  // _writeTestsIndex () {
+  //   this.fs.copyTpl(
+  //     this.templatePath('tests-index.js'),
+  //     this._getPath(
+  //       { isAbsolute: true },
+  //       'packageTests',
+  //       'index.js'
+  //     ),
+  //     this.props
+  //   );
+  // }
 
   writing () {
     if (!this._canWrite()) { return; }
@@ -125,8 +135,9 @@ module.exports = class extends VulcanGenerator {
     this._writeClientMain();
     this._writeServerMain();
     this._writeServerSeed();
-    this._writeModelsIndex();
-    this._writeTestsIndex();
+    this._writeModulesIndex();
+    // this._writeTestsIndex();
+    this._writeComponentsIndex();
     this._writeRoutes();
   }
 

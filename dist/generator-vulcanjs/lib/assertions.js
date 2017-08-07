@@ -1,9 +1,11 @@
-const store = require('./store');
-const uiText = require('./ui-text');
+'use strict';
 
-const errors = {};
+var store = require('./store');
+var uiText = require('./ui-text');
 
-function assert(assertion, ...args) {
+var errors = {};
+
+function assert(assertion) {
   function isVulcan() {
     if (!store.is('vulcan')) {
       errors.notVulcan = {
@@ -77,25 +79,29 @@ function assert(assertion, ...args) {
     }
   }
 
+  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+
   switch (assertion) {
     case 'isVulcan':
-      return isVulcan(...args);
+      return isVulcan.apply(undefined, args);
     case 'isDelete':
-      return isDelete(...args);
+      return isDelete.apply(undefined, args);
     case 'notVulcan':
-      return notVulcan(...args);
+      return notVulcan.apply(undefined, args);
     case 'isPackageExists':
-      return isPackageExists(...args);
+      return isPackageExists.apply(undefined, args);
     case 'notPackageExists':
-      return notPackageExists(...args);
+      return notPackageExists.apply(undefined, args);
     case 'isModelExists':
-      return isModelExists(...args);
+      return isModelExists.apply(undefined, args);
     case 'notModelExists':
-      return notModelExists(...args);
+      return notModelExists.apply(undefined, args);
     case 'hasNonZeroPackages':
-      return hasNonZeroPackages(...args);
+      return hasNonZeroPackages.apply(undefined, args);
     case 'packageHasNonZeroModels':
-      return packageHasNonZeroModels(...args);
+      return packageHasNonZeroModels.apply(undefined, args);
     default:
       return undefined;
   }

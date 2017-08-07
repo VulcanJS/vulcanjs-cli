@@ -3,6 +3,7 @@ module.exports = (grunt) => {
     babel: {
       options: {
         // sourceMap: true,
+        presets: ['es2015'],
         plugins: [
           'transform-object-rest-spread',
           // 'transform-es2015-modules-commonjs',
