@@ -81,9 +81,6 @@ module.exports = function (_VulcanGenerator) {
     key: 'end',
     value: function end() {
       this._end();
-      if (!this._hasNoErrors()) {
-        return;
-      }
       this.log(' ');
       this.log(chalk.green('Successfully generated vulcan code base. \n'));
       this.log(chalk.green('To run your new app: \n'));

@@ -122,7 +122,6 @@ module.exports = function (_Generator) {
         var errorNo = 'Error (' + index + ')';
         var message = '\n' + errorNo + ': ' + chalk.red(error.message);
         _this3.log(message);
-        //      this.env.error(message);
       });
       process.exit(1);
     }
@@ -134,7 +133,9 @@ module.exports = function (_Generator) {
   }, {
     key: '_end',
     value: function _end() {
-      this._logAllErrors();
+      if (!this._hasNoErrors) {
+        this._logAllErrors();
+      }
     }
   }, {
     key: '_registerArguments',

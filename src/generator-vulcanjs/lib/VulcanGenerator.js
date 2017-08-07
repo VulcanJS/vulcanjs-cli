@@ -93,8 +93,7 @@ module.exports = class VulcanGenerator extends Generator {
     errorsArr.forEach((error, index) => {
       const errorNo = `Error (${index})`;
       const message = `\n${errorNo}: ${chalk.red(error.message)}`;
-      this.log( message );
-//      this.env.error(message);
+      this.log(message);
     });
     process.exit(1);
   }
@@ -104,7 +103,7 @@ module.exports = class VulcanGenerator extends Generator {
   */
 
   _end () {
-    this._logAllErrors();
+    if (!this._hasNoErrors) { this._logAllErrors(); }
   }
 
   _registerArguments () {}

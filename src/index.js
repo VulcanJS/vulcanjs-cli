@@ -35,7 +35,6 @@ const componentNamesToGeneratorRegisters = {
   remove: () => { env.register(remover, 'remove'); },
   list: () => { env.register(lister, 'list'); },
   init: () => { env.register(init, 'init'); },
-  unshallow: () => { env.register(unshallow, 'unshallow'); },
 };
 
 function registerGenerator (componentName) {
@@ -108,11 +107,6 @@ function run () {
   } else if (action.type === 'init') {
     registerGenerator('init');
     return runWithOptions('init', {
-      vulcanjsComponent: action.component,
-    });
-  } else if (action.type === 'unshallow') {
-    registerGenerator('unshallow');
-    return runWithOptions('unshallow', {
       vulcanjsComponent: action.component,
     });
   }

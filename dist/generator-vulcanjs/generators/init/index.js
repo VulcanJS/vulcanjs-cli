@@ -64,16 +64,12 @@ module.exports = function (_VulcanGenerator) {
         type: 'SET_PACKAGE_MANAGER',
         packageManager: this.props.packageManager
       });
-      debugger;
       this._commitStore();
     }
   }, {
     key: 'end',
     value: function end() {
       this._end();
-      if (!this._hasNoErrors()) {
-        return;
-      }
     }
   }]);
 
