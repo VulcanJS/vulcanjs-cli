@@ -74,7 +74,7 @@ function setup (generatorSetup) {
     }
 
     function modelPath (options, ...args) {
-      return modelsPath(
+      return modulesPath(
         options,
         generator.props.modelName,
         ...args

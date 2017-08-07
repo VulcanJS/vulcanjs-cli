@@ -106,17 +106,6 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeModelsIndex () {
-    this.fs.copyTpl(
-      this.templatePath('models.index.js'),
-      this._getPath(
-        { isAbsolute: true },
-        'modelsIndex'
-      ),
-      this.props
-    );
-  }
-
   _writeRoutes () {
     this.fs.copyTpl(
       this.templatePath('routes.js'),
@@ -150,7 +139,6 @@ module.exports = class extends VulcanGenerator {
     // this._writeTestsIndex();
     this._writeComponentsIndex();
     this._writeRoutes();
-    this._writeModelsIndex();
   }
 
   end () {

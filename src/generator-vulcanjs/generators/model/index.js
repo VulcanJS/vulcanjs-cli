@@ -85,18 +85,18 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _updateModelsIndex () {
-    const modelsIndexPath = this._getPath(
+  _updateModulesIndex () {
+    const modulesIndexPath = this._getPath(
       { isAbsolute: true },
-      'modelsIndex'
+      'modulesIndex'
     );
-    const fileText = this.fs.read(modelsIndexPath);
+    const fileText = this.fs.read(modulesIndexPath);
     const fileWithImportText = ast.addImportStatement(
       fileText,
       `./${this.props.modelName}/collection.js`
     );
     this.fs.write(
-      modelsIndexPath,
+      modulesIndexPath,
       fileWithImportText
     );
   }
@@ -104,7 +104,7 @@ module.exports = class extends VulcanGenerator {
   writing () {
     if (!this._canWrite()) { return; }
     this._writeCollection();
-    this._updateModelsIndex();
+    this._updateModulesIndex();
     // this._writeTestCollection();
   }
 

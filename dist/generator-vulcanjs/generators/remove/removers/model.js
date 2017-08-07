@@ -49,12 +49,12 @@ module.exports = function (_VulcanGenerator) {
       });
     }
   }, {
-    key: '_updateModelsIndex',
-    value: function _updateModelsIndex() {
-      var modelsIndexPath = this._getPath({ isAbsolute: true }, 'modelsIndex');
-      var fileText = this.fs.read(modelsIndexPath);
+    key: '_updateModulesIndex',
+    value: function _updateModulesIndex() {
+      var modulesIndexPath = this._getPath({ isAbsolute: true }, 'modulesIndex');
+      var fileText = this.fs.read(modulesIndexPath);
       var fileWithImportText = ast.removeImportStatement(fileText, './' + this.props.modelName + '/collection.js');
-      this.fs.write(modelsIndexPath, fileWithImportText);
+      this.fs.write(modulesIndexPath, fileWithImportText);
     }
   }, {
     key: '_removeModelDir',
@@ -74,7 +74,7 @@ module.exports = function (_VulcanGenerator) {
         modelName: this.props.modelName
       });
       this._removeModelDir();
-      this._updateModelsIndex();
+      this._updateModulesIndex();
       return this._commitStore();
     }
   }, {

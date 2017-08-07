@@ -91,11 +91,6 @@ module.exports = function (_VulcanGenerator) {
       this.fs.copyTpl(this.templatePath('components.index.js'), this._getPath({ isAbsolute: true }, 'componentsIndex'), this.props);
     }
   }, {
-    key: '_writeModelsIndex',
-    value: function _writeModelsIndex() {
-      this.fs.copyTpl(this.templatePath('models.index.js'), this._getPath({ isAbsolute: true }, 'modelsIndex'), this.props);
-    }
-  }, {
     key: '_writeRoutes',
     value: function _writeRoutes() {
       this.fs.copyTpl(this.templatePath('routes.js'), this._getPath({ isAbsolute: true }, 'routes'), this.props);
@@ -127,7 +122,6 @@ module.exports = function (_VulcanGenerator) {
       // this._writeTestsIndex();
       this._writeComponentsIndex();
       this._writeRoutes();
-      this._writeModelsIndex();
     }
   }, {
     key: 'end',

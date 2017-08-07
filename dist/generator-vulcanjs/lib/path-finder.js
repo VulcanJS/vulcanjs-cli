@@ -77,7 +77,7 @@ function setup(generatorSetup) {
         args[_key9 - 1] = arguments[_key9];
       }
 
-      return modelsPath.apply(undefined, [options, generator.props.modelName].concat(args));
+      return modulesPath.apply(undefined, [options, generator.props.modelName].concat(args));
     }
 
     function componentsPath(options) {
