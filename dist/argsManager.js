@@ -10,11 +10,11 @@ const recognizedActions = {
   remove: 'remove',
   r: 'remove',
   list: 'list',
-  l: 'list'
-};
-
-const errors = {
-  unrecognizedCommand: 'Command not recognized. Try: create, generate and remove'
+  l: 'list',
+  i: 'init',
+  init: 'init',
+  un: 'unshallow',
+  unshallow: 'unshallow'
 };
 
 const genericProcessor = args => {
@@ -39,15 +39,17 @@ const createProcessor = args => ({
 });
 
 const argsProcessors = {
+  init: genericProcessor,
   generate: genericProcessor,
   remove: genericProcessor,
   list: genericProcessor,
-  create: createProcessor
+  create: createProcessor,
+  unshallow: genericProcessor
 };
 
 function usage() {
   const values = _.uniq(_.values(recognizedActions));
-  console.log(chalk.green('\nvulcanjs usage:'));
+  console.log(chalk.green('\nvulcan usage:'));
   console.log(chalk.grey('\nSynopsis'));
   console.log('  vulcan <action> <object> <...>\n');
   console.log('    <action>   Operation to perform ');
@@ -55,6 +57,8 @@ function usage() {
   console.log('    <...>      Parameters. If not provided, interactively entered');
   console.log(chalk.grey('\nProject initialisation'));
   console.log('  vulcan create <appName>');
+  console.log('  vulcan init <appName>');
+  console.log('  vulcan unshallow ');
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
   console.log('  vulcan (generate|g) model <packageName> <modelName>');
