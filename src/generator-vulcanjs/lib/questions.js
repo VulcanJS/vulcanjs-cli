@@ -27,6 +27,16 @@ function setup (generatorSetup) {
       };
     }
 
+    function doShallowClone () {
+      return {
+        type: 'list',
+        name: 'doShallowClone',
+        when: () => when('reactExtension'),
+        message: uiText.messages.doShallowClone,
+        choices: common.cloningOptions,
+      };
+    }
+
     function isDelete () {
       return {
         type: 'confirm',
@@ -433,6 +443,7 @@ function setup (generatorSetup) {
     function getSingleQuestion (questionName) {
       switch (questionName) {
         case 'appName': return appName();
+        case 'doShallowClone': return doShallowClone();
         case 'reactExtension': return reactExtension();
         case 'packageManager': return packageManager();
         case 'packageName': return packageName();
