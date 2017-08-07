@@ -1,1 +1,1 @@
-import { registerComponent } from "meteor/vulcan:core";
+import { registerComponent } from 'meteor/vulcan:core';
