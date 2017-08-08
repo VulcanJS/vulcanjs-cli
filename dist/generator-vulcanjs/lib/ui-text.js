@@ -4,7 +4,6 @@ var chalk = require('chalk');
 
 var descriptions = {
   appName: 'The name of your app',
-  doShallowClone: 'Default is fast and great for testing. Full vulcan git clone will avoid requiring to unshallow the repository to change the git remote.',
   reactExtension: 'Default react component extension',
   packageManager: 'Preferred package manager',
   packageName: 'The name of the package',
@@ -25,7 +24,6 @@ var descriptions = {
 
 var messages = {
   appName: 'App name',
-  doShallowClone: 'Use fast (<5s) or complete (>60s) git clone? See unshallow action for more "fast" details.',
   reactExtension: 'React extension',
   packageManager: 'Package manager',
   packageName: 'Package name',
@@ -41,6 +39,8 @@ var messages = {
   storyBookSetupStatus: 'Looks like you havent set up your react storybook. Would you like to do it now?',
   isAddComponentToStoryBook: 'Add component to storybook',
   isAddCustomSchemaProperty: 'Add a custom property to the collection',
+  isAddCustomMutations: 'Add custom mutations',
+  isAddCustomResolvers: 'Add custom resolvers',
   isAddAnotherCustomSchemaProperty: 'Add another custom property to the collection',
   schemaPropertyName: 'Property name',
   isSchemaPropertyHidden: 'Property is hidden',

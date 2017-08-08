@@ -40,9 +40,7 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithNumModelsList', 'modelNameList'
-      // 'defaultResolvers'
-      );
+      var questions = this._getQuestions('packageNameWithNumModelsList', 'modelNameList');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
@@ -50,10 +48,7 @@ module.exports = function (_VulcanGenerator) {
           collectionName: _this2._finalize('collectionName', answers),
           listResolverName: _this2._finalize('resolverName', 'List', answers),
           singleResolverName: _this2._finalize('resolverName', 'Single', answers),
-          totalResolverName: _this2._finalize('resolverName', 'Total', answers),
-          hasListResolver: true,
-          hasSingleResolver: true,
-          hasTotalResolver: true
+          totalResolverName: _this2._finalize('resolverName', 'Total', answers)
         };
       });
     }
