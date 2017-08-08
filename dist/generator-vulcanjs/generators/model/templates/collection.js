@@ -1,17 +1,15 @@
-import { createCollection } from 'meteor/vulcan:core';
+import { createCollection, getDefaultResolvers, getDefaultMutations } from 'meteor/vulcan:core';
 import schema from './schema.js';
-// import resolvers from './resolvers.js';
-// import mutations from './mutations.js';
 import './fragments.js';
 import './permissions.js';
 import './parameters.js';
 
 const <%= collectionName %> = createCollection({
+  schema,
   collectionName: '<%= collectionName %>',
   typeName: '<%= typeName %>',
-  schema,
-  // resolvers,
-  // mutations,
+  resolvers: getDefaultResolvers(<%= collectionName %>),
+  mutations: getDefaultMutations(<%= collectionName %>),
 });
 
 export default <%= collectionName %>;
