@@ -15,6 +15,7 @@ var remover = require.resolve('./generator-vulcanjs/generators/remove');
 var lister = require.resolve('./generator-vulcanjs/generators/list');
 var _init = require.resolve('./generator-vulcanjs/generators/init');
 var unshallow = require.resolve('./generator-vulcanjs/generators/unshallow');
+var _start = require.resolve('./generator-vulcanjs/generators/start');
 
 var env = yeoman.createEnv();
 
@@ -51,6 +52,9 @@ var componentNamesToGeneratorRegisters = {
   },
   init: function init() {
     env.register(_init, 'init');
+  },
+  start: function start() {
+    env.register(_start, 'start');
   }
 };
 
@@ -126,6 +130,9 @@ function run() {
     return runWithOptions('init', {
       vulcanjsComponent: action.component
     });
+  } else if (action.type === 'start') {
+    registerGenerator('start');
+    return runWithOptions('start', {});
   }
 }
 
