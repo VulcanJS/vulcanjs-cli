@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 <%if (isRegister) { %><% include ./partials/registerComponentImport.js -%><%} -%>
 
 class <%= componentName %> extends Component {
-  render() {
+  render () {
     return (
       <div>
         Find me at <%= componentPath %>
