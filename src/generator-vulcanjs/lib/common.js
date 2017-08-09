@@ -31,7 +31,7 @@ const packageManagers = ['yarn', 'npm'];
 
 const visitorTypes = ['Guests', 'Members', 'Admins'];
 
-const schemaPropertyTypes = ['String', 'Number', 'Array', 'Object', 'Custom'];
+const schemaPropertyTypes = ['String', 'Number', 'Boolean', 'Array', 'Object', 'Custom'];
 
 const modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
 
