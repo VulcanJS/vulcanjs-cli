@@ -11,8 +11,8 @@ const <%= collectionName %> = createCollection({
   schema,
   collectionName: '<%= collectionName %>',
   typeName: '<%= typeName %>',
-  <%if (!isAddCustomResolvers) { %>resolvers: getDefaultResolvers(<%= collectionName %>)<%} else {%>resolvers<%} %>,
-  <%if (!isAddCustomMutations) { %>mutations: getDefaultMutations(<%= collectionName %>)<%} else {%>mutations<%} %>,
+  <%if (!isAddCustomResolvers) { %>resolvers: getDefaultResolvers('<%= collectionName %>')<%} else {%>resolvers<%} %>,
+  <%if (!isAddCustomMutations) { %>mutations: getDefaultMutations('<%= collectionName %>')<%} else {%>mutations<%} %>,
 });
 
 export default <%= collectionName %>;
