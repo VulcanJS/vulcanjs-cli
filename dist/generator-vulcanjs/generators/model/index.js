@@ -41,13 +41,15 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithManualList', 'packageNameIfManual', 'modelName');
+      var questions = this._getQuestions('packageNameWithManualList', 'packageNameIfManual', 'modelName', 'isAddCustomResolvers', 'isAddCustomMutations');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
           modelName: _this2._finalize('modelName', answers),
           collectionName: _this2._finalize('collectionName', answers),
-          typeName: _this2._finalize('pascalModelName', answers)
+          typeName: _this2._finalize('pascalModelName', answers),
+          isAddCustomResolvers: _this2._finalize('raw', 'isAddCustomResolvers', answers),
+          isAddCustomMutations: _this2._finalize('raw', 'isAddCustomMutations', answers)
         };
         _this2._composeGenerators();
       });
@@ -55,16 +57,18 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_composeGenerators',
     value: function _composeGenerators() {
-      var _this3 = this;
-
-      var modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
-      modelParts.forEach(function (modelPart) {
+      function composeWithModelPart(modelPart) {
         var generator = require.resolve('./' + modelPart);
-        var nextOptions = _extends({}, _this3.options, _this3.props, {
+        var nextOptions = _extends({}, this.options, this.props, {
           dontAsk: true
         });
-        _this3.composeWith(generator, nextOptions);
-      });
+        this.composeWith(generator, nextOptions);
+      }
+      var boundCompose = composeWithModelPart.bind(this);
+      var modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
+      if (this.props.isAddCustomResolvers) modelParts.push('resolvers');
+      if (this.props.isAddCustomMutations) modelParts.push('mutations');
+      modelParts.forEach(boundCompose);
     }
   }, {
     key: 'configuring',

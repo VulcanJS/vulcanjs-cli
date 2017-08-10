@@ -18,9 +18,15 @@ const schema = {
   //   type: String,
   //   optional: true,
   //   viewableBy: ['guests'],
-  //   resolveAs: 'user: User', // resolve this field as "user" on the client
+  //   resolveAs: {
+  //     fieldName: 'user',
+  //     type: 'User',
+  //     resolver: (movie, args, context) => {
+  //       return context.Users.findOne({ _id: movie.userId }, { fields: context.Users.getViewableFields(context.currentUser, context.Users) });
+  //     },
+  //     addOriginalField: true
+  //   }
   // },
-
   <% customSchemaProperties.forEach((schemaProperty) => { %>
     <%- include('./partials/schemaProperty.js', schemaProperty) %>
   <% }); %>

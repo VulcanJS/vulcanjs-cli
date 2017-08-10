@@ -33,7 +33,7 @@ var packageManagers = ['yarn', 'npm'];
 
 var visitorTypes = ['Guests', 'Members', 'Admins'];
 
-var schemaPropertyTypes = ['String', 'Number', 'Array', 'Object', 'Custom'];
+var schemaPropertyTypes = ['String', 'Number', 'Boolean', 'Array', 'Object', 'Custom'];
 
 var modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
 

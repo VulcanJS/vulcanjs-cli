@@ -18,7 +18,6 @@ module.exports = class extends VulcanGenerator {
     const questions = this._getQuestions(
       'packageNameWithNumModelsList',
       'modelNameList'
-      // 'defaultResolvers'
     );
     return this.prompt(questions)
     .then((answers) => {
@@ -29,9 +28,6 @@ module.exports = class extends VulcanGenerator {
         listResolverName: this._finalize('resolverName', 'List', answers),
         singleResolverName: this._finalize('resolverName', 'Single', answers),
         totalResolverName: this._finalize('resolverName', 'Total', answers),
-        hasListResolver: true,
-        hasSingleResolver: true,
-        hasTotalResolver: true,
       };
     });
   }

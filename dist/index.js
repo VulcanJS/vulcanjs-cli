@@ -14,7 +14,6 @@ var routeGenerator = require.resolve('./generator-vulcanjs/generators/route');
 var remover = require.resolve('./generator-vulcanjs/generators/remove');
 var lister = require.resolve('./generator-vulcanjs/generators/list');
 var _init = require.resolve('./generator-vulcanjs/generators/init');
-var unshallow = require.resolve('./generator-vulcanjs/generators/unshallow');
 var _start = require.resolve('./generator-vulcanjs/generators/start');
 
 var env = yeoman.createEnv();

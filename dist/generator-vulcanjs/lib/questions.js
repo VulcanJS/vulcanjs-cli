@@ -319,6 +319,30 @@ function setup(generatorSetup) {
       };
     }
 
+    function isAddCustomResolvers() {
+      return {
+        type: 'confirm',
+        name: 'isAddCustomResolvers',
+        message: uiText.messages.isAddCustomResolvers,
+        when: function when() {
+          return _when('isAddCustomResolvers');
+        },
+        default: false
+      };
+    }
+
+    function isAddCustomMutations() {
+      return {
+        type: 'confirm',
+        name: 'isAddCustomMutations',
+        message: uiText.messages.isAddCustomMutations,
+        when: function when() {
+          return _when('isAddCustomMutations');
+        },
+        default: false
+      };
+    }
+
     function isAddCustomSchemaProperty() {
       return {
         type: 'confirm',
@@ -520,6 +544,10 @@ function setup(generatorSetup) {
           return layoutName();
         case 'isAddCustomSchemaProperty':
           return isAddCustomSchemaProperty();
+        case 'isAddCustomMutations':
+          return isAddCustomMutations();
+        case 'isAddCustomResolvers':
+          return isAddCustomResolvers();
         case 'schemaPropertyName':
           return schemaPropertyName();
         case 'isSchemaPropertyHidden':

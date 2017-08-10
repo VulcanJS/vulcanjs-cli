@@ -19,7 +19,9 @@ module.exports = class extends VulcanGenerator {
     const questions = this._getQuestions(
       'packageNameWithManualList',
       'packageNameIfManual',
-      'modelName'
+      'modelName',
+      'isAddCustomResolvers',
+      'isAddCustomMutations'
     );
     return this.prompt(questions)
     .then((answers) => {
@@ -28,14 +30,15 @@ module.exports = class extends VulcanGenerator {
         modelName: this._finalize('modelName', answers),
         collectionName: this._finalize('collectionName', answers),
         typeName: this._finalize('pascalModelName', answers),
+        isAddCustomResolvers: this._finalize('raw', 'isAddCustomResolvers', answers),
+        isAddCustomMutations: this._finalize('raw', 'isAddCustomMutations', answers),
       };
       this._composeGenerators();
     });
   }
 
   _composeGenerators () {
-    const modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
-    modelParts.forEach((modelPart) => {
+    function composeWithModelPart (modelPart) {
       const generator = require.resolve(`./${modelPart}`);
       const nextOptions = {
         ...this.options,
@@ -43,7 +46,12 @@ module.exports = class extends VulcanGenerator {
         dontAsk: true,
       };
       this.composeWith(generator, nextOptions);
-    });
+    }
+    const boundCompose = composeWithModelPart.bind(this);
+    const modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
+    if (this.props.isAddCustomResolvers) modelParts.push('resolvers');
+    if (this.props.isAddCustomMutations) modelParts.push('mutations');
+    modelParts.forEach(boundCompose);
   }
 
   configuring () {
