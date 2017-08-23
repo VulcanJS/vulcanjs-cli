@@ -15,7 +15,10 @@ var recognizedActions = {
   l: 'list',
   i: 'init',
   init: 'init',
-  start: 'start'
+  start: 'start',
+  conf: 'config',
+  config: 'config',
+  configure: 'config'
 };
 
 var genericProcessor = function genericProcessor(args) {
@@ -47,7 +50,8 @@ var argsProcessors = {
   remove: genericProcessor,
   list: genericProcessor,
   create: createProcessor,
-  start: genericProcessor
+  start: genericProcessor,
+  config: genericProcessor
 };
 
 function usage() {
@@ -63,6 +67,8 @@ function usage() {
   console.log(chalk.grey('\nProject initialisation'));
   console.log('  vulcan create <appName>');
   console.log('  vulcan init <appName>');
+  console.log(chalk.grey('\nProject settings'));
+  console.log('  vulcan conf|configure');
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
   console.log('  vulcan (generate|g) model <packageName> <modelName>');
