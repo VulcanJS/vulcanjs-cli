@@ -1,14 +1,13 @@
 const chalk = require('chalk');
 const VulcanGenerator = require('../../lib/VulcanGenerator');
 const confQuestions = require("./questions");
-const store = require('mem-fs').create();
-const memFs = require('mem-fs-editor').create(store);
+const sh = require("../../lib/sessionHandler");
+const sessionHandler = new sh(); 
+
 
 module.exports = class extends VulcanGenerator {
-  _registerArguments() {
-  }
+
   initializing() {
-    this._getQuestions = confQuestions.setup();
 
     // Ensure vulcan project
     this._assert('isVulcan');
@@ -21,18 +20,64 @@ module.exports = class extends VulcanGenerator {
       this.destinationPath()
       );
 
-    // Make sure the settings.json file exists
-    this.settings = memFs.readJSON("settings.json")
-    if (!this.settings) {
-      this.settings = memFs.readJSON("sample_settings.json")
-      if (!this.settings) {
-        throw("Failed to retrieve a sample settings.json!");
-      }
-      this.copiedSample = true;
+    var that = this
+    var generator = this 
+    var newQuestion = () => {
+      return this.prompt([{
+          type: 'list',
+          name: 'action',
+          message: 'Select a category to configure, or exit.',
+          choices: [
+            {name: 'Start options (port, packages location,...)', value: 'start', checked: false},
+            {name: 'Site informations (title, image,...)', value: 'public', checked: false},
+            {name: 'Emailing  (address, mailchimp,...)', value: 'emailing', checked: false},
+            {name: 'Quit', value: 'quit', checked: false},
+          ],
+        }])
     }
 
+    function getAll() {
+      return newQuestion().then((answers) => {
+        if ( answers.action === "quit") {
+          return;
+        } else {
+          that.action = answers.action;
+          // It should get the list of parameters by action 
+          var choicesList = confQuestions.getList( that.action )
+          that.prompt([{
+                type: 'list',
+                name: 'parameter',
+                pageSize: 20,
+                message: 'Please choose a parameter',
+                choice: choicesList,
+                choices: choicesList
+          }]).then((answers) => {
+  
+            that.parameter = answers.parameter  
+            var currentValue = chalk.green(sessionHandler.getParamValue( generator.action, generator.parameter ) || "[!] Nothing set yet ");
+            that.log( `Current value for parameter is '${currentValue}'`);
+            // It should require the value for the parameter 
+            return that.prompt([{
+                type: 'input',
+                name: 'value',
+                message: "Parameter value"
+            }]);
+          
+          }).then((answers) => {
+            that.value = answers.value
+            that.log(`\nSaving ${that.action}: ${that.parameter} = ${that.value}...`);
+            sessionHandler.setValue( that.action, that.parameter, that.value )
+            that.log(chalk.green("OK")+"\n");
+            return getAll()
+
+          })
+        }
+      })
+    }
+    return getAll();
+
     // Prompt for questions
-    return this.prompt([{
+    return that.prompt([{
         type: 'checkbox',
         pageSize: 20,
         name: 'parametersList',
@@ -41,32 +86,35 @@ module.exports = class extends VulcanGenerator {
           {name: 'Port', value: 'port', checked: false},
         ],
       }]).then((answers) => {
-      this.questionsList = answers.parametersList;
-    });
-    ;
+      return that.prompt([{
+          type: 'input',
+          name: 'value',
+          message: 'Do you want to continue',
+//        choices: [
+//          {name: 'Port', value: 'port', checked: false},
+//        ],
+        }])
+    }).then((answers) => {
+      console.log("record " + answers)
+    })
+      ;
   }
 
   prompting() {
 
-    const questions = this._getQuestions(...this.questionsList);
-    console.log(questions)
-    return this.prompt(questions).then((answers) => {
-      console.log(answers)
-    });
-
+    /**    
+     const questions = this._getQuestions(...this.questionsList);
+     console.log(questions)
+     return this.prompt(questions).then((answers) => {
+     console.log(answers)
+     });
+     */
   }
 
   writing() {
     if (!this._canWrite()) {
       return;
     }
-    memFs.writeJSON("settings.json", this.settings)
-    memFs.commit([], () => {
-    })
-    /*
-     memFs.extendJSON('settings.json', {a:1});
-     memFs.commit([], () => { console.log("ok") } )
-     */
   }
 
   end() {

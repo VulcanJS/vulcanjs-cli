@@ -17,6 +17,7 @@ function combineValidators() {
 }
 
 var assertNonEmpty = function assertNonEmpty(input) {
+  console.log(input);
   if (input) return true;
   return uiText.errors.isEmpty;
 };
