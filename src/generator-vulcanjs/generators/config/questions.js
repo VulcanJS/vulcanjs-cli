@@ -8,10 +8,10 @@ const validations = require('../../lib/validations');
  * @returns {unresolved}
  */
 function getPrompts(...questionNames) {
+
   // Start
   function port () { return { type: 'input',name: 'port',message: 'Port:',default: 3000,validate: validations.assertNonEmpty, }; }
   function packageLocation () { return { type: 'input',name: 'port', message: 'PackageLocation:',default: "~/.Vulcan",validate: validations.assertNonEmpty, }; }
-      
 
   // public
   function title() { return {type: 'input', name: 'title', message: 'title:', default: "Your site title", validate: validations.assertNonEmpty, }; } ;
@@ -108,8 +108,6 @@ function getPrompts(...questionNames) {
  */
 function getList(category) {
   
-  console.log( 'Get List '+category)
-
   switch (category) {
     case 'start' :
       return [

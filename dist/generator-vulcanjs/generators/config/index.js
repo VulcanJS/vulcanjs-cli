@@ -24,8 +24,8 @@ module.exports = function (_VulcanGenerator) {
   }
 
   _createClass(_class, [{
-    key: 'initializing',
-    value: function initializing() {
+    key: 'prompting',
+    value: function prompting() {
       var _this2 = this;
 
       // Ensure vulcan project
@@ -37,8 +37,11 @@ module.exports = function (_VulcanGenerator) {
       // Move to project root
       this.destinationRoot(this.destinationPath());
 
-      var that = this;
       var generator = this;
+
+      /**
+       * Recursive loop entry point
+       */
       var newQuestion = function newQuestion() {
         return _this2.prompt([{
           type: 'list',
@@ -48,15 +51,18 @@ module.exports = function (_VulcanGenerator) {
         }]);
       };
 
+      /**
+       * Recursive loop body
+       */
       function getAll() {
         return newQuestion().then(function (answers) {
           if (answers.action === "quit") {
             return;
           } else {
-            that.action = answers.action;
+            generator.action = answers.action;
             // It should get the list of parameters by action 
-            var choicesList = confQuestions.getList(that.action);
-            that.prompt([{
+            var choicesList = confQuestions.getList(generator.action);
+            generator.prompt([{
               type: 'list',
               name: 'parameter',
               pageSize: 20,
@@ -65,70 +71,23 @@ module.exports = function (_VulcanGenerator) {
               choices: choicesList
             }]).then(function (answers) {
 
-              that.parameter = answers.parameter;
+              generator.parameter = answers.parameter;
               var currentValue = chalk.green(sessionHandler.getParamValue(generator.action, generator.parameter) || "[!] Nothing set yet ");
-              that.log('Current value for parameter is \'' + currentValue + '\'');
+              generator.log('Current value for parameter is \'' + currentValue + '\'');
               // It should require the value for the parameter 
-              return that.prompt([{
-                type: 'input',
-                name: 'value',
-                message: "Parameter value"
-              }]);
+              var promptParams = confQuestions.getPrompts(generator.parameter);
+              return generator.prompt(promptParams);
             }).then(function (answers) {
-              that.value = answers.value;
-              that.log('\nSaving ' + that.action + ': ' + that.parameter + ' = ' + that.value + '...');
-              sessionHandler.setValue(that.action, that.parameter, that.value);
-              that.log(chalk.green("OK") + "\n");
+              generator.value = answers[generator.parameter];
+              generator.log('\nSaving ' + generator.action + ': ' + generator.parameter + ' = ' + generator.value + '...');
+              sessionHandler.setValue(generator.action, generator.parameter, generator.value);
+              generator.log(chalk.green("OK") + "\n");
               return getAll();
             });
           }
         });
       }
       return getAll();
-
-      // Prompt for questions
-      return that.prompt([{
-        type: 'checkbox',
-        pageSize: 20,
-        name: 'parametersList',
-        message: 'Which parameters do you want to configure',
-        choices: [{ name: 'Port', value: 'port', checked: false }]
-      }]).then(function (answers) {
-        return that.prompt([{
-          type: 'input',
-          name: 'value',
-          message: 'Do you want to continue'
-          //        choices: [
-          //          {name: 'Port', value: 'port', checked: false},
-          //        ],
-        }]);
-      }).then(function (answers) {
-        console.log("record " + answers);
-      });
-    }
-  }, {
-    key: 'prompting',
-    value: function prompting() {
-
-      /**    
-       const questions = this._getQuestions(...this.questionsList);
-       console.log(questions)
-       return this.prompt(questions).then((answers) => {
-       console.log(answers)
-       });
-       */
-    }
-  }, {
-    key: 'writing',
-    value: function writing() {
-      if (!this._canWrite()) {
-        return;
-      }
-    }
-  }, {
-    key: 'end',
-    value: function end() {
-      this._end();
     }
   }]);
 

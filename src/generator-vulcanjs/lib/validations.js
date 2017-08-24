@@ -14,7 +14,6 @@ function combineValidators (...fns) {
 }
 
 const assertNonEmpty = (input) => {
-console.log( input ) 
   if (input) return true;
   return uiText.errors.isEmpty;
 };

@@ -9,6 +9,7 @@ var validations = require('../../lib/validations');
  * @returns {unresolved}
  */
 function getPrompts() {
+
   // Start
   function port() {
     return { type: 'input', name: 'port', message: 'Port:', default: 3000, validate: validations.assertNonEmpty };
@@ -204,8 +205,6 @@ function getPrompts() {
  * @returns {Array}
  */
 function getList(category) {
-
-  console.log('Get List ' + category);
 
   switch (category) {
     case 'start':
