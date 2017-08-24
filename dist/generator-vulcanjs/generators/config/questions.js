@@ -15,7 +15,7 @@ function getPrompts() {
     return { type: 'input', name: 'port', message: 'Port:', default: 3000, validate: validations.assertNonEmpty };
   }
   function packageLocation() {
-    return { type: 'input', name: 'port', message: 'PackageLocation:', default: "~/.Vulcan", validate: validations.assertNonEmpty };
+    return { type: 'input', name: 'packageLocation', message: 'PackageLocation:', default: "~/.Vulcan", validate: validations.assertNonEmpty };
   }
 
   // public
