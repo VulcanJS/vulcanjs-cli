@@ -10,6 +10,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var chalk = require('chalk');
 var VulcanGenerator = require('../../lib/VulcanGenerator');
+var sh = require('../../lib/settingsHandler');
+var sessionHandler = new sh();
 
 module.exports = function (_VulcanGenerator) {
   _inherits(_class, _VulcanGenerator);
@@ -21,10 +23,31 @@ module.exports = function (_VulcanGenerator) {
   }
 
   _createClass(_class, [{
-    key: 'default',
-    value: function _default() {
+    key: 'initializing',
+    value: function initializing() {
+      return this.prompt([{
+        type: 'list',
+        name: 'action',
+        message: 'Select a category to configure, or exit.',
+        choices: [{ name: 'Start options (port, packages location,...)', value: 'start', checked: false }, { name: 'Site informations (title, image,...)', value: 'public', checked: false }, { name: 'Emailing  (address, mailchimp,...)', value: 'emailing', checked: false }, { name: 'Quit', value: 'quit', checked: false }]
+      }]);
+    }
+  }, {
+    key: 'writing',
+    value: function writing() {
+
+      var env = process.env;
+      var args = ['run'];
+      var port = sessionHandler.getParamValue(null, 'port');
+      if (port) {
+        args.push('--port', port);
+      }
+      var packageLocation = sessionHandler.getParamValue(null, 'packageLocation');
+      if (packageLocation) {
+        env['METEOR_PACKAGE_DIRS'] = packageLocation + '/packages';
+      }
       this.log(chalk.green('\nStarting your app... \n'));
-      this.spawnCommandSync('meteor', ['run']);
+      this.spawnCommandSync('meteor', args, { env: env });
     }
   }]);
 
