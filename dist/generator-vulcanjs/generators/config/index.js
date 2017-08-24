@@ -11,8 +11,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var chalk = require('chalk');
 var VulcanGenerator = require('../../lib/VulcanGenerator');
 var confQuestions = require("./questions");
-var sh = require("../../lib/sessionHandler");
-var sessionHandler = new sh();
+var sh = require("../../lib/settingsHandler");
+var settingsHandler = new sh();
 
 module.exports = function (_VulcanGenerator) {
   _inherits(_class, _VulcanGenerator);
@@ -72,7 +72,7 @@ module.exports = function (_VulcanGenerator) {
             }]).then(function (answers) {
 
               generator.parameter = answers.parameter;
-              var currentValue = chalk.green(sessionHandler.getParamValue(generator.action, generator.parameter) || "[!] Nothing set yet ");
+              var currentValue = chalk.green(settingsHandler.getParamValue(generator.action, generator.parameter) || "[!] Nothing set yet ");
               generator.log('Current value for parameter is \'' + currentValue + '\'');
               // It should require the value for the parameter 
               var promptParams = confQuestions.getPrompts(generator.parameter);
@@ -80,7 +80,7 @@ module.exports = function (_VulcanGenerator) {
             }).then(function (answers) {
               generator.value = answers[generator.parameter];
               generator.log('\nSaving ' + generator.action + ': ' + generator.parameter + ' = ' + generator.value + '...');
-              sessionHandler.setValue(generator.action, generator.parameter, generator.value);
+              settingsHandler.setValue(generator.action, generator.parameter, generator.value);
               generator.log(chalk.green("OK") + "\n");
               return getAll();
             });

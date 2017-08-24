@@ -9,14 +9,14 @@ var memFs = require('mem-fs-editor').create(store);
 
 /**
  * 
- * @returns {nm$_sessionHandler.sessionHandler.instance}
+ * @returns {nm$_settingsHandler.settingsHandler.instance}
  */
 module.exports = function () {
-  function sessionHandler() {
-    _classCallCheck(this, sessionHandler);
+  function settingsHandler() {
+    _classCallCheck(this, settingsHandler);
   }
 
-  _createClass(sessionHandler, [{
+  _createClass(settingsHandler, [{
     key: 'getSettings',
 
 
@@ -39,7 +39,7 @@ module.exports = function () {
      * 
      * @param {type} action
      * @param {type} key
-     * @returns {thissettings.public|sessionHandler.this.getParamValue.value|this.settings}
+     * @returns {thissettings.public|settingsHandler.this.getParamValue.value|this.settings}
      */
 
   }, {
@@ -74,5 +74,5 @@ module.exports = function () {
     }
   }]);
 
-  return sessionHandler;
+  return settingsHandler;
 }();

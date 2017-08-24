@@ -1,8 +1,8 @@
 const chalk = require('chalk');
 const VulcanGenerator = require('../../lib/VulcanGenerator');
 const confQuestions = require("./questions");
-const sh = require("../../lib/sessionHandler");
-const sessionHandler = new sh();
+const sh = require("../../lib/settingsHandler");
+const settingsHandler = new sh();
 
 module.exports = class extends VulcanGenerator {
 
@@ -59,7 +59,7 @@ module.exports = class extends VulcanGenerator {
             }]).then((answers) => {
 
             generator.parameter = answers.parameter
-            var currentValue = chalk.green(sessionHandler.getParamValue(generator.action, generator.parameter) || "[!] Nothing set yet ");
+            var currentValue = chalk.green(settingsHandler.getParamValue(generator.action, generator.parameter) || "[!] Nothing set yet ");
             generator.log(`Current value for parameter is '${currentValue}'`);
             // It should require the value for the parameter 
             var promptParams = confQuestions.getPrompts(generator.parameter);
@@ -68,7 +68,7 @@ module.exports = class extends VulcanGenerator {
           }).then((answers) => {
             generator.value = answers[generator.parameter];
             generator.log(`\nSaving ${generator.action}: ${generator.parameter} = ${generator.value}...`);
-            sessionHandler.setValue(generator.action, generator.parameter, generator.value)
+            settingsHandler.setValue(generator.action, generator.parameter, generator.value)
             generator.log(chalk.green("OK") + "\n");
             return getAll()
 

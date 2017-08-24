@@ -3,9 +3,9 @@ const memFs = require('mem-fs-editor').create(store);
 
 /**
  * 
- * @returns {nm$_sessionHandler.sessionHandler.instance}
+ * @returns {nm$_settingsHandler.settingsHandler.instance}
  */
-module.exports = class sessionHandler {
+module.exports = class settingsHandler {
 
   /**
    * 
@@ -26,7 +26,7 @@ module.exports = class sessionHandler {
    * 
    * @param {type} action
    * @param {type} key
-   * @returns {thissettings.public|sessionHandler.this.getParamValue.value|this.settings}
+   * @returns {thissettings.public|settingsHandler.this.getParamValue.value|this.settings}
    */
   getParamValue(action, key) {
 
