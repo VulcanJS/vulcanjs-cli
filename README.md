@@ -11,7 +11,7 @@
 
 ## Warning
 
-This tool is very new and is still under development. Use with caution. Always commit your code before using any program that modifies it.
+This tool is not maintained anymore, and does not work with the later versions of VulcanJS.
 
 ## Table of Contents
 
