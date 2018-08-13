@@ -10,7 +10,7 @@ const descriptions = {
   componentName: 'The name of your component',
   routeName: 'The name of your route',
   routePath: 'The path of your route',
-  layoutName: 'The layot that will wrap this route\'s component',
+  layoutName: 'The layout that will wrap this route\'s component',
   isRegisterComponent: 'Set to true of you want to register the component to Vulcan.',
   isAddComponentToStoryBook: 'Set to true of you want to add the component to storybook.',
   componentType: 'The type of the component. Is it a pure function, or a class?',
