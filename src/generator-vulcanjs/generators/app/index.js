@@ -1,28 +1,30 @@
 const chalk = require('chalk');
 const VulcanGenerator = require('../../lib/VulcanGenerator');
 
+const STARTER_REPO_URL = 'https://github.com/VulcanJS/Vulcan-Starter.git';
+
 module.exports = class extends VulcanGenerator {
-  _registerArguments() {
+  _registerArguments () {
     this._registerOptions(
       'appName',
       'doShallowClone',
       'reactExtension',
       'packageManager'
-      );
+    );
   }
 
-  initializing() {
+  initializing () {
     this._assert('notVulcan');
   }
 
-  prompting() {
+  prompting () {
     if (!this._canPrompt()) {
       return false;
     }
     const questions = this._getQuestions(
       'appName',
       'packageManager'
-      );
+    );
     return this.prompt(questions).then((answers) => {
       this.props = {
         appName: this._finalize('appName', answers),
@@ -31,20 +33,20 @@ module.exports = class extends VulcanGenerator {
     });
   }
 
-  writing() {
+  writing () {
     if (!this._canInstall()) {
       return;
     }
 
-    this.log(chalk.green('\nPulling the most up to date git repository... \n'));
+    this.log(chalk.green('\nPulling the most up to date Vulcan-Starter git repository... \n'));
     this.spawnCommandSync('git', [
       'clone',
-      'https://github.com/Vulcanjs/Vulcan',
+      STARTER_REPO_URL,
       this.props.appName,
     ]);
     this.destinationRoot(
       this.destinationPath(this.props.appName)
-      );
+    );
     this.installDependencies({
       npm: this.props.packageManager === 'npm',
       bower: false,
@@ -67,7 +69,7 @@ module.exports = class extends VulcanGenerator {
     this._commitStore();
   }
 
-  end() {
+  end () {
     this._end();
     if (!this._hasNoErrors()) {
       return;

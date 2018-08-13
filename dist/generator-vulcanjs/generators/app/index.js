@@ -11,6 +11,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var chalk = require('chalk');
 var VulcanGenerator = require('../../lib/VulcanGenerator');
 
+var STARTER_REPO_URL = 'https://github.com/VulcanJS/Vulcan-Starter.git';
+
 module.exports = function (_VulcanGenerator) {
   _inherits(_class, _VulcanGenerator);
 
@@ -53,8 +55,8 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
 
-      this.log(chalk.green('\nPulling the most up to date git repository... \n'));
-      this.spawnCommandSync('git', ['clone', 'https://github.com/Vulcanjs/Vulcan', this.props.appName]);
+      this.log(chalk.green('\nPulling the most up to date Vulcan-Starter git repository... \n'));
+      this.spawnCommandSync('git', ['clone', STARTER_REPO_URL, this.props.appName]);
       this.destinationRoot(this.destinationPath(this.props.appName));
       this.installDependencies({
         npm: this.props.packageManager === 'npm',
