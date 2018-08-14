@@ -48,6 +48,7 @@ function setup(generatorSetup) {
       return libPath.apply(undefined, [options, 'modules'].concat(args));
     }
 
+    // model = module in Vulcan
     function modelsPath(options) {
       for (var _len7 = arguments.length, args = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
         args[_key7 - 1] = arguments[_key7];
@@ -89,7 +90,7 @@ function setup(generatorSetup) {
     }
 
     function componentsIndexPath(options) {
-      return componentsPath(options, 'index.js');
+      return modulesPath(options, 'components.js');
     }
 
     function packageTestsPath(options) {

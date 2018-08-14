@@ -43,6 +43,7 @@ function setup (generatorSetup) {
       );
     }
 
+    // model = module in Vulcan
     function modelsPath (options, ...args) {
       return modulesPath(
         options,
@@ -90,9 +91,9 @@ function setup (generatorSetup) {
     }
 
     function componentsIndexPath (options) {
-      return componentsPath(
+      return modulesPath(
         options,
-        'index.js'
+        'components.js'
       );
     }
 

@@ -88,7 +88,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_writeComponentsIndex',
     value: function _writeComponentsIndex() {
-      this.fs.copyTpl(this.templatePath('components.index.js'), this._getPath({ isAbsolute: true }, 'componentsIndex'), this.props);
+      this.fs.copyTpl(this.templatePath('components.js'), this._getPath({ isAbsolute: true }, 'componentsIndex'), this.props);
     }
   }, {
     key: '_writeRoutes',

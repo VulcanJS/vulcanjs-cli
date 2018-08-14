@@ -29,9 +29,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName',
-      // 'modelName',
-      'componentName');
+      this._registerOptions('packageName', 'componentName');
     }
   }, {
     key: 'prompting',
@@ -41,14 +39,10 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameList', 'packageNameIfManual',
-      // 'modelNameList',
-      // 'modelNameIfManual',
-      'componentName', 'componentType', 'isRegisterComponent');
+      var questions = this._getQuestions('packageNameList', 'packageNameIfManual', 'componentName', 'componentType', 'isRegisterComponent');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          // modelName: this._finalize('modelName', answers),
           componentName: _this2._finalize('componentName', answers),
           componentFileName: _this2._finalize('componentFileName', answers),
           componentType: _this2._finalize('raw', 'componentType', answers),

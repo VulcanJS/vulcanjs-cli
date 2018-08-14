@@ -20,14 +20,14 @@ module.exports = class extends VulcanGenerator {
       'modelNameList'
     );
     return this.prompt(questions)
-    .then((answers) => {
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        modelName: this._finalize('modelName', answers),
-        typeName: this._finalize('typeName', answers),
-        collectionName: this._finalize('collectionName', answers),
-      };
-    });
+      .then((answers) => {
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+          modelName: this._finalize('modelName', answers),
+          typeName: this._finalize('typeName', answers),
+          collectionName: this._finalize('collectionName', answers),
+        };
+      });
   }
 
   _writeFragments () {

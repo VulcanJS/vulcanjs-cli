@@ -22,19 +22,19 @@ module.exports = class extends VulcanGenerator {
       'modelName'
     );
     return this.prompt(questions)
-    .then((answers) => {
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        modelName: this._finalize('modelName', answers),
-        collectionName: this._finalize('collectionName', answers),
-        typeName: this._finalize('pascalModelName', answers),
-      };
-      this._composeGenerators();
-    });
+      .then((answers) => {
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+          modelName: this._finalize('modelName', answers),
+          collectionName: this._finalize('collectionName', answers),
+          typeName: this._finalize('pascalModelName', answers),
+        };
+        this._composeGenerators();
+      });
   }
 
   _composeGenerators () {
-    const modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
+    const modelParts = ['fragments', 'schema', 'permissions'];
     modelParts.forEach((modelPart) => {
       const generator = require.resolve(`./${modelPart}`);
       const nextOptions = {
