@@ -61,8 +61,8 @@ function usage() {
   console.log('    <...>      Parameters. If not provided, interactively entered');
   console.log(chalk.grey('\nProject initialisation'));
   console.log('  vulcan create <appName>');
-  console.log('  vulcan init <appName>');
-  console.log('  vulcan unshallow ');
+  // console.log('  vulcan init <appName>');
+  // console.log('  vulcan unshallow ');
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
   console.log('  vulcan (generate|g) model <packageName> <modelName>');
