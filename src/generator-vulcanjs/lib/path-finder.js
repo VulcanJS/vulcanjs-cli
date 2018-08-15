@@ -6,6 +6,7 @@ function setup (generatorSetup) {
     function getPath (options, ...args) {
       const relativeToProjectRootPath = path.join(...args);
       const absolutePath = generator.destinationPath(relativeToProjectRootPath);
+      console.log('getPath aboslutePath', absolutePath);
       if (options.relativeTo) return path.relative(options.relativeTo, absolutePath);
       return options.isAbsolute ? absolutePath : relativeToProjectRootPath;
     }
@@ -14,6 +15,14 @@ function setup (generatorSetup) {
       return getPath(
         options,
         '.stories',
+        ...args
+      );
+    }
+
+    function packagesPath (options, ...args) {
+      return getPath(
+        options,
+        'packages',
         ...args
       );
     }
@@ -162,6 +171,7 @@ function setup (generatorSetup) {
 
     switch (pathType) {
       case 'rootStories': return rootStoriesPath(wrappedOptions, ...wrappedArgs);
+      case 'packages': return packagesPath(wrappedOptions, ...wrappedArgs);
       case 'package': return packagePath(wrappedOptions, ...wrappedArgs);
       case 'lib': return libPath(wrappedOptions, ...wrappedArgs);
       case 'models': return modelsPath(wrappedOptions, ...wrappedArgs);
@@ -185,6 +195,24 @@ function setup (generatorSetup) {
   return get;
 }
 
+function findModules (generator, options, packageName, ...args) {
+  function getPath () {
+    const relativeToProjectRootPath = path.join(...args);
+    const absolutePath = generator.destinationPath(relativeToProjectRootPath);
+    if (options.relativeTo) return path.relative(options.relativeTo, absolutePath);
+    return options.isAbsolute ? absolutePath : relativeToProjectRootPath;
+  }
+  return getPath(
+    options,
+    'packages',
+    packageName,
+    'lib',
+    'modules',
+    ...args
+  );
+}
+
 module.exports = {
   setup,
+  findModules,
 };

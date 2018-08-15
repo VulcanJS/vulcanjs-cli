@@ -2,9 +2,11 @@ const uiText = require('./ui-text');
 const common = require('./common');
 const store = require('./store');
 const validations = require('./validations');
+const makeLister = require('./lister');
 
 function setup (generatorSetup) {
   const generator = generatorSetup;
+  const lister = makeLister.setup(generatorSetup);
 
   function get (...questionNames) {
     const options = generator.options;
@@ -126,14 +128,14 @@ function setup (generatorSetup) {
         choices: () => {
           let packageNames;
           if (questionOptions && questionOptions.isWithNumModels) {
-            packageNames = store.get('packageNamesWithNumModels')
-            .sort(common.numModelsSort)
-            .map(({ name, numModels }) => {
-              if (numModels > 0) return name;
-              return { name, value: name, disabled: true };
-            });
+            packageNames = lister.listPackagesWithNbModules()
+              .sort(common.numModelsSort)
+              .map(({ name, numModels }) => {
+                if (numModels > 0) return name;
+                return { name, value: name, disabled: true };
+              });
           } else {
-            packageNames = store.get('packageNames');
+            packageNames = lister.listPackages();
           }
           const preProcessedChoices = [...packageNames];
           if (questionOptions.isAllAllowed) { preProcessedChoices.push(common.allChoice); }
@@ -141,7 +143,7 @@ function setup (generatorSetup) {
           return preProcessedChoices;
         },
         default: common.getDefaultChoiceIndex(
-          store.get('packageNames'),
+          lister.listPackages(),
           options.packageName
         ),
       };
@@ -192,7 +194,7 @@ function setup (generatorSetup) {
         when: () => when('modelName'),
         choices: (answers) => {
           const finalPackageName = generator._finalize('packageName', answers);
-          const modelNames = store.get('modelNames', finalPackageName);
+          const modelNames = lister.listModules(finalPackageName);
           const preProcessedChoices = [...modelNames];
           if (questionOptions.isManualAllowed) {
             preProcessedChoices.push(common.manualChoice);
@@ -201,7 +203,7 @@ function setup (generatorSetup) {
         },
         default: (answers) => {
           const finalPackageName = generator._finalize('packageName', answers);
-          const modelNames = store.get('modelNames', finalPackageName);
+          const modelNames = lister.listModules(finalPackageName);
           return common.getDefaultChoiceIndex(
             modelNames,
             options.modelName

@@ -6,9 +6,11 @@ var uiText = require('./ui-text');
 var common = require('./common');
 var store = require('./store');
 var validations = require('./validations');
+var makeLister = require('./lister');
 
 function setup(generatorSetup) {
   var generator = generatorSetup;
+  var lister = makeLister.setup(generatorSetup);
 
   function get() {
     var options = generator.options;
@@ -131,7 +133,7 @@ function setup(generatorSetup) {
         choices: function choices() {
           var packageNames = void 0;
           if (questionOptions && questionOptions.isWithNumModels) {
-            packageNames = store.get('packageNamesWithNumModels').sort(common.numModelsSort).map(function (_ref) {
+            packageNames = lister.listPackagesWithNbModules().sort(common.numModelsSort).map(function (_ref) {
               var name = _ref.name,
                   numModels = _ref.numModels;
 
@@ -139,7 +141,7 @@ function setup(generatorSetup) {
               return { name: name, value: name, disabled: true };
             });
           } else {
-            packageNames = store.get('packageNames');
+            packageNames = lister.listPackages();
           }
           var preProcessedChoices = [].concat(_toConsumableArray(packageNames));
           if (questionOptions.isAllAllowed) {
@@ -150,7 +152,7 @@ function setup(generatorSetup) {
           }
           return preProcessedChoices;
         },
-        default: common.getDefaultChoiceIndex(store.get('packageNames'), options.packageName)
+        default: common.getDefaultChoiceIndex(lister.listPackages(), options.packageName)
       };
     }
 
@@ -197,7 +199,7 @@ function setup(generatorSetup) {
         },
         choices: function choices(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
-          var modelNames = store.get('modelNames', finalPackageName);
+          var modelNames = lister.listModules(finalPackageName);
           var preProcessedChoices = [].concat(_toConsumableArray(modelNames));
           if (questionOptions.isManualAllowed) {
             preProcessedChoices.push(common.manualChoice);
@@ -206,7 +208,7 @@ function setup(generatorSetup) {
         },
         default: function _default(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
-          var modelNames = store.get('modelNames', finalPackageName);
+          var modelNames = lister.listModules(finalPackageName);
           return common.getDefaultChoiceIndex(modelNames, options.modelName);
         }
       };
