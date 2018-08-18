@@ -19,14 +19,20 @@ module.exports = class extends VulcanGenerator {
 
   prompting () {
     if (!this._canPrompt()) { return false; }
-    const questions = this._getQuestions(
-      'packageNameList',
-      'routeName',
-      'routePath',
-      'componentName',
-      'layoutName'
-      // ,'parentRoute'
-    );
+    const argsAndQuestions = [
+      { arg: 'packageName', question: 'packageNameList' },
+      { arg: 'routeName' },
+      { arg: 'routePath' },
+      { arg: 'componentName' },
+      { arg: 'layoutName' },
+    ];
+    const questions = argsAndQuestions.reduce((currentQuestions, { arg, question }) => {
+      if (this._needArg(arg)) {
+        const questionName = question || arg;
+        return [...currentQuestions, ...this._getQuestions(questionName)];
+      }
+      return currentQuestions;
+    }, []);
     return this.prompt(questions)
       .then((answers) => {
         this.props = {

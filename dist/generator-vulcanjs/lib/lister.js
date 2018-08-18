@@ -1,5 +1,7 @@
 'use strict';
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 /**
  * List and count elements of the application (packages, modules, routes etc.)
  */
@@ -41,6 +43,12 @@ function setup(generatorSetup) {
     var packageModulesPath = pathFinder.findModules(generatorSetup, { isAbsolute: true }, pkgName);
     return listFolders(packageModulesPath);
   }
+  function listAllModules() {
+    var packageNames = listPackages();
+    return packageNames.reduce(function (allModules, packageName) {
+      return [].concat(_toConsumableArray(allModules), _toConsumableArray(listModules(packageName)));
+    }, []);
+  }
   function listPackagesWithNbModules() {
     var packages = listPackages();
     return packages.map(function (pkgName) {
@@ -70,6 +78,7 @@ function setup(generatorSetup) {
 
   return {
     listModules: listModules,
+    listAllModules: listAllModules,
     listPackages: listPackages,
     listPackagesWithNbModules: listPackagesWithNbModules,
     countRoutes: countRoutes,

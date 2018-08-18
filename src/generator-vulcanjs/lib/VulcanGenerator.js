@@ -2,7 +2,7 @@ const Generator = require('yeoman-generator');
 const beautify = require('gulp-beautify');
 const questions = require('./questions');
 const finalizers = require('./finalizers');
-const assertions = require('./assertions');
+const makeAssertions = require('./assertions');
 const storeFactory = require('./store');
 const pathFinder = require('./path-finder');
 const optionsManager = require('./optionsManager');
@@ -18,6 +18,8 @@ module.exports = class VulcanGenerator extends Generator {
       const allConfig = this.config.getAll();
       store = storeFactory.init(allConfig);
     }
+
+    const assertions = makeAssertions.setup(this);
     if (!errors) {
       errors = assertions.errors;
     }

@@ -6,13 +6,13 @@ const path = require('path');
 const pathFinder = require('./path-finder');
 const chalk = require('chalk');
 
-function isDirectory (dirPath) {
+function isDirectory(dirPath) {
   return fs.lstatSync(dirPath).isDirectory();
 }
-function isNotPrivate (dirName) {
+function isNotPrivate(dirName) {
   return !/^_/.test(dirName);
 }
-function listFolders (dirPath) {
+function listFolders(dirPath) {
   try {
     const folderContent = fs.readdirSync(dirPath);
     const folders = folderContent.filter((folderName) => isDirectory(path.join(dirPath, folderName)));
@@ -25,19 +25,23 @@ function listFolders (dirPath) {
   }
 }
 
-function setup (generatorSetup) {
+function setup(generatorSetup) {
   const getPath = pathFinder.setup(generatorSetup);
 
-  function listPackages () {
+  function listPackages() {
     const appPackagesPath = getPath({ isAbsolute: true }, 'packages');
     const folders = listFolders(appPackagesPath);
     return folders;
   }
-  function listModules (pkgName) {
+  function listModules(pkgName) {
     const packageModulesPath = pathFinder.findModules(generatorSetup, { isAbsolute: true }, pkgName);
     return listFolders(packageModulesPath);
   }
-  function listPackagesWithNbModules () {
+  function listAllModules() {
+    const packageNames = listPackages();
+    return packageNames.reduce((allModules, packageName) => [...allModules, ...listModules(packageName)], []);
+  }
+  function listPackagesWithNbModules() {
     const packages = listPackages();
     return packages.map((pkgName) => ({
       name: pkgName,
@@ -45,7 +49,7 @@ function setup (generatorSetup) {
     }));
   }
 
-  function countRoutes (pkgName) {
+  function countRoutes(pkgName) {
     const packageRoutesPath = pathFinder.findRoutes(generatorSetup, { isAbsolute: true }, pkgName);
     // TODO: handle errors if the filename has been modified
     try {
@@ -58,12 +62,13 @@ function setup (generatorSetup) {
       return -1;
     }
   }
-  function countModules (pkgName) {
+  function countModules(pkgName) {
     return listModules(pkgName).length;
   }
 
   return {
     listModules,
+    listAllModules,
     listPackages,
     listPackagesWithNbModules,
     countRoutes,
