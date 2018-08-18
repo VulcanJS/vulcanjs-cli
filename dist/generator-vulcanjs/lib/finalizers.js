@@ -8,6 +8,7 @@ var filter = require('./filters').filter;
 var store = require('./store');
 var flatten = require('lodash/flatten');
 var pluralize = require('pluralize');
+var makeLister = require('./lister');
 
 var arrayToEjsString = function arrayToEjsString(arr) {
   var quotedList = arr.map(function (elem) {
@@ -19,6 +20,7 @@ var arrayToEjsString = function arrayToEjsString(arr) {
 
 function setup(generatorSetup) {
   var generator = generatorSetup;
+  var lister = makeLister.setup(generator);
 
   function finalize(propName) {
     function getRaw(keyBeforeRaw) {
@@ -140,8 +142,8 @@ function setup(generatorSetup) {
       return {
         no: id,
         name: packageNameRaw,
-        models: store.num('models', packageNameRaw),
-        routes: store.num('routes', packageNameRaw)
+        models: lister.countModules(packageNameRaw),
+        routes: lister.countRoutes(packageNameRaw)
       };
     }
 

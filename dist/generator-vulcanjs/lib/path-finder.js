@@ -212,21 +212,36 @@ function setup(generatorSetup) {
   return get;
 }
 
-function findModules(generator, options, packageName) {
-  for (var _len19 = arguments.length, args = Array(_len19 > 3 ? _len19 - 3 : 0), _key19 = 3; _key19 < _len19; _key19++) {
-    args[_key19 - 3] = arguments[_key19];
-  }
+function makeGetPath(generator) {
+  function getPath(options) {
+    for (var _len19 = arguments.length, args = Array(_len19 > 1 ? _len19 - 1 : 0), _key19 = 1; _key19 < _len19; _key19++) {
+      args[_key19 - 1] = arguments[_key19];
+    }
 
-  function getPath() {
     var relativeToProjectRootPath = path.join.apply(path, args);
     var absolutePath = generator.destinationPath(relativeToProjectRootPath);
     if (options.relativeTo) return path.relative(options.relativeTo, absolutePath);
     return options.isAbsolute ? absolutePath : relativeToProjectRootPath;
   }
+  return getPath;
+}
+function findModules(generator, options, packageName) {
+  var getPath = makeGetPath(generator);
+
+  for (var _len20 = arguments.length, args = Array(_len20 > 3 ? _len20 - 3 : 0), _key20 = 3; _key20 < _len20; _key20++) {
+    args[_key20 - 3] = arguments[_key20];
+  }
+
   return getPath.apply(undefined, [options, 'packages', packageName, 'lib', 'modules'].concat(args));
+}
+
+// TODO: we should also tolerate a .jsx extension
+function findRoutes(generator, options, packageName) {
+  return findModules(generator, options, packageName, 'routes.js');
 }
 
 module.exports = {
   setup: setup,
-  findModules: findModules
+  findModules: findModules,
+  findRoutes: findRoutes
 };

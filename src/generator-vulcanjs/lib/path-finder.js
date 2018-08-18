@@ -195,13 +195,17 @@ function setup (generatorSetup) {
   return get;
 }
 
-function findModules (generator, options, packageName, ...args) {
-  function getPath () {
+function makeGetPath (generator) {
+  function getPath (options, ...args) {
     const relativeToProjectRootPath = path.join(...args);
     const absolutePath = generator.destinationPath(relativeToProjectRootPath);
     if (options.relativeTo) return path.relative(options.relativeTo, absolutePath);
     return options.isAbsolute ? absolutePath : relativeToProjectRootPath;
   }
+  return getPath;
+}
+function findModules (generator, options, packageName, ...args) {
+  const getPath = makeGetPath(generator);
   return getPath(
     options,
     'packages',
@@ -212,7 +216,13 @@ function findModules (generator, options, packageName, ...args) {
   );
 }
 
+// TODO: we should also tolerate a .jsx extension
+function findRoutes (generator, options, packageName) {
+  return findModules(generator, options, packageName, 'routes.js');
+}
+
 module.exports = {
   setup,
   findModules,
+  findRoutes,
 };

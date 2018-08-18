@@ -1,8 +1,12 @@
 'use strict';
 
+/**
+ * List and count elements of the application (packages, modules, routes etc.)
+ */
 var fs = require('fs');
 var path = require('path');
 var pathFinder = require('./path-finder');
+var chalk = require('chalk');
 
 function isDirectory(dirPath) {
   return fs.lstatSync(dirPath).isDirectory();
@@ -41,10 +45,29 @@ function setup(generatorSetup) {
     });
   }
 
+  function countRoutes(pkgName) {
+    var packageRoutesPath = pathFinder.findRoutes(generatorSetup, { isAbsolute: true }, pkgName);
+    // TODO: handle errors if the filename has been modified
+    try {
+      var fileContent = fs.readFileSync(packageRoutesPath, { encoding: 'utf-8' });
+      var routesCount = (fileContent.match(/addRoute\(/g) || []).length;
+      return routesCount;
+    } catch (err) {
+      console.log(chalk.red('Could not find or open routes definition for package ' + pkgName));
+      console.log(err);
+      return -1;
+    }
+  }
+  function countModules(pkgName) {
+    return listModules(pkgName).length;
+  }
+
   return {
     listModules: listModules,
     listPackages: listPackages,
-    listPackagesWithNbModules: listPackagesWithNbModules
+    listPackagesWithNbModules: listPackagesWithNbModules,
+    countRoutes: countRoutes,
+    countModules: countModules
   };
 }
 
