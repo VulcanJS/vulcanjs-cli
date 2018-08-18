@@ -13,10 +13,16 @@ function isNotPrivate (dirName) {
   return !/^_/.test(dirName);
 }
 function listFolders (dirPath) {
-  const folderContent = fs.readdirSync(dirPath);
-  const folders = folderContent.filter((folderName) => isDirectory(path.join(dirPath, folderName)));
-  const validFolders = folders.filter(isNotPrivate);
-  return validFolders;
+  try {
+    const folderContent = fs.readdirSync(dirPath);
+    const folders = folderContent.filter((folderName) => isDirectory(path.join(dirPath, folderName)));
+    const validFolders = folders.filter(isNotPrivate);
+    return validFolders;
+  } catch (err) {
+    console.log(chalk.red(`Could not find or open folder ${dirPath}`));
+    console.log(err);
+    return [];
+  }
 }
 
 function setup (generatorSetup) {
@@ -47,7 +53,7 @@ function setup (generatorSetup) {
       const routesCount = (fileContent.match(/addRoute\(/g) || []).length;
       return routesCount;
     } catch (err) {
-      console.log(chalk.red(`Could not find or open routes definition for package ${  pkgName}`));
+      console.log(chalk.red(`Could not find or open routes definition for package ${pkgName}`));
       console.log(err);
       return -1;
     }

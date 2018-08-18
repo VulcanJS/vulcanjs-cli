@@ -1,6 +1,5 @@
 const uiText = require('./ui-text');
 const common = require('./common');
-const store = require('./store');
 const validations = require('./validations');
 const makeLister = require('./lister');
 
@@ -12,9 +11,6 @@ function setup (generatorSetup) {
     const options = generator.options;
 
     function when (fieldName, answers, questionOptions) {
-      if (questionOptions && questionOptions.isManual) {
-        return answers[fieldName] === common.manualChoiceValue;
-      }
       return (!(options.dontAsk && options[fieldName]));
     }
 
@@ -139,7 +135,6 @@ function setup (generatorSetup) {
           }
           const preProcessedChoices = [...packageNames];
           if (questionOptions.isAllAllowed) { preProcessedChoices.push(common.allChoice); }
-          if (questionOptions.isManualAllowed) { preProcessedChoices.push(common.manualChoice); }
           return preProcessedChoices;
         },
         default: common.getDefaultChoiceIndex(
@@ -195,10 +190,6 @@ function setup (generatorSetup) {
         choices: (answers) => {
           const finalPackageName = generator._finalize('packageName', answers);
           const modelNames = lister.listModules(finalPackageName);
-          const preProcessedChoices = [...modelNames];
-          if (questionOptions.isManualAllowed) {
-            preProcessedChoices.push(common.manualChoice);
-          }
           return [...modelNames];
         },
         default: (answers) => {
@@ -271,27 +262,6 @@ function setup (generatorSetup) {
       };
     }
 
-    function routeNameList () {
-      return {
-        type: 'list',
-        name: 'routeName',
-        message: uiText.messages.routeName,
-        when: () => when('routeName'),
-        choices: (answers) => {
-          const finalPackageName = generator._finalize('packageName', answers);
-          const routeNames = store.get('routeNames', finalPackageName);
-          return [...routeNames, common.manualChoice];
-        },
-        // default: (answers) => {
-        //   const finalPackageName = generator._finalize('packageName', answers);
-        //   const modelNames = store.get('modelNames', finalPackageName);
-        //   return common.getDefaultChoiceIndex(
-        //     modelNames,
-        //     options.modelName
-        //   );
-        // },
-      };
-    }
 
     function routePath () {
       return {
@@ -449,26 +419,20 @@ function setup (generatorSetup) {
         case 'reactExtension': return reactExtension();
         case 'packageManager': return packageManager();
         case 'packageName': return packageName();
-        case 'packageNameIfManual': return packageName({ isManual: true });
         case 'vulcanDependencies': return vulcanDependencies();
         case 'isPackageAutoAdd': return isPackageAutoAdd();
         case 'packageNameList': return packageNameList();
-        case 'packageNameWithNumModelsList': return packageNameList({ isWithNumModels: true, isManualAllowed: true });
-        case 'packageNameWithManualList': return packageNameList({ isManualAllowed: true });
+        case 'packageNameWithNumModelsList': return packageNameList({ isWithNumModels: true });
         case 'packageNameWithAllList': return packageNameList({ isAllAllowed: true });
         case 'modelName': return modelName();
-        case 'modelNameIfManual': return modelName({ isManual: true });
         case 'modelParts': return modelParts();
         case 'modelNameList': return modelNameList();
-        case 'modelNameWithManualList': return modelNameList({ isManual: true });
         case 'componentName': return componentName();
         case 'componentType': return componentType();
         case 'isRegisterComponent': return isRegisterComponent();
         case 'defaultResolvers': return defaultResolvers();
         case 'isDelete': return isDelete();
         case 'routeName': return routeName();
-        case 'routeNameIfManual': return routeName({ isManual: true });
-        case 'routeNameList': return routeNameList();
         case 'routePath': return routePath();
         case 'layoutName': return layoutName();
         case 'isAddCustomSchemaProperty': return isAddCustomSchemaProperty();

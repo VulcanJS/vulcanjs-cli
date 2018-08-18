@@ -4,7 +4,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var uiText = require('./ui-text');
 var common = require('./common');
-var store = require('./store');
 var validations = require('./validations');
 var makeLister = require('./lister');
 
@@ -16,9 +15,6 @@ function setup(generatorSetup) {
     var options = generator.options;
 
     function _when(fieldName, answers, questionOptions) {
-      if (questionOptions && questionOptions.isManual) {
-        return answers[fieldName] === common.manualChoiceValue;
-      }
       return !(options.dontAsk && options[fieldName]);
     }
 
@@ -147,9 +143,6 @@ function setup(generatorSetup) {
           if (questionOptions.isAllAllowed) {
             preProcessedChoices.push(common.allChoice);
           }
-          if (questionOptions.isManualAllowed) {
-            preProcessedChoices.push(common.manualChoice);
-          }
           return preProcessedChoices;
         },
         default: common.getDefaultChoiceIndex(lister.listPackages(), options.packageName)
@@ -200,10 +193,6 @@ function setup(generatorSetup) {
         choices: function choices(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
           var modelNames = lister.listModules(finalPackageName);
-          var preProcessedChoices = [].concat(_toConsumableArray(modelNames));
-          if (questionOptions.isManualAllowed) {
-            preProcessedChoices.push(common.manualChoice);
-          }
           return [].concat(_toConsumableArray(modelNames));
         },
         default: function _default(answers) {
@@ -273,30 +262,6 @@ function setup(generatorSetup) {
         },
         validate: validations.assertNonEmpty,
         default: options.routeName
-      };
-    }
-
-    function routeNameList() {
-      return {
-        type: 'list',
-        name: 'routeName',
-        message: uiText.messages.routeName,
-        when: function when() {
-          return _when('routeName');
-        },
-        choices: function choices(answers) {
-          var finalPackageName = generator._finalize('packageName', answers);
-          var routeNames = store.get('routeNames', finalPackageName);
-          return [].concat(_toConsumableArray(routeNames), [common.manualChoice]);
-        }
-        // default: (answers) => {
-        //   const finalPackageName = generator._finalize('packageName', answers);
-        //   const modelNames = store.get('modelNames', finalPackageName);
-        //   return common.getDefaultChoiceIndex(
-        //     modelNames,
-        //     options.modelName
-        //   );
-        // },
       };
     }
 
@@ -476,8 +441,6 @@ function setup(generatorSetup) {
           return packageManager();
         case 'packageName':
           return packageName();
-        case 'packageNameIfManual':
-          return packageName({ isManual: true });
         case 'vulcanDependencies':
           return vulcanDependencies();
         case 'isPackageAutoAdd':
@@ -485,21 +448,15 @@ function setup(generatorSetup) {
         case 'packageNameList':
           return packageNameList();
         case 'packageNameWithNumModelsList':
-          return packageNameList({ isWithNumModels: true, isManualAllowed: true });
-        case 'packageNameWithManualList':
-          return packageNameList({ isManualAllowed: true });
+          return packageNameList({ isWithNumModels: true });
         case 'packageNameWithAllList':
           return packageNameList({ isAllAllowed: true });
         case 'modelName':
           return modelName();
-        case 'modelNameIfManual':
-          return modelName({ isManual: true });
         case 'modelParts':
           return modelParts();
         case 'modelNameList':
           return modelNameList();
-        case 'modelNameWithManualList':
-          return modelNameList({ isManual: true });
         case 'componentName':
           return componentName();
         case 'componentType':
@@ -512,10 +469,6 @@ function setup(generatorSetup) {
           return isDelete();
         case 'routeName':
           return routeName();
-        case 'routeNameIfManual':
-          return routeName({ isManual: true });
-        case 'routeNameList':
-          return routeNameList();
         case 'routePath':
           return routePath();
         case 'layoutName':

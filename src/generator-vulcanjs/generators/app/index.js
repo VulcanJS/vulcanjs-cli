@@ -21,10 +21,13 @@ module.exports = class extends VulcanGenerator {
     if (!this._canPrompt()) {
       return false;
     }
-    const questions = this._getQuestions(
-      'appName',
-      'packageManager'
-    );
+    let questions = [];
+    if (this._needArg('appName')) {
+      questions = [...questions, ...this._getQuestions(
+        'appName'
+      )];
+    }
+    questions = [...questions, ...this._getQuestions('packageManager')];
     return this.prompt(questions).then((answers) => {
       this.props = {
         appName: this._finalize('appName', answers),

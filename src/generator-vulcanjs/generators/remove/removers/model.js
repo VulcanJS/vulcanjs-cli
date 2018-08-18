@@ -8,24 +8,24 @@ module.exports = class extends VulcanGenerator {
   }
 
   _registerArguments () {
-    //TODO: add arguments for remove
+    // TODO: add arguments for remove
   }
 
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
       'packageNameWithNumModelsList',
-      'modelNameWithManualList',
+      'modelNameList',
       'isDelete'
     );
     return this.prompt(questions)
-    .then((answers) => {
-      this._assert('isDelete', answers.isDelete);
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        modelName: this._finalize('modelName', answers),
-      };
-    });
+      .then((answers) => {
+        this._assert('isDelete', answers.isDelete);
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+          modelName: this._finalize('modelName', answers),
+        };
+      });
   }
 
   _updateModulesIndex () {

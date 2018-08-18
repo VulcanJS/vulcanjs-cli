@@ -39,7 +39,7 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameList', 'packageNameIfManual', 'routeName', 'routePath', 'componentName', 'layoutName'
+      var questions = this._getQuestions('packageNameList', 'routeName', 'routePath', 'componentName', 'layoutName'
       // ,'parentRoute'
       );
       return this.prompt(questions).then(function (answers) {

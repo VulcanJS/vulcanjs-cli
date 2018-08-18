@@ -21,7 +21,6 @@ module.exports = class extends VulcanGenerator {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
       'packageNameList',
-      'packageNameIfManual',
       'routeName',
       'routePath',
       'componentName',
@@ -29,16 +28,16 @@ module.exports = class extends VulcanGenerator {
       // ,'parentRoute'
     );
     return this.prompt(questions)
-    .then((answers) => {
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        componentName: this._finalize('componentName', answers),
-        routeName: this._finalize('raw', 'routeName', answers),
-        routePath: this._finalize('raw', 'routePath', answers),
-        layoutName: this._finalize('raw', 'layoutName', answers),
-        addRouteStatement: this._finalize('addRouteStatement', answers),
-      };
-    });
+      .then((answers) => {
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+          componentName: this._finalize('componentName', answers),
+          routeName: this._finalize('raw', 'routeName', answers),
+          routePath: this._finalize('raw', 'routePath', answers),
+          layoutName: this._finalize('raw', 'layoutName', answers),
+          addRouteStatement: this._finalize('addRouteStatement', answers),
+        };
+      });
   }
 
   _updateRoutes () {

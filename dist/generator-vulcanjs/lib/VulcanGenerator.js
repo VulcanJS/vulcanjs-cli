@@ -55,10 +55,20 @@ module.exports = function (_Generator) {
   }
 
   /*
-    State management
+  Helper to test if a question is necessary
   */
 
+
   _createClass(VulcanGenerator, [{
+    key: '_needArg',
+    value: function _needArg(argument) {
+      return typeof this.options[argument] === 'undefined';
+    }
+    /*
+      State management
+    */
+
+  }, {
     key: '_commitStore',
     value: function _commitStore() {
       var _this2 = this;

@@ -12,7 +12,7 @@ const numModelsSort = (a, b) => {
   if (aHasNonZero && bHasNonZero) return 0;
   if (!aHasNonZero && !bHasNonZero) return 0;
   if (!aHasNonZero && bHasNonZero) return 1;
-  /* if (aHasNonZero && !bHasNonZero)*/ return -1;
+  /* if (aHasNonZero && !bHasNonZero) */ return -1;
 };
 
 const getSetFromArr = (arr) => {
@@ -43,11 +43,9 @@ const vulcanjsRemovableComponents = [
 
 const vulcanjsListableComponents = [
   'packages',
-  'routes',
+  //'routes',
 ];
 
-const manualChoiceValue = '__vjs_manual';
-const manualChoice = { name: '[MANUAL]', value: manualChoiceValue };
 const allChoiceValue = '__vjs_all';
 const allChoice = { name: '[ALL]', value: allChoiceValue };
 
@@ -69,11 +67,9 @@ const exposed = {
   vulcanjsRemovableComponents,
   vulcanjsListableComponents,
   modelParts,
-  manualChoiceValue,
-  manualChoice,
   allChoiceValue,
   allChoice,
-  cloningOptions
+  cloningOptions,
 };
 
 module.exports = exposed;

@@ -15,12 +15,18 @@ function isNotPrivate(dirName) {
   return !/^_/.test(dirName);
 }
 function listFolders(dirPath) {
-  var folderContent = fs.readdirSync(dirPath);
-  var folders = folderContent.filter(function (folderName) {
-    return isDirectory(path.join(dirPath, folderName));
-  });
-  var validFolders = folders.filter(isNotPrivate);
-  return validFolders;
+  try {
+    var folderContent = fs.readdirSync(dirPath);
+    var folders = folderContent.filter(function (folderName) {
+      return isDirectory(path.join(dirPath, folderName));
+    });
+    var validFolders = folders.filter(isNotPrivate);
+    return validFolders;
+  } catch (err) {
+    console.log(chalk.red('Could not find or open folder ' + dirPath));
+    console.log(err);
+    return [];
+  }
 }
 
 function setup(generatorSetup) {

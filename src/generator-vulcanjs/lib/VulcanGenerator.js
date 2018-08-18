@@ -43,6 +43,12 @@ module.exports = class VulcanGenerator extends Generator {
   }
 
   /*
+  Helper to test if a question is necessary
+  */
+  _needArg (argument) {
+    return typeof this.options[argument] === 'undefined';
+  }
+  /*
     State management
   */
 
@@ -93,8 +99,8 @@ module.exports = class VulcanGenerator extends Generator {
     errorsArr.forEach((error, index) => {
       const errorNo = `Error (${index})`;
       const message = `\n${errorNo}: ${chalk.red(error.message)}`;
-      this.log( message );
-//      this.env.error(message);
+      this.log(message);
+      //      this.env.error(message);
     });
     process.exit(1);
   }
@@ -107,6 +113,6 @@ module.exports = class VulcanGenerator extends Generator {
     this._logAllErrors();
   }
 
-  _registerArguments () {}
+  _registerArguments () { }
 
 };

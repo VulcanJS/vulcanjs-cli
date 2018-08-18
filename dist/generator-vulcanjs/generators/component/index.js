@@ -39,7 +39,7 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameList', 'packageNameIfManual', 'componentName', 'componentType', 'isRegisterComponent');
+      var questions = this._getQuestions('packageNameList', 'componentName', 'componentType', 'isRegisterComponent');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),

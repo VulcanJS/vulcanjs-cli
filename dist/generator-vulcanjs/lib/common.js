@@ -14,7 +14,7 @@ var numModelsSort = function numModelsSort(a, b) {
   if (aHasNonZero && bHasNonZero) return 0;
   if (!aHasNonZero && !bHasNonZero) return 0;
   if (!aHasNonZero && bHasNonZero) return 1;
-  /* if (aHasNonZero && !bHasNonZero)*/return -1;
+  /* if (aHasNonZero && !bHasNonZero) */return -1;
 };
 
 var getSetFromArr = function getSetFromArr(arr) {
@@ -39,10 +39,8 @@ var modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions'
 
 var vulcanjsRemovableComponents = ['route', 'model', 'package'];
 
-var vulcanjsListableComponents = ['packages', 'routes'];
+var vulcanjsListableComponents = ['packages'];
 
-var manualChoiceValue = '__vjs_manual';
-var manualChoice = { name: '[MANUAL]', value: manualChoiceValue };
 var allChoiceValue = '__vjs_all';
 var allChoice = { name: '[ALL]', value: allChoiceValue };
 
@@ -65,8 +63,6 @@ var exposed = {
   vulcanjsRemovableComponents: vulcanjsRemovableComponents,
   vulcanjsListableComponents: vulcanjsListableComponents,
   modelParts: modelParts,
-  manualChoiceValue: manualChoiceValue,
-  manualChoice: manualChoice,
   allChoiceValue: allChoiceValue,
   allChoice: allChoice,
   cloningOptions: cloningOptions

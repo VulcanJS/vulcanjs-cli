@@ -157,30 +157,6 @@ function setup(generatorSetup) {
       });
     }
 
-    function getPrettyRoutesWithoutNumbers(inputPackageName) {
-      var theRoutes = store.get('routes', inputPackageName);
-      var prettyRoutes = theRoutes.map(function (theRoute) {
-        return {
-          package: inputPackageName,
-          name: theRoute.name,
-          path: theRoute.content.routePath
-        };
-      });
-      return prettyRoutes;
-    }
-
-    function prettyRoutesForPackage(inputPackageName) {
-      var prettyRoutesWithoutNumbers = getPrettyRoutesWithoutNumbers(inputPackageName);
-      return addNo(prettyRoutesWithoutNumbers);
-    }
-
-    function allPrettyRoutes() {
-      var allPackageNames = store.get('packageNames');
-      var prettyRoutes = allPackageNames.map(getPrettyRoutesWithoutNumbers);
-      var flattenedRoutes = flatten(prettyRoutes);
-      return addNo(flattenedRoutes);
-    }
-
     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
     }
@@ -224,10 +200,6 @@ function setup(generatorSetup) {
         return permissionTo.apply(undefined, args);
       case 'prettyPackages':
         return prettyPackages.apply(undefined, args);
-      case 'prettyRoutesForPackage':
-        return prettyRoutesForPackage.apply(undefined, args);
-      case 'allPrettyRoutes':
-        return allPrettyRoutes.apply(undefined, args);
       case 'raw':
         return getRaw.apply(undefined, args);
       default:
