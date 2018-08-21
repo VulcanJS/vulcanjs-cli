@@ -30,21 +30,21 @@ function setup(generatorSetup) {
     return uiText.errors.isPackageExists(packageName);
   };
 
-  var assertNotModelExists = function assertNotModelExists(packageName, modelName) {
-    if (!lister.moduleExists(packageName, modelName)) return true;
-    return uiText.errors.isModelExists(packageName, modelName);
+  var assertNotModuleExists = function assertNotModuleExists(packageName, moduleName) {
+    if (!lister.moduleExists(packageName, moduleName)) return true;
+    return uiText.errors.isModuleExists(packageName, moduleName);
   };
 
-  var generateNotModelExists = function generateNotModelExists(packageName) {
+  var generateNotModuleExists = function generateNotModuleExists(packageName) {
     return function (input) {
-      return assertNotModelExists(packageName, input);
+      return assertNotModuleExists(packageName, input);
     };
   };
   return {
     assertNonEmpty: assertNonEmpty,
     assertNotPackageExists: assertNotPackageExists,
-    assertNotModelExists: assertNotModelExists,
-    generateNotModelExists: generateNotModelExists
+    assertNotModuleExists: assertNotModuleExists,
+    generateNotModuleExists: generateNotModuleExists
   };
 }
 

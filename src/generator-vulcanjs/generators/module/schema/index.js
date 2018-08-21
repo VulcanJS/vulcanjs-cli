@@ -9,22 +9,22 @@ module.exports = class extends VulcanGenerator {
   _registerArguments () {
     this._registerOptions(
       'packageName',
-      'modelName'
+      'moduleName'
     );
   }
 
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithNumModelsList',
-      'modelNameList',
+      'packageNameWithNumModulesList',
+      'moduleNameList',
       'isAddCustomSchemaProperty'
     );
     return this.prompt(questions)
     .then((answers) => {
       this.props = {
         packageName: this._finalize('packageName', answers),
-        modelName: this._finalize('modelName', answers),
+        moduleName: this._finalize('moduleName', answers),
         isAddCustomSchemaProperty: this._finalize('raw', 'isAddCustomSchemaProperty', answers),
         customSchemaProperties: [],
       };
@@ -70,7 +70,7 @@ module.exports = class extends VulcanGenerator {
       this.templatePath('schema.js'),
       this._getPath(
         { isAbsolute: true },
-        'model',
+        'module',
         'schema.js'
       ),
       this.props
@@ -81,13 +81,13 @@ module.exports = class extends VulcanGenerator {
     const testFragmentsProps = {
       ...this.props,
       subjectName: 'schema',
-      subjectPath: `../../../lib/models/${this.props.modelName}/schema`,
+      subjectPath: `../../../lib/modules/${this.props.moduleName}/schema`,
     };
     this.fs.copyTpl(
       this.templatePath('../../templates/generic-test.js'),
       this._getPath(
         { isAbsolute: true },
-        'modelTest',
+        'moduleTest',
         'schema.spec.js'
       ),
       testFragmentsProps

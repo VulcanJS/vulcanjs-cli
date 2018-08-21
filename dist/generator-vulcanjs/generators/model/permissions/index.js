@@ -30,7 +30,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName', 'modelName');
+      this._registerOptions('packageName', 'moduleName');
     }
   }, {
     key: 'prompting',
@@ -40,11 +40,11 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithNumModelsList', 'modelNameList');
+      var questions = this._getQuestions('packageNameWithNumModulesList', 'moduleNameList');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          modelName: _this2._finalize('modelName', answers),
+          moduleName: _this2._finalize('moduleName', answers),
           newPermission: _this2._finalize('permissionName', ['new'], answers),
           editOwnPermission: _this2._finalize('permissionName', ['edit', 'own'], answers),
           editAllPermission: _this2._finalize('permissionName', ['edit', 'all'], answers),
@@ -56,16 +56,16 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_writePermissions',
     value: function _writePermissions() {
-      this.fs.copyTpl(this.templatePath('permissions.js'), this._getPath({ isAbsolute: true }, 'model', 'permissions.js'), this.props);
+      this.fs.copyTpl(this.templatePath('permissions.js'), this._getPath({ isAbsolute: true }, 'module', 'permissions.js'), this.props);
     }
   }, {
     key: '_writeTestPermissions',
     value: function _writeTestPermissions() {
       var testProps = _extends({}, this.props, {
         subjectName: 'permissions',
-        subjectPath: '../../../lib/models/' + this.props.modelName + '/permissions'
+        subjectPath: '../../../lib/modules/' + this.props.moduleName + '/permissions'
       });
-      this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'permissions.spec.js'), testProps);
+      this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'moduleTest', 'permissions.spec.js'), testProps);
     }
   }, {
     key: 'writing',

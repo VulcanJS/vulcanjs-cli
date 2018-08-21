@@ -1,8 +1,8 @@
 const uiText = require('./ui-text');
 const makeLister = require('./lister');
 
-function combineValidators (...fns) {
-  return function reducedValidator (input) {
+function combineValidators(...fns) {
+  return function reducedValidator(input) {
     return fns.reduce(
       (acc, curValidator) => {
         if (typeof acc === 'string') return acc;
@@ -13,7 +13,7 @@ function combineValidators (...fns) {
   };
 }
 
-function setup (generatorSetup) {
+function setup(generatorSetup) {
   const generator = generatorSetup;
   const lister = makeLister.setup(generator);
 
@@ -27,19 +27,19 @@ function setup (generatorSetup) {
     return uiText.errors.isPackageExists(packageName);
   };
 
-  const assertNotModelExists = (packageName, modelName) => {
-    if (!lister.moduleExists(packageName, modelName)) return true;
-    return uiText.errors.isModelExists(packageName, modelName);
+  const assertNotModuleExists = (packageName, moduleName) => {
+    if (!lister.moduleExists(packageName, moduleName)) return true;
+    return uiText.errors.isModuleExists(packageName, moduleName);
   };
 
-  const generateNotModelExists = (packageName) => (
-    (input) => assertNotModelExists(packageName, input)
+  const generateNotModuleExists = (packageName) => (
+    (input) => assertNotModuleExists(packageName, input)
   );
   return {
     assertNonEmpty,
     assertNotPackageExists,
-    assertNotModelExists,
-    generateNotModelExists,
+    assertNotModuleExists,
+    generateNotModuleExists,
   };
 }
 

@@ -30,7 +30,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName', 'modelName');
+      this._registerOptions('packageName', 'moduleName');
     }
   }, {
     key: 'prompting',
@@ -40,13 +40,13 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithNumModelsList', 'modelNameList'
+      var questions = this._getQuestions('packageNameWithNumModulesList', 'moduleNameList'
       // 'defaultResolvers'
       );
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          modelName: _this2._finalize('modelName', answers),
+          moduleName: _this2._finalize('moduleName', answers),
           collectionName: _this2._finalize('collectionName', answers),
           listResolverName: _this2._finalize('resolverName', 'List', answers),
           singleResolverName: _this2._finalize('resolverName', 'Single', answers),
@@ -60,16 +60,16 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_writeResolvers',
     value: function _writeResolvers() {
-      this.fs.copyTpl(this.templatePath('resolvers.js'), this._getPath({ isAbsolute: true }, 'model', 'resolvers.js'), this.props);
+      this.fs.copyTpl(this.templatePath('resolvers.js'), this._getPath({ isAbsolute: true }, 'module', 'resolvers.js'), this.props);
     }
   }, {
     key: '_writeTestResolvers',
     value: function _writeTestResolvers() {
       var testProps = _extends({}, this.props, {
         subjectName: 'resolvers',
-        subjectPath: '../../../lib/models/' + this.props.modelName + '/resolvers'
+        subjectPath: '../../../lib/modules/' + this.props.moduleName + '/resolvers'
       });
-      this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'resolvers.spec.js'), testProps);
+      this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'moduleTest', 'resolvers.spec.js'), testProps);
     }
   }, {
     key: 'writing',

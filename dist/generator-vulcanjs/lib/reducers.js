@@ -5,34 +5,34 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var Redux = require('redux');
 var _ = require('lodash');
 
-var modelReducer = function modelReducer() {
+var moduleReducer = function moduleReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   switch (action.type) {
-    case 'ADD_MODEL':
+    case 'ADD_MODULE':
       return state;
     default:
       return state;
   }
 };
 
-var modelsReducer = function modelsReducer() {
+var modulesReducer = function modulesReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   switch (action.type) {
-    case 'ADD_MODEL':
+    case 'ADD_MODULE':
       {
         var partialNext = {};
-        partialNext[action.modelName] = modelReducer(undefined, action);
+        partialNext[action.moduleName] = moduleReducer(undefined, action);
         return _extends({}, state, partialNext);
       }
 
-    case 'REMOVE_MODEL':
+    case 'REMOVE_MODULE':
       {
         return _.pickBy(state, function (value, key) {
-          return key !== action.modelName;
+          return key !== action.moduleName;
         });
       }
     default:
@@ -82,7 +82,7 @@ var routesReducer = function routesReducer() {
 };
 
 var packageReducer = function packageReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { models: {}, routes: {} };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { modules: {}, routes: {} };
   var action = arguments[1];
 
   switch (action.type) {
@@ -103,19 +103,19 @@ var packageReducer = function packageReducer() {
         });
       }
 
-    case 'ADD_MODEL':
+    case 'ADD_MODULE':
       {
-        var prevModels = state.models;
+        var prevModules = state.modules;
         return _extends({}, state, {
-          models: modelsReducer(prevModels, action)
+          modules: modulesReducer(prevModules, action)
         });
       }
 
-    case 'REMOVE_MODEL':
+    case 'REMOVE_MODULE':
       {
-        var _prevModels = state.models;
+        var _prevModules = state.modules;
         return _extends({}, state, {
-          models: modelsReducer(_prevModels, action)
+          modules: modulesReducer(_prevModules, action)
         });
       }
     default:
@@ -143,7 +143,7 @@ var packages = function packages() {
         return _extends({}, state, _partialNext);
       }
 
-    case 'ADD_MODEL':
+    case 'ADD_MODULE':
       {
         var _prevPackage = state[action.packageName];
         var _partialNext2 = {};
@@ -158,7 +158,7 @@ var packages = function packages() {
         });
       }
 
-    case 'REMOVE_MODEL':
+    case 'REMOVE_MODULE':
       {
         var packageToWork = state[action.packageName];
         var _partialNext3 = {};

@@ -54,7 +54,7 @@ function setup(generatorSetup) {
     return packages.map(function (pkgName) {
       return {
         name: pkgName,
-        numModels: listFolders(pathFinder.findModules(generatorSetup, { isAbsolute: true }, pkgName))
+        numModules: listFolders(pathFinder.findModules(generatorSetup, { isAbsolute: true }, pkgName))
       };
     });
   }
@@ -81,9 +81,9 @@ function setup(generatorSetup) {
     return packageNames.includes(pkgName);
   }
 
-  function moduleExists(pkgName, modelName) {
+  function moduleExists(pkgName, moduleName) {
     var moduleNames = listModules(pkgName);
-    return moduleNames.includes(modelName);
+    return moduleNames.includes(moduleName);
   }
 
   return {

@@ -39,12 +39,12 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithNumModelsList', 'modelNameList', 'isDelete');
+      var questions = this._getQuestions('packageNameWithNumModulesList', 'moduleNameList', 'isDelete');
       return this.prompt(questions).then(function (answers) {
         _this2._assert('isDelete', answers.isDelete);
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          modelName: _this2._finalize('modelName', answers)
+          moduleName: _this2._finalize('moduleName', answers)
         };
       });
     }
@@ -53,13 +53,13 @@ module.exports = function (_VulcanGenerator) {
     value: function _updateModulesIndex() {
       var modulesIndexPath = this._getPath({ isAbsolute: true }, 'modulesIndex');
       var fileText = this.fs.read(modulesIndexPath);
-      var fileWithImportText = ast.removeImportStatement(fileText, './' + this.props.modelName + '/collection.js');
+      var fileWithImportText = ast.removeImportStatement(fileText, './' + this.props.moduleName + '/collection.js');
       this.fs.write(modulesIndexPath, fileWithImportText);
     }
   }, {
-    key: '_removeModelDir',
-    value: function _removeModelDir() {
-      var sourceDir = this._getPath({ isAbsolute: true }, 'model');
+    key: '_removeModuleDir',
+    value: function _removeModuleDir() {
+      var sourceDir = this._getPath({ isAbsolute: true }, 'module');
       this.fs.delete(sourceDir);
     }
   }, {
@@ -69,11 +69,11 @@ module.exports = function (_VulcanGenerator) {
         return false;
       }
       this._dispatch({
-        type: 'REMOVE_MODEL',
+        type: 'REMOVE_MODULE',
         packageName: this.props.packageName,
-        modelName: this.props.modelName
+        moduleName: this.props.moduleName
       });
-      this._removeModelDir();
+      this._removeModuleDir();
       this._updateModulesIndex();
       return this._commitStore();
     }

@@ -9,54 +9,57 @@ module.exports = class extends VulcanGenerator {
   _registerArguments () {
     this._registerOptions(
       'packageName',
-      'modelName'
+      'moduleName'
     );
   }
 
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithNumModelsList',
-      'modelNameList'
+      'packageNameWithNumModulesList',
+      'moduleNameList'
+      // 'defaultResolvers'
     );
     return this.prompt(questions)
     .then((answers) => {
       this.props = {
         packageName: this._finalize('packageName', answers),
-        modelName: this._finalize('modelName', answers),
-        newPermission: this._finalize('permissionName', ['new'], answers),
-        editOwnPermission: this._finalize('permissionName', ['edit', 'own'], answers),
-        editAllPermission: this._finalize('permissionName', ['edit', 'all'], answers),
-        removeOwnPermission: this._finalize('permissionName', ['remove', 'own'], answers),
-        removeAllPermission: this._finalize('permissionName', ['remove', 'all'], answers),
+        moduleName: this._finalize('moduleName', answers),
+        collectionName: this._finalize('collectionName', answers),
+        listResolverName: this._finalize('resolverName', 'List', answers),
+        singleResolverName: this._finalize('resolverName', 'Single', answers),
+        totalResolverName: this._finalize('resolverName', 'Total', answers),
+        hasListResolver: true,
+        hasSingleResolver: true,
+        hasTotalResolver: true,
       };
     });
   }
 
-  _writePermissions () {
+  _writeResolvers () {
     this.fs.copyTpl(
-      this.templatePath('permissions.js'),
+      this.templatePath('resolvers.js'),
       this._getPath(
         { isAbsolute: true },
-        'model',
-        'permissions.js'
+        'module',
+        'resolvers.js'
       ),
       this.props
     );
   }
 
-  _writeTestPermissions () {
+  _writeTestResolvers () {
     const testProps = {
       ...this.props,
-      subjectName: 'permissions',
-      subjectPath: `../../../lib/models/${this.props.modelName}/permissions`,
+      subjectName: 'resolvers',
+      subjectPath: `../../../lib/modules/${this.props.moduleName}/resolvers`,
     };
     this.fs.copyTpl(
       this.templatePath('../../templates/generic-test.js'),
       this._getPath(
         { isAbsolute: true },
-        'modelTest',
-        'permissions.spec.js'
+        'moduleTest',
+        'resolvers.spec.js'
       ),
       testProps
     );
@@ -64,8 +67,8 @@ module.exports = class extends VulcanGenerator {
 
   writing () {
     if (!this._canWrite()) { return; }
-    this._writePermissions();
-    // this._writeTestPermissions();
+    this._writeResolvers();
+    // this._writeTestResolvers();
   }
 
   end () {

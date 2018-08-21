@@ -6,9 +6,9 @@ const alphabeticalSort = (a, b) => {
   return 0;
 };
 
-const numModelsSort = (a, b) => {
-  const aHasNonZero = a.numModels > 0;
-  const bHasNonZero = b.numModels > 0;
+const numModulesSort = (a, b) => {
+  const aHasNonZero = a.numModules > 0;
+  const bHasNonZero = b.numModules > 0;
   if (aHasNonZero && bHasNonZero) return 0;
   if (!aHasNonZero && !bHasNonZero) return 0;
   if (!aHasNonZero && bHasNonZero) return 1;
@@ -33,11 +33,11 @@ const visitorTypes = ['Guests', 'Members', 'Admins'];
 
 const schemaPropertyTypes = ['String', 'Number', 'Array', 'Object', 'Custom'];
 
-const modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
+const moduleParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
 
 const vulcanjsRemovableComponents = [
   'route',
-  'model',
+  'module',
   'package',
 ];
 
@@ -57,7 +57,7 @@ const getDefaultChoiceIndex = (choices, option) => {
 
 const exposed = {
   alphabeticalSort,
-  numModelsSort,
+  numModulesSort,
   reactExtensions,
   packageManagers,
   visitorTypes,
@@ -66,7 +66,7 @@ const exposed = {
   getSetFromArr,
   vulcanjsRemovableComponents,
   vulcanjsListableComponents,
-  modelParts,
+  moduleParts,
   allChoiceValue,
   allChoice,
   cloningOptions,

@@ -2,20 +2,20 @@ const VulcanGenerator = require('../../../lib/VulcanGenerator');
 const ast = require('../../../lib/ast');
 
 module.exports = class extends VulcanGenerator {
-  initializing () {
+  initializing() {
     this._assert('isVulcan');
     this._assert('hasNonZeroPackages');
   }
 
-  _registerArguments () {
+  _registerArguments() {
     // TODO: add arguments for remove
   }
 
-  prompting () {
+  prompting() {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithNumModelsList',
-      'modelNameList',
+      'packageNameWithNumModulesList',
+      'moduleNameList',
       'isDelete'
     );
     return this.prompt(questions)
@@ -23,12 +23,12 @@ module.exports = class extends VulcanGenerator {
         this._assert('isDelete', answers.isDelete);
         this.props = {
           packageName: this._finalize('packageName', answers),
-          modelName: this._finalize('modelName', answers),
+          moduleName: this._finalize('moduleName', answers),
         };
       });
   }
 
-  _updateModulesIndex () {
+  _updateModulesIndex() {
     const modulesIndexPath = this._getPath(
       { isAbsolute: true },
       'modulesIndex'
@@ -36,7 +36,7 @@ module.exports = class extends VulcanGenerator {
     const fileText = this.fs.read(modulesIndexPath);
     const fileWithImportText = ast.removeImportStatement(
       fileText,
-      `./${this.props.modelName}/collection.js`
+      `./${this.props.moduleName}/collection.js`
     );
     this.fs.write(
       modulesIndexPath,
@@ -44,27 +44,27 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _removeModelDir () {
+  _removeModuleDir() {
     const sourceDir = this._getPath(
       { isAbsolute: true },
-      'model'
+      'module'
     );
     this.fs.delete(sourceDir);
   }
 
-  writing () {
+  writing() {
     if (!this._canWrite()) { return false; }
     this._dispatch({
-      type: 'REMOVE_MODEL',
+      type: 'REMOVE_MODULE',
       packageName: this.props.packageName,
-      modelName: this.props.modelName,
+      moduleName: this.props.moduleName,
     });
-    this._removeModelDir();
+    this._removeModuleDir();
     this._updateModulesIndex();
     return this._commitStore();
   }
 
-  end () {
+  end() {
     this._end();
   }
 };

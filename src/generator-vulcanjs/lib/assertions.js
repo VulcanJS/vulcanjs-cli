@@ -3,12 +3,12 @@ const makeLister = require('./lister');
 
 const errors = {};
 
-function setup (generatorSetup) {
+function setup(generatorSetup) {
   const generator = generatorSetup;
   const lister = makeLister.setup(generator);
 
-  function assert (assertion, ...args) {
-    function isVulcan () {
+  function assert(assertion, ...args) {
+    function isVulcan() {
       // TODO: not imlemented yet
       // Idea: check for a package.json file?
       // if (!store.is('vulcan')) {
@@ -18,7 +18,7 @@ function setup (generatorSetup) {
       // }
     }
 
-    function notVulcan () {
+    function notVulcan() {
       // if (store.is('vulcan')) {
       //  errors.isVulcan = {
       //    message: uiText.errors.isVulcan,
@@ -26,7 +26,7 @@ function setup (generatorSetup) {
       // }
     }
 
-    function isPackageExists (packageName) {
+    function isPackageExists(packageName) {
       if (!lister.packageExists(packageName)) {
         errors.notPackageExists = {
           message: uiText.errors.notPackageExists(packageName),
@@ -34,7 +34,7 @@ function setup (generatorSetup) {
       }
     }
 
-    function notPackageExists (packageName) {
+    function notPackageExists(packageName) {
       if (lister.packageExists(packageName)) {
         errors.isPackageExists = {
           message: uiText.errors.isPackageExists(packageName),
@@ -42,23 +42,23 @@ function setup (generatorSetup) {
       }
     }
 
-    function isModelExists (packageName, modelName) {
-      if (!lister.moduleExists(packageName, modelName)) {
-        errors.notModelExists = {
-          message: uiText.errors.notModelExists(packageName, modelName),
+    function isModuleExists(packageName, moduleName) {
+      if (!lister.moduleExists(packageName, moduleName)) {
+        errors.notModuleExists = {
+          message: uiText.errors.notModuleExists(packageName, moduleName),
         };
       }
     }
 
-    function notModelExists (packageName, modelName) {
-      if (lister.moduleExists(packageName, modelName)) {
-        errors.isModelExists = {
-          message: uiText.errors.isModelExists(packageName, modelName),
+    function notModuleExists(packageName, moduleName) {
+      if (lister.moduleExists(packageName, moduleName)) {
+        errors.isModuleExists = {
+          message: uiText.errors.isModuleExists(packageName, moduleName),
         };
       }
     }
 
-    function hasNonZeroPackages () {
+    function hasNonZeroPackages() {
       const packageNames = lister.listPackages();
       if (packageNames.length) {
         errors.isZeroPackages = {
@@ -67,18 +67,18 @@ function setup (generatorSetup) {
       }
     }
 
-    function packageHasNonZeroModels (packageName) {
+    function packageHasNonZeroModules(packageName) {
       this._assertIsPackageExists(packageName);
-      if (!this._packageHasNonZeroModels(packageName)) {
-        errors.hasZeroModels = {
-          message: uiText.errors.hasZeroModels(packageName),
+      if (!this._packageHasNonZeroModules(packageName)) {
+        errors.hasZeroModules = {
+          message: uiText.errors.hasZeroModules(packageName),
         };
       }
     }
 
-    function isDelete (isDeleting) {
+    function isDelete(isDeleting) {
       if (!isDeleting) {
-        errors.hasZeroModels = {
+        errors.hasZeroModules = {
           message: uiText.errors.isDelete,
         };
       }
@@ -90,10 +90,10 @@ function setup (generatorSetup) {
       case 'notVulcan': return notVulcan(...args);
       case 'isPackageExists': return isPackageExists(...args);
       case 'notPackageExists': return notPackageExists(...args);
-      case 'isModelExists': return isModelExists(...args);
-      case 'notModelExists': return notModelExists(...args);
+      case 'isModuleExists': return isModuleExists(...args);
+      case 'notModuleExists': return notModuleExists(...args);
       case 'hasNonZeroPackages': return hasNonZeroPackages(...args);
-      case 'packageHasNonZeroModels': return packageHasNonZeroModels(...args);
+      case 'packageHasNonZeroModules': return packageHasNonZeroModules(...args);
       default: return undefined;
     }
   }

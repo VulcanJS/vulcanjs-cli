@@ -30,7 +30,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName', 'modelName');
+      this._registerOptions('packageName', 'moduleName');
     }
   }, {
     key: 'prompting',
@@ -40,11 +40,11 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithNumModelsList', 'modelNameList');
+      var questions = this._getQuestions('packageNameWithNumModulesList', 'moduleNameList');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          modelName: _this2._finalize('modelName', answers),
+          moduleName: _this2._finalize('moduleName', answers),
           typeName: _this2._finalize('typeName', answers),
           collectionName: _this2._finalize('collectionName', answers)
         };
@@ -53,16 +53,16 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_writeFragments',
     value: function _writeFragments() {
-      this.fs.copyTpl(this.templatePath('fragments.js'), this._getPath({ isAbsolute: true }, 'model', 'fragments.js'), this.props);
+      this.fs.copyTpl(this.templatePath('fragments.js'), this._getPath({ isAbsolute: true }, 'module', 'fragments.js'), this.props);
     }
   }, {
     key: '_writeTestFragments',
     value: function _writeTestFragments() {
       var testProps = _extends({}, this.props, {
         subjectName: 'fragments',
-        subjectPath: '../../../lib/models/' + this.props.modelName + '/fragments'
+        subjectPath: '../../../lib/modules/' + this.props.moduleName + '/fragments'
       });
-      this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'fragments.spec.js'), testProps);
+      this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'moduleTest', 'fragments.spec.js'), testProps);
     }
   }, {
     key: 'writing',

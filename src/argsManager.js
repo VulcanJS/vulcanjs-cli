@@ -61,12 +61,12 @@ function usage () {
   // console.log('  vulcan unshallow ');
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
-  console.log('  vulcan (generate|g) model <packageName> <modelName>');
-  console.log('  vulcan (generate|g) component <packageName> <modelName> <componentName>');
+  console.log('  vulcan (generate|g) module <packageName> <moduleName>');
+  console.log('  vulcan (generate|g) component <packageName> <moduleName> <componentName>');
   console.log('  vulcan (generate|g) route <packageName> <routeName> <routePath>');
   console.log(chalk.grey('\nAssets removal'));
   console.log('  vulcan (remove|r) package');
-  console.log('  vulcan (remove|r) model');
+  console.log('  vulcan (remove|r) module');
   console.log(chalk.grey('\nAssets listing'));
   console.log('  vulcan (list|l) routes');
   console.log('  vulcan (list|l) packages');

@@ -2,19 +2,19 @@ const VulcanGenerator = require('../../lib/VulcanGenerator');
 const ast = require('../../lib/ast');
 
 module.exports = class extends VulcanGenerator {
-  initializing () {
+  initializing() {
     this._assert('isVulcan');
     this._assert('hasNonZeroPackages');
   }
 
-  _registerArguments () {
+  _registerArguments() {
     this._registerOptions(
       'packageName',
-      'modelName'
+      'moduleName'
     );
   }
 
-  prompting () {
+  prompting() {
     if (!this._canPrompt()) { return false; }
     let questions = [];
     if (this._needArg('packageName')) {
@@ -22,25 +22,25 @@ module.exports = class extends VulcanGenerator {
         'packageNameList'
       )];
     }
-    if (this._needArg('modelName')) {
-      questions = [...questions, ...this._getQuestions('modelName')];
+    if (this._needArg('moduleName')) {
+      questions = [...questions, ...this._getQuestions('moduleName')];
     }
     return this.prompt(questions)
       .then((answers) => {
         this.props = {
           packageName: this._finalize('packageName', answers),
-          modelName: this._finalize('modelName', answers),
+          moduleName: this._finalize('moduleName', answers),
           collectionName: this._finalize('collectionName', answers),
-          typeName: this._finalize('pascalModelName', answers),
+          typeName: this._finalize('pascalModuleName', answers),
         };
         this._composeGenerators();
       });
   }
 
-  _composeGenerators () {
-    const modelParts = ['fragments', 'schema', 'permissions'];
-    modelParts.forEach((modelPart) => {
-      const generator = require.resolve(`./${modelPart}`);
+  _composeGenerators() {
+    const moduleParts = ['fragments', 'schema', 'permissions'];
+    moduleParts.forEach((modulePart) => {
+      const generator = require.resolve(`./${modulePart}`);
       const nextOptions = {
         ...this.options,
         ...this.props,
@@ -50,46 +50,46 @@ module.exports = class extends VulcanGenerator {
     });
   }
 
-  configuring () {
+  configuring() {
     if (!this._canConfigure()) { return; }
     this._dispatch({
-      type: 'ADD_MODEL',
+      type: 'ADD_MODULE',
       packageName: this.props.packageName,
-      modelName: this.props.modelName,
+      moduleName: this.props.moduleName,
     });
     this._commitStore();
   }
 
-  _writeCollection () {
+  _writeCollection() {
     this.fs.copyTpl(
       this.templatePath('collection.js'),
       this._getPath(
         { isAbsolute: true },
-        'model',
+        'module',
         'collection.js'
       ),
       this.props
     );
   }
 
-  _writeTestCollection () {
+  _writeTestCollection() {
     const testProps = {
       ...this.props,
       subjectName: 'collection',
-      subjectPath: `../../../lib/models/${this.props.modelName}/fragments`,
+      subjectPath: `../../../lib/modules/${this.props.moduleName}/fragments`,
     };
     this.fs.copyTpl(
       this.templatePath('generic-test.js'),
       this._getPath(
         { isAbsolute: true },
-        'modelTest',
+        'moduleTest',
         'collection.spec.js'
       ),
       testProps
     );
   }
 
-  _updateModulesIndex () {
+  _updateModulesIndex() {
     const modulesIndexPath = this._getPath(
       { isAbsolute: true },
       'modulesIndex'
@@ -97,7 +97,7 @@ module.exports = class extends VulcanGenerator {
     const fileText = this.fs.read(modulesIndexPath);
     const fileWithImportText = ast.addImportStatement(
       fileText,
-      `./${this.props.modelName}/collection.js`
+      `./${this.props.moduleName}/collection.js`
     );
     this.fs.write(
       modulesIndexPath,
@@ -105,14 +105,14 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  writing () {
+  writing() {
     if (!this._canWrite()) { return; }
     this._writeCollection();
     this._updateModulesIndex();
     // this._writeTestCollection();
   }
 
-  end () {
+  end() {
     this._end();
   }
 };

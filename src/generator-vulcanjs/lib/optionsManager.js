@@ -13,11 +13,11 @@ const allOptions = {
     alias: 'p',
     desc: uiText.descriptions.packageName,
   },
-  modelName: {
+  moduleName: {
     type: String,
     required: false,
     alias: 'm',
-    desc: uiText.descriptions.modelName,
+    desc: uiText.descriptions.moduleName,
   },
   componentName: {
     type: String,
@@ -69,10 +69,10 @@ const allOptions = {
   },
 };
 
-function setup (generatorSetup) {
+function setup(generatorSetup) {
   const generator = generatorSetup;
-  function register (...optionNames) {
-    function registerSingleOption (optionName) {
+  function register(...optionNames) {
+    function registerSingleOption(optionName) {
       generator.option(
         optionName,
         allOptions[optionName]

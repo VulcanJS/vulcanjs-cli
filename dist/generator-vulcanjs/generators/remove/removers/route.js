@@ -39,7 +39,7 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithNumModelsList', 'routeNameList', 'isDelete');
+      var questions = this._getQuestions('packageNameWithNumModulesList', 'routeNameList', 'isDelete');
       return this.prompt(questions).then(function (answers) {
         _this2._assert('isDelete', answers.isDelete);
         _this2.props = {

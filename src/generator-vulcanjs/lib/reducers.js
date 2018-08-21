@@ -1,28 +1,28 @@
 const Redux = require('redux');
 const _ = require('lodash');
 
-const modelReducer = (state = {}, action) => {
+const moduleReducer = (state = {}, action) => {
   switch (action.type) {
-    case 'ADD_MODEL': return state;
+    case 'ADD_MODULE': return state;
     default: return state;
   }
 };
 
-const modelsReducer = (state = {}, action) => {
+const modulesReducer = (state = {}, action) => {
   switch (action.type) {
-    case 'ADD_MODEL': {
+    case 'ADD_MODULE': {
       const partialNext = {};
-      partialNext[action.modelName] = modelReducer(undefined, action);
+      partialNext[action.moduleName] = moduleReducer(undefined, action);
       return {
         ...state,
         ...partialNext,
       };
     }
 
-    case 'REMOVE_MODEL': {
+    case 'REMOVE_MODULE': {
       return _.pickBy(
         state,
-        (value, key) => key !== action.modelName
+        (value, key) => key !== action.moduleName
       );
     }
     default: return state;
@@ -63,7 +63,7 @@ const routesReducer = (state = {}, action) => {
   }
 };
 
-const packageReducer = (state = { models: {}, routes: {} }, action) => {
+const packageReducer = (state = { modules: {}, routes: {} }, action) => {
   switch (action.type) {
 
     case 'ADD_ROUTE': {
@@ -82,19 +82,19 @@ const packageReducer = (state = { models: {}, routes: {} }, action) => {
       };
     }
 
-    case 'ADD_MODEL': {
-      const prevModels = state.models;
+    case 'ADD_MODULE': {
+      const prevModules = state.modules;
       return {
         ...state,
-        models: modelsReducer(prevModels, action),
+        modules: modulesReducer(prevModules, action),
       };
     }
 
-    case 'REMOVE_MODEL': {
-      const prevModels = state.models;
+    case 'REMOVE_MODULE': {
+      const prevModules = state.modules;
       return {
         ...state,
-        models: modelsReducer(prevModels, action),
+        modules: modulesReducer(prevModules, action),
       };
     }
     default: return state;
@@ -125,7 +125,7 @@ const packages = (state = {}, action) => {
       };
     }
 
-    case 'ADD_MODEL': {
+    case 'ADD_MODULE': {
       const prevPackage = state[action.packageName];
       const partialNext = {};
       partialNext[action.packageName] = packageReducer(
@@ -145,7 +145,7 @@ const packages = (state = {}, action) => {
       );
     }
 
-    case 'REMOVE_MODEL': {
+    case 'REMOVE_MODULE': {
       const packageToWork = state[action.packageName];
       const partialNext = {};
       partialNext[action.packageName] = packageReducer(packageToWork, action);

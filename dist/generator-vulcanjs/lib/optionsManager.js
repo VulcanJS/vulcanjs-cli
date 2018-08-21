@@ -15,11 +15,11 @@ var allOptions = {
     alias: 'p',
     desc: uiText.descriptions.packageName
   },
-  modelName: {
+  moduleName: {
     type: String,
     required: false,
     alias: 'm',
-    desc: uiText.descriptions.modelName
+    desc: uiText.descriptions.moduleName
   },
   componentName: {
     type: String,

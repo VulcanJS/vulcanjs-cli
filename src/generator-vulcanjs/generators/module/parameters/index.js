@@ -1,71 +1,70 @@
 const VulcanGenerator = require('../../../lib/VulcanGenerator');
 
 module.exports = class extends VulcanGenerator {
-  initializing () {
+  initializing() {
     this._assert('isVulcan');
     this._assert('hasNonZeroPackages');
   }
 
-  _registerArguments () {
+  _registerArguments() {
     this._registerOptions(
       'packageName',
-      'modelName'
+      'moduleName'
     );
   }
 
-  prompting () {
+  prompting() {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithNumModelsList',
-      'modelNameList'
+      'packageNameWithNumModulesList',
+      'moduleNameList'
     );
     return this.prompt(questions)
       .then((answers) => {
         this.props = {
           packageName: this._finalize('packageName', answers),
-          modelName: this._finalize('modelName', answers),
-          typeName: this._finalize('typeName', answers),
-          collectionName: this._finalize('collectionName', answers),
+          moduleName: this._finalize('moduleName', answers),
+          parametersName: this._finalize('moduleName', answers),
         };
       });
   }
 
-  _writeFragments () {
+  _writeParameters() {
     this.fs.copyTpl(
-      this.templatePath('fragments.js'),
+      this.templatePath('parameters.js'),
       this._getPath(
         { isAbsolute: true },
-        'model',
-        'fragments.js'
+        'module',
+        'parameters.js'
       ),
       this.props
     );
   }
 
-  _writeTestFragments () {
-    const testProps = {
+  _writeTestParameters() {
+    const testFragmentsProps = {
       ...this.props,
-      subjectName: 'fragments',
-      subjectPath: `../../../lib/models/${this.props.modelName}/fragments`,
+      subjectName: 'parameters',
+      subjectPath: `../../../lib/modules/${this.props.moduleName}/parameters`,
     };
     this.fs.copyTpl(
       this.templatePath('../../templates/generic-test.js'),
       this._getPath(
         { isAbsolute: true },
-        'modelTest',
-        'fragments.spec.js'
+        'moduleTest',
+        'parameters.spec.js'
       ),
-      testProps
+      testFragmentsProps
     );
   }
 
-  writing () {
+  writing() {
     if (!this._canWrite()) { return; }
-    this._writeFragments();
-    // this._writeTestFragments();
+    this._writeParameters();
+    // this._writeTestParameters();
   }
 
-  end () {
+  end() {
     this._end();
   }
 };

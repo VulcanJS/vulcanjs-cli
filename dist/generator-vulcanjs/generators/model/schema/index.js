@@ -30,7 +30,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName', 'modelName');
+      this._registerOptions('packageName', 'moduleName');
     }
   }, {
     key: 'prompting',
@@ -40,11 +40,11 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithNumModelsList', 'modelNameList', 'isAddCustomSchemaProperty');
+      var questions = this._getQuestions('packageNameWithNumModulesList', 'moduleNameList', 'isAddCustomSchemaProperty');
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          modelName: _this2._finalize('modelName', answers),
+          moduleName: _this2._finalize('moduleName', answers),
           isAddCustomSchemaProperty: _this2._finalize('raw', 'isAddCustomSchemaProperty', answers),
           customSchemaProperties: []
         };
@@ -79,16 +79,16 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_writeSchema',
     value: function _writeSchema() {
-      this.fs.copyTpl(this.templatePath('schema.js'), this._getPath({ isAbsolute: true }, 'model', 'schema.js'), this.props);
+      this.fs.copyTpl(this.templatePath('schema.js'), this._getPath({ isAbsolute: true }, 'module', 'schema.js'), this.props);
     }
   }, {
     key: '_writeTestSchema',
     value: function _writeTestSchema() {
       var testFragmentsProps = _extends({}, this.props, {
         subjectName: 'schema',
-        subjectPath: '../../../lib/models/' + this.props.modelName + '/schema'
+        subjectPath: '../../../lib/modules/' + this.props.moduleName + '/schema'
       });
-      this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'schema.spec.js'), testFragmentsProps);
+      this.fs.copyTpl(this.templatePath('../../templates/generic-test.js'), this._getPath({ isAbsolute: true }, 'moduleTest', 'schema.spec.js'), testFragmentsProps);
     }
   }, {
     key: 'writing',

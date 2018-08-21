@@ -2,12 +2,12 @@ const VulcanGenerator = require('../../lib/VulcanGenerator');
 const ast = require('../../lib/ast');
 
 module.exports = class extends VulcanGenerator {
-  initializing () {
+  initializing() {
     this._assert('isVulcan');
     this._assert('hasNonZeroPackages');
   }
 
-  _registerArguments () {
+  _registerArguments() {
     this._registerOptions(
       'packageName',
       'routeName',
@@ -17,7 +17,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  prompting () {
+  prompting() {
     if (!this._canPrompt()) { return false; }
     const argsAndQuestions = [
       { arg: 'packageName', question: 'packageNameList' },
@@ -46,7 +46,7 @@ module.exports = class extends VulcanGenerator {
       });
   }
 
-  _updateRoutes () {
+  _updateRoutes() {
     const routesPath = this._getPath(
       { isAbsolute: true },
       'routes'
@@ -63,7 +63,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  configuring () {
+  configuring() {
     if (!this._canConfigure()) { return; }
     this._dispatch({
       type: 'ADD_ROUTE',
@@ -73,13 +73,13 @@ module.exports = class extends VulcanGenerator {
     });
   }
 
-  writing () {
+  writing() {
     if (!this._canWrite()) { return; }
     this._updateRoutes();
     this._commitStore();
   }
 
-  end () {
+  end() {
     this._end();
   }
 };

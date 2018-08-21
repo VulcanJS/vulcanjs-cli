@@ -57,21 +57,21 @@ function setup(generatorSetup) {
       return libPath.apply(undefined, [options, 'modules'].concat(args));
     }
 
-    // model = module in Vulcan
-    function modelsPath(options) {
+    // module = module in Vulcan
+    function modulesPath(options) {
       for (var _len8 = arguments.length, args = Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
         args[_key8 - 1] = arguments[_key8];
       }
 
-      return modulesPath.apply(undefined, [options, 'models'].concat(args));
+      return modulesPath.apply(undefined, [options, 'modules'].concat(args));
     }
 
-    function modelsIndexPath(options) {
+    function modulesIndexPath(options) {
       for (var _len9 = arguments.length, args = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
         args[_key9 - 1] = arguments[_key9];
       }
 
-      return modelsPath.apply(undefined, [options, 'index.js'].concat(args));
+      return modulesPath.apply(undefined, [options, 'index.js'].concat(args));
     }
 
     function modulesIndexPath(options) {
@@ -82,12 +82,12 @@ function setup(generatorSetup) {
       return modulesPath(options, 'routes.js');
     }
 
-    function modelPath(options) {
+    function modulePath(options) {
       for (var _len10 = arguments.length, args = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
         args[_key10 - 1] = arguments[_key10];
       }
 
-      return modulesPath.apply(undefined, [options, generator.props.modelName].concat(args));
+      return modulesPath.apply(undefined, [options, generator.props.moduleName].concat(args));
     }
 
     function componentsPath(options) {
@@ -110,20 +110,20 @@ function setup(generatorSetup) {
       return packagePath.apply(undefined, [options, 'tests'].concat(args));
     }
 
-    function modelTestsPath(options) {
+    function moduleTestsPath(options) {
       for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
         args[_key13 - 1] = arguments[_key13];
       }
 
-      return packageTestsPath.apply(undefined, [options, 'models'].concat(args));
+      return packageTestsPath.apply(undefined, [options, 'modules'].concat(args));
     }
 
-    function modelTestPath(options) {
+    function moduleTestPath(options) {
       for (var _len14 = arguments.length, args = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
         args[_key14 - 1] = arguments[_key14];
       }
 
-      return modelTestsPath.apply(undefined, [options, generator.props.modelName].concat(args));
+      return moduleTestsPath.apply(undefined, [options, generator.props.moduleName].concat(args));
     }
 
     function packageStoriesPath(options) {
@@ -134,16 +134,16 @@ function setup(generatorSetup) {
       return componentsPath.apply(undefined, [options, '.stories.js'].concat(args));
     }
 
-    function modelInComponentsPath(options) {
+    function moduleInComponentsPath(options) {
       for (var _len16 = arguments.length, args = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
         args[_key16 - 1] = arguments[_key16];
       }
 
-      return componentsPath.apply(undefined, [options, generator.props.modelName].concat(args));
+      return componentsPath.apply(undefined, [options, generator.props.moduleName].concat(args));
     }
 
-    function modelStoriesPath(options) {
-      return modelInComponentsPath(options, '.stories.js');
+    function moduleStoriesPath(options) {
+      return moduleInComponentsPath(options, '.stories.js');
     }
 
     function clientPath(options) {
@@ -175,30 +175,30 @@ function setup(generatorSetup) {
         return packagePath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'lib':
         return libPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'models':
-        return modelsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'modules':
+        return modulesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modules':
         return modulesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'packageTests':
         return packageTestsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modulesIndex':
         return modulesIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'modelsIndex':
-        return modelsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'modulesIndex':
+        return modulesIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'componentsIndex':
         return componentsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'model':
-        return modelPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'module':
+        return modulePath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'components':
         return componentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'modelTest':
-        return modelTestPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'moduleTest':
+        return moduleTestPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'packageStories':
         return packageStoriesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'modelInComponents':
-        return modelInComponentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'modelStories':
-        return modelStoriesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'moduleInComponents':
+        return moduleInComponentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'moduleStories':
+        return moduleStoriesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'client':
         return clientPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'server':

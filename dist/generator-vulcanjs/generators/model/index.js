@@ -33,7 +33,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      this._registerOptions('packageName', 'modelName');
+      this._registerOptions('packageName', 'moduleName');
     }
   }, {
     key: 'prompting',
@@ -47,15 +47,15 @@ module.exports = function (_VulcanGenerator) {
       if (this._needArg('packageName')) {
         questions = [].concat(_toConsumableArray(questions), _toConsumableArray(this._getQuestions('packageNameList')));
       }
-      if (this._needArg('modelName')) {
-        questions = [].concat(_toConsumableArray(questions), _toConsumableArray(this._getQuestions('modelName')));
+      if (this._needArg('moduleName')) {
+        questions = [].concat(_toConsumableArray(questions), _toConsumableArray(this._getQuestions('moduleName')));
       }
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
-          modelName: _this2._finalize('modelName', answers),
+          moduleName: _this2._finalize('moduleName', answers),
           collectionName: _this2._finalize('collectionName', answers),
-          typeName: _this2._finalize('pascalModelName', answers)
+          typeName: _this2._finalize('pascalModuleName', answers)
         };
         _this2._composeGenerators();
       });
@@ -65,9 +65,9 @@ module.exports = function (_VulcanGenerator) {
     value: function _composeGenerators() {
       var _this3 = this;
 
-      var modelParts = ['fragments', 'schema', 'permissions'];
-      modelParts.forEach(function (modelPart) {
-        var generator = require.resolve('./' + modelPart);
+      var moduleParts = ['fragments', 'schema', 'permissions'];
+      moduleParts.forEach(function (modulePart) {
+        var generator = require.resolve('./' + modulePart);
         var nextOptions = _extends({}, _this3.options, _this3.props, {
           dontAsk: true
         });
@@ -81,32 +81,32 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._dispatch({
-        type: 'ADD_MODEL',
+        type: 'ADD_MODULE',
         packageName: this.props.packageName,
-        modelName: this.props.modelName
+        moduleName: this.props.moduleName
       });
       this._commitStore();
     }
   }, {
     key: '_writeCollection',
     value: function _writeCollection() {
-      this.fs.copyTpl(this.templatePath('collection.js'), this._getPath({ isAbsolute: true }, 'model', 'collection.js'), this.props);
+      this.fs.copyTpl(this.templatePath('collection.js'), this._getPath({ isAbsolute: true }, 'module', 'collection.js'), this.props);
     }
   }, {
     key: '_writeTestCollection',
     value: function _writeTestCollection() {
       var testProps = _extends({}, this.props, {
         subjectName: 'collection',
-        subjectPath: '../../../lib/models/' + this.props.modelName + '/fragments'
+        subjectPath: '../../../lib/modules/' + this.props.moduleName + '/fragments'
       });
-      this.fs.copyTpl(this.templatePath('generic-test.js'), this._getPath({ isAbsolute: true }, 'modelTest', 'collection.spec.js'), testProps);
+      this.fs.copyTpl(this.templatePath('generic-test.js'), this._getPath({ isAbsolute: true }, 'moduleTest', 'collection.spec.js'), testProps);
     }
   }, {
     key: '_updateModulesIndex',
     value: function _updateModulesIndex() {
       var modulesIndexPath = this._getPath({ isAbsolute: true }, 'modulesIndex');
       var fileText = this.fs.read(modulesIndexPath);
-      var fileWithImportText = ast.addImportStatement(fileText, './' + this.props.modelName + '/collection.js');
+      var fileWithImportText = ast.addImportStatement(fileText, './' + this.props.moduleName + '/collection.js');
       this.fs.write(modulesIndexPath, fileWithImportText);
     }
   }, {

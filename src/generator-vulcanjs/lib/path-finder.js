@@ -52,17 +52,17 @@ function setup (generatorSetup) {
       );
     }
 
-    // model = module in Vulcan
-    function modelsPath (options, ...args) {
+    // module = module in Vulcan
+    function modulesPath (options, ...args) {
       return modulesPath(
         options,
-        'models',
+        'modules',
         ...args
       );
     }
 
-    function modelsIndexPath (options, ...args) {
-      return modelsPath(
+    function modulesIndexPath (options, ...args) {
+      return modulesPath(
         options,
         'index.js',
         ...args
@@ -83,10 +83,10 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelPath (options, ...args) {
+    function modulePath (options, ...args) {
       return modulesPath(
         options,
-        generator.props.modelName,
+        generator.props.moduleName,
         ...args
       );
     }
@@ -114,18 +114,18 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelTestsPath (options, ...args) {
+    function moduleTestsPath (options, ...args) {
       return packageTestsPath(
         options,
-        'models',
+        'modules',
         ...args
       );
     }
 
-    function modelTestPath (options, ...args) {
-      return modelTestsPath(
+    function moduleTestPath (options, ...args) {
+      return moduleTestsPath(
         options,
-        generator.props.modelName,
+        generator.props.moduleName,
         ...args
       );
     }
@@ -138,16 +138,16 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelInComponentsPath (options, ...args) {
+    function moduleInComponentsPath (options, ...args) {
       return componentsPath(
         options,
-        generator.props.modelName,
+        generator.props.moduleName,
         ...args
       );
     }
 
-    function modelStoriesPath (options) {
-      return modelInComponentsPath(
+    function moduleStoriesPath (options) {
+      return moduleInComponentsPath(
         options,
         '.stories.js'
       );
@@ -174,18 +174,18 @@ function setup (generatorSetup) {
       case 'packages': return packagesPath(wrappedOptions, ...wrappedArgs);
       case 'package': return packagePath(wrappedOptions, ...wrappedArgs);
       case 'lib': return libPath(wrappedOptions, ...wrappedArgs);
-      case 'models': return modelsPath(wrappedOptions, ...wrappedArgs);
+      case 'modules': return modulesPath(wrappedOptions, ...wrappedArgs);
       case 'modules': return modulesPath(wrappedOptions, ...wrappedArgs);
       case 'packageTests': return packageTestsPath(wrappedOptions, ...wrappedArgs);
       case 'modulesIndex': return modulesIndexPath(wrappedOptions, ...wrappedArgs);
-      case 'modelsIndex': return modelsIndexPath(wrappedOptions, ...wrappedArgs);
+      case 'modulesIndex': return modulesIndexPath(wrappedOptions, ...wrappedArgs);
       case 'componentsIndex': return componentsIndexPath(wrappedOptions, ...wrappedArgs);
-      case 'model': return modelPath(wrappedOptions, ...wrappedArgs);
+      case 'module': return modulePath(wrappedOptions, ...wrappedArgs);
       case 'components': return componentsPath(wrappedOptions, ...wrappedArgs);
-      case 'modelTest': return modelTestPath(wrappedOptions, ...wrappedArgs);
+      case 'moduleTest': return moduleTestPath(wrappedOptions, ...wrappedArgs);
       case 'packageStories': return packageStoriesPath(wrappedOptions, ...wrappedArgs);
-      case 'modelInComponents': return modelInComponentsPath(wrappedOptions, ...wrappedArgs);
-      case 'modelStories': return modelStoriesPath(wrappedOptions, ...wrappedArgs);
+      case 'moduleInComponents': return moduleInComponentsPath(wrappedOptions, ...wrappedArgs);
+      case 'moduleStories': return moduleStoriesPath(wrappedOptions, ...wrappedArgs);
       case 'client': return clientPath(wrappedOptions, ...wrappedArgs);
       case 'server': return serverPath(wrappedOptions, ...wrappedArgs);
       case 'routes': return routesPath(wrappedOptions, ...wrappedArgs);

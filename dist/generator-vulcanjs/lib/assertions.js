@@ -44,18 +44,18 @@ function setup(generatorSetup) {
       }
     }
 
-    function isModelExists(packageName, modelName) {
-      if (!lister.moduleExists(packageName, modelName)) {
-        errors.notModelExists = {
-          message: uiText.errors.notModelExists(packageName, modelName)
+    function isModuleExists(packageName, moduleName) {
+      if (!lister.moduleExists(packageName, moduleName)) {
+        errors.notModuleExists = {
+          message: uiText.errors.notModuleExists(packageName, moduleName)
         };
       }
     }
 
-    function notModelExists(packageName, modelName) {
-      if (lister.moduleExists(packageName, modelName)) {
-        errors.isModelExists = {
-          message: uiText.errors.isModelExists(packageName, modelName)
+    function notModuleExists(packageName, moduleName) {
+      if (lister.moduleExists(packageName, moduleName)) {
+        errors.isModuleExists = {
+          message: uiText.errors.isModuleExists(packageName, moduleName)
         };
       }
     }
@@ -69,18 +69,18 @@ function setup(generatorSetup) {
       }
     }
 
-    function packageHasNonZeroModels(packageName) {
+    function packageHasNonZeroModules(packageName) {
       this._assertIsPackageExists(packageName);
-      if (!this._packageHasNonZeroModels(packageName)) {
-        errors.hasZeroModels = {
-          message: uiText.errors.hasZeroModels(packageName)
+      if (!this._packageHasNonZeroModules(packageName)) {
+        errors.hasZeroModules = {
+          message: uiText.errors.hasZeroModules(packageName)
         };
       }
     }
 
     function isDelete(isDeleting) {
       if (!isDeleting) {
-        errors.hasZeroModels = {
+        errors.hasZeroModules = {
           message: uiText.errors.isDelete
         };
       }
@@ -101,14 +101,14 @@ function setup(generatorSetup) {
         return isPackageExists.apply(undefined, args);
       case 'notPackageExists':
         return notPackageExists.apply(undefined, args);
-      case 'isModelExists':
-        return isModelExists.apply(undefined, args);
-      case 'notModelExists':
-        return notModelExists.apply(undefined, args);
+      case 'isModuleExists':
+        return isModuleExists.apply(undefined, args);
+      case 'notModuleExists':
+        return notModuleExists.apply(undefined, args);
       case 'hasNonZeroPackages':
         return hasNonZeroPackages.apply(undefined, args);
-      case 'packageHasNonZeroModels':
-        return packageHasNonZeroModels.apply(undefined, args);
+      case 'packageHasNonZeroModules':
+        return packageHasNonZeroModules.apply(undefined, args);
       default:
         return undefined;
     }

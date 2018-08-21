@@ -129,12 +129,12 @@ function setup(generatorSetup) {
         },
         choices: function choices() {
           var packageNames = void 0;
-          if (questionOptions && questionOptions.isWithNumModels) {
-            packageNames = lister.listPackagesWithNbModules().sort(common.numModelsSort).map(function (_ref) {
+          if (questionOptions && questionOptions.isWithNumModules) {
+            packageNames = lister.listPackagesWithNbModules().sort(common.numModulesSort).map(function (_ref) {
               var name = _ref.name,
-                  numModels = _ref.numModels;
+                  numModules = _ref.numModules;
 
-              if (numModels > 0) return name;
+              if (numModules > 0) return name;
               return { name: name, value: name, disabled: true };
             });
           } else {
@@ -150,56 +150,56 @@ function setup(generatorSetup) {
       };
     }
 
-    function modelName() {
+    function moduleeeName() {
       var questionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       return {
         type: 'input',
-        name: 'modelName',
-        message: uiText.messages.modelName,
+        name: 'moduleeeName',
+        message: uiText.messages.moduleeeName,
         when: function when(answers) {
-          return _when('modelName', answers, questionOptions);
+          return _when('moduleeeName', answers, questionOptions);
         },
-        default: options.modelName,
+        default: options.moduleeeName,
         validate: function validate(input, answers) {
-          var combinedValidator = validations.combineValidators(validator.assertNonEmpty, validator.generateNotModelExists(generator._finalize('packageName', answers)));
+          var combinedValidator = validations.combineValidators(validator.assertNonEmpty, validator.generateNotModuleExists(generator._finalize('packageName', answers)));
           return combinedValidator(input, answers);
         }
       };
     }
 
-    function modelParts() {
+    function moduleeeParts() {
       return {
         type: 'checkbox',
-        name: 'modelParts',
+        name: 'moduleeeParts',
         message: 'Create with',
         choices: [{ name: 'Fragments', value: 'fragments', checked: true }, { name: 'Mutations', value: 'mutations', checked: true }, { name: 'Parameters', value: 'parameters', checked: true }, { name: 'Permissions', value: 'permissions', checked: true }, { name: 'Resolvers', value: 'resolvers', checked: true }, { name: 'Schema', value: 'schema', checked: true }],
         when: function when() {
-          return _when('modelParts');
+          return _when('moduleeeParts');
         },
         filter: common.getSetFromArr
       };
     }
 
-    function modelNameList() {
+    function moduleeeNameList() {
       var questionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       return {
         type: 'list',
-        name: 'modelName',
-        message: uiText.messages.modelName,
+        name: 'moduleeeName',
+        message: uiText.messages.moduleeeName,
         when: function when() {
-          return _when('modelName');
+          return _when('moduleeeName');
         },
         choices: function choices(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
-          var modelNames = lister.listModules(finalPackageName);
-          return [].concat(_toConsumableArray(modelNames));
+          var moduleeeNames = lister.listModules(finalPackageName);
+          return [].concat(_toConsumableArray(moduleeeNames));
         },
         default: function _default(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
-          var modelNames = lister.listModules(finalPackageName);
-          return common.getDefaultChoiceIndex(modelNames, options.modelName);
+          var moduleeeNames = lister.listModules(finalPackageName);
+          return common.getDefaultChoiceIndex(moduleeeNames, options.moduleeeName);
         }
       };
     }
@@ -448,16 +448,16 @@ function setup(generatorSetup) {
           return isPackageAutoAdd();
         case 'packageNameList':
           return packageNameList();
-        case 'packageNameWithNumModelsList':
-          return packageNameList({ isWithNumModels: true });
+        case 'packageNameWithNumModulesList':
+          return packageNameList({ isWithNumModules: true });
         case 'packageNameWithAllList':
           return packageNameList({ isAllAllowed: true });
-        case 'modelName':
-          return modelName();
-        case 'modelParts':
-          return modelParts();
-        case 'modelNameList':
-          return modelNameList();
+        case 'moduleeeName':
+          returmoduleleleName();
+        case 'moduleeeParts':
+          returmoduleleleParts();
+        case 'moduleeeNameList':
+          returmoduleleleNameList();
         case 'componentName':
           return componentName();
         case 'componentType':

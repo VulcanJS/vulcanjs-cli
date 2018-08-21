@@ -3,4 +3,4 @@ import {
   storiesOf
 } from '@storybook/react';
 
-storiesOf('<%= modelName %>', module);
+storiesOf('<%= moduleName %>', module);

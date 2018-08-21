@@ -9,59 +9,60 @@ module.exports = class extends VulcanGenerator {
   _registerArguments () {
     this._registerOptions(
       'packageName',
-      'modelName'
+      'moduleName'
     );
   }
 
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithNumModelsList',
-      'modelNameList'
+      'packageNameWithNumModulesList',
+      'moduleNameList'
     );
     return this.prompt(questions)
-    .then((answers) => {
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        modelName: this._finalize('modelName', answers),
-        parametersName: this._finalize('modelName', answers),
-      };
-    });
+      .then((answers) => {
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+          moduleName: this._finalize('moduleName', answers),
+          typeName: this._finalize('typeName', answers),
+          collectionName: this._finalize('collectionName', answers),
+        };
+      });
   }
 
-  _writeParameters () {
+  _writeFragments () {
     this.fs.copyTpl(
-      this.templatePath('parameters.js'),
+      this.templatePath('fragments.js'),
       this._getPath(
         { isAbsolute: true },
-        'model',
-        'parameters.js'
+        'module',
+        'fragments.js'
       ),
       this.props
     );
   }
 
-  _writeTestParameters () {
-    const testFragmentsProps = {
+  _writeTestFragments () {
+    const testProps = {
       ...this.props,
-      subjectName: 'parameters',
-      subjectPath: `../../../lib/models/${this.props.modelName}/parameters`,
+      subjectName: 'fragments',
+      subjectPath: `../../../lib/modules/${this.props.moduleName}/fragments`,
     };
     this.fs.copyTpl(
       this.templatePath('../../templates/generic-test.js'),
       this._getPath(
         { isAbsolute: true },
-        'modelTest',
-        'parameters.spec.js'
+        'moduleTest',
+        'fragments.spec.js'
       ),
-      testFragmentsProps
+      testProps
     );
   }
 
   writing () {
     if (!this._canWrite()) { return; }
-    this._writeParameters();
-    // this._writeTestParameters();
+    this._writeFragments();
+    // this._writeTestFragments();
   }
 
   end () {
