@@ -27,8 +27,7 @@ function setup (generatorSetup) {
     }
 
     function isPackageExists (packageName) {
-      const packageNames = lister.listPackages();
-      if (!packageNames.includes(packageName)) {
+      if (!lister.packageExists(packageName)) {
         errors.notPackageExists = {
           message: uiText.errors.notPackageExists(packageName),
         };
@@ -36,8 +35,7 @@ function setup (generatorSetup) {
     }
 
     function notPackageExists (packageName) {
-      const packageNames = lister.listPackages();
-      if (packageNames.includes(packageName)) {
+      if (lister.packageExists(packageName)) {
         errors.isPackageExists = {
           message: uiText.errors.isPackageExists(packageName),
         };
@@ -45,8 +43,7 @@ function setup (generatorSetup) {
     }
 
     function isModelExists (packageName, modelName) {
-      const moduleNames = lister.listModules(packageName);
-      if (!moduleNames.includes(modelName)) {
+      if (!lister.moduleExists(packageName, modelName)) {
         errors.notModelExists = {
           message: uiText.errors.notModelExists(packageName, modelName),
         };
@@ -54,8 +51,7 @@ function setup (generatorSetup) {
     }
 
     function notModelExists (packageName, modelName) {
-      const moduleNames = lister.listModules(packageName);
-      if (moduleNames.includes(modelName)) {
+      if (lister.moduleExists(packageName, modelName)) {
         errors.isModelExists = {
           message: uiText.errors.isModelExists(packageName, modelName),
         };

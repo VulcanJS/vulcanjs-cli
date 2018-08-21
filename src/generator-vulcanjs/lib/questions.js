@@ -6,6 +6,7 @@ const makeLister = require('./lister');
 function setup (generatorSetup) {
   const generator = generatorSetup;
   const lister = makeLister.setup(generatorSetup);
+  const validator = validations.setup(generatorSetup);
 
   function get (...questionNames) {
     const options = generator.options;
@@ -21,7 +22,7 @@ function setup (generatorSetup) {
         message: uiText.messages.appName,
         when: () => when('appName'),
         default: options.appName,
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
       };
     }
 
@@ -77,8 +78,8 @@ function setup (generatorSetup) {
         when: (answers) => when('packageName', answers, questionOptions),
         default: options.packageName,
         validate: validations.combineValidators(
-          validations.assertNonEmpty,
-          validations.assertNotPackageExists
+          validator.assertNonEmpty,
+          validator.assertNotPackageExists
         ),
       };
     }
@@ -153,8 +154,8 @@ function setup (generatorSetup) {
         default: options.modelName,
         validate: (input, answers) => {
           const combinedValidator = validations.combineValidators(
-            validations.assertNonEmpty,
-            validations.generateNotModelExists(
+            validator.assertNonEmpty,
+            validator.generateNotModelExists(
               generator._finalize('packageName', answers)
             )
           );
@@ -224,7 +225,7 @@ function setup (generatorSetup) {
         name: 'componentName',
         message: uiText.messages.componentName,
         when: () => when('componentName'),
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.componentName,
       };
     }
@@ -257,7 +258,7 @@ function setup (generatorSetup) {
         name: 'routeName',
         message: uiText.messages.routeName,
         when: (answers) => when('routeName', answers, questionOptions),
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.routeName,
       };
     }
@@ -269,7 +270,7 @@ function setup (generatorSetup) {
         name: 'routePath',
         message: uiText.messages.routePath,
         when: when('routePath'),
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.routePath,
       };
     }
@@ -300,7 +301,7 @@ function setup (generatorSetup) {
         name: 'schemaPropertyName',
         message: uiText.messages.schemaPropertyName,
         when: () => when('schemaPropertyName'),
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
       };
     }
 
@@ -322,7 +323,7 @@ function setup (generatorSetup) {
           !answers.isSchemaPropertyHidden &&
           when('schemaPropertyLabel')
         ),
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
       };
     }
 

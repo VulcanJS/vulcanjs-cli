@@ -76,13 +76,25 @@ function setup(generatorSetup) {
     return listModules(pkgName).length;
   }
 
+  function packageExists(pkgName) {
+    var packageNames = listPackages();
+    return packageNames.includes(pkgName);
+  }
+
+  function moduleExists(pkgName, modelName) {
+    var moduleNames = listModules(pkgName);
+    return moduleNames.includes(modelName);
+  }
+
   return {
     listModules: listModules,
     listAllModules: listAllModules,
     listPackages: listPackages,
     listPackagesWithNbModules: listPackagesWithNbModules,
     countRoutes: countRoutes,
-    countModules: countModules
+    countModules: countModules,
+    packageExists: packageExists,
+    moduleExists: moduleExists
   };
 }
 

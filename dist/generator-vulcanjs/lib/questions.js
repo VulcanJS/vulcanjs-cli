@@ -10,6 +10,7 @@ var makeLister = require('./lister');
 function setup(generatorSetup) {
   var generator = generatorSetup;
   var lister = makeLister.setup(generatorSetup);
+  var validator = validations.setup(generatorSetup);
 
   function get() {
     var options = generator.options;
@@ -27,7 +28,7 @@ function setup(generatorSetup) {
           return _when('appName');
         },
         default: options.appName,
-        validate: validations.assertNonEmpty
+        validate: validator.assertNonEmpty
       };
     }
 
@@ -89,7 +90,7 @@ function setup(generatorSetup) {
           return _when('packageName', answers, questionOptions);
         },
         default: options.packageName,
-        validate: validations.combineValidators(validations.assertNonEmpty, validations.assertNotPackageExists)
+        validate: validations.combineValidators(validator.assertNonEmpty, validator.assertNotPackageExists)
       };
     }
 
@@ -161,7 +162,7 @@ function setup(generatorSetup) {
         },
         default: options.modelName,
         validate: function validate(input, answers) {
-          var combinedValidator = validations.combineValidators(validations.assertNonEmpty, validations.generateNotModelExists(generator._finalize('packageName', answers)));
+          var combinedValidator = validations.combineValidators(validator.assertNonEmpty, validator.generateNotModelExists(generator._finalize('packageName', answers)));
           return combinedValidator(input, answers);
         }
       };
@@ -224,7 +225,7 @@ function setup(generatorSetup) {
         when: function when() {
           return _when('componentName');
         },
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.componentName
       };
     }
@@ -260,7 +261,7 @@ function setup(generatorSetup) {
         when: function when(answers) {
           return _when('routeName', answers, questionOptions);
         },
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.routeName
       };
     }
@@ -271,7 +272,7 @@ function setup(generatorSetup) {
         name: 'routePath',
         message: uiText.messages.routePath,
         when: _when('routePath'),
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.routePath
       };
     }
@@ -306,7 +307,7 @@ function setup(generatorSetup) {
         when: function when() {
           return _when('schemaPropertyName');
         },
-        validate: validations.assertNonEmpty
+        validate: validator.assertNonEmpty
       };
     }
 
@@ -329,7 +330,7 @@ function setup(generatorSetup) {
         when: function when(answers) {
           return !answers.isSchemaPropertyHidden && _when('schemaPropertyLabel');
         },
-        validate: validations.assertNonEmpty
+        validate: validator.assertNonEmpty
       };
     }
 
