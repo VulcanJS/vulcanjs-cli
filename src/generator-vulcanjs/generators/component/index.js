@@ -16,12 +16,19 @@ module.exports = class extends VulcanGenerator {
 
   prompting () {
     if (!this._canPrompt()) { return false; }
-    const questions = this._getQuestions(
-      'packageNameList',
-      'componentName',
+    let questions = [];
+    if (this._needArg('packageName')) {
+      questions = [...questions, ...this._getQuestions(
+        'packageNameList'
+      )];
+    }
+    if (this._needArg('componentName')) {
+      questions = [...questions, ...this._getQuestions('componentName')];
+    }
+    questions = [...questions, ...this._getQuestions(
       'componentType',
       'isRegisterComponent'
-    );
+    )];
     return this.prompt(questions)
       .then((answers) => {
         this.props = {

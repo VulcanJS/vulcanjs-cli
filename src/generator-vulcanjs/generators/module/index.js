@@ -25,6 +25,7 @@ module.exports = class extends VulcanGenerator {
     if (this._needArg('moduleName')) {
       questions = [...questions, ...this._getQuestions('moduleName')];
     }
+    console.log('HERE', questions);
     return this.prompt(questions)
       .then((answers) => {
         this.props = {
@@ -51,13 +52,7 @@ module.exports = class extends VulcanGenerator {
   }
 
   configuring() {
-    if (!this._canConfigure()) { return; }
-    this._dispatch({
-      type: 'ADD_MODULE',
-      packageName: this.props.packageName,
-      moduleName: this.props.moduleName,
-    });
-    this._commitStore();
+    if (!this._canConfigure()) { }
   }
 
   _writeCollection() {

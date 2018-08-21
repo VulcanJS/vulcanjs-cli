@@ -2,16 +2,16 @@ const VulcanGenerator = require('../../../lib/VulcanGenerator');
 const ast = require('../../../lib/ast');
 
 module.exports = class extends VulcanGenerator {
-  initializing() {
+  initializing () {
     this._assert('isVulcan');
     this._assert('hasNonZeroPackages');
   }
 
-  _registerArguments() {
+  _registerArguments () {
     // TODO: add arguments for remove
   }
 
-  prompting() {
+  prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
       'packageNameWithNumModulesList',
@@ -28,7 +28,7 @@ module.exports = class extends VulcanGenerator {
       });
   }
 
-  _updateModulesIndex() {
+  _updateModulesIndex () {
     const modulesIndexPath = this._getPath(
       { isAbsolute: true },
       'modulesIndex'
@@ -44,7 +44,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _removeModuleDir() {
+  _removeModuleDir () {
     const sourceDir = this._getPath(
       { isAbsolute: true },
       'module'
@@ -52,19 +52,13 @@ module.exports = class extends VulcanGenerator {
     this.fs.delete(sourceDir);
   }
 
-  writing() {
+  writing () {
     if (!this._canWrite()) { return false; }
-    this._dispatch({
-      type: 'REMOVE_MODULE',
-      packageName: this.props.packageName,
-      moduleName: this.props.moduleName,
-    });
     this._removeModuleDir();
     this._updateModulesIndex();
-    return this._commitStore();
   }
 
-  end() {
+  end () {
     this._end();
   }
 };

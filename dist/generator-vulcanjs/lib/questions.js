@@ -150,17 +150,17 @@ function setup(generatorSetup) {
       };
     }
 
-    function moduleeeName() {
+    function moduleName() {
       var questionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       return {
         type: 'input',
-        name: 'moduleeeName',
-        message: uiText.messages.moduleeeName,
+        name: 'moduleName',
+        message: uiText.messages.moduleName,
         when: function when(answers) {
-          return _when('moduleeeName', answers, questionOptions);
+          return _when('moduleName', answers, questionOptions);
         },
-        default: options.moduleeeName,
+        default: options.moduleName,
         validate: function validate(input, answers) {
           var combinedValidator = validations.combineValidators(validator.assertNonEmpty, validator.generateNotModuleExists(generator._finalize('packageName', answers)));
           return combinedValidator(input, answers);
@@ -168,38 +168,38 @@ function setup(generatorSetup) {
       };
     }
 
-    function moduleeeParts() {
+    function moduleParts() {
       return {
         type: 'checkbox',
-        name: 'moduleeeParts',
+        name: 'moduleParts',
         message: 'Create with',
         choices: [{ name: 'Fragments', value: 'fragments', checked: true }, { name: 'Mutations', value: 'mutations', checked: true }, { name: 'Parameters', value: 'parameters', checked: true }, { name: 'Permissions', value: 'permissions', checked: true }, { name: 'Resolvers', value: 'resolvers', checked: true }, { name: 'Schema', value: 'schema', checked: true }],
         when: function when() {
-          return _when('moduleeeParts');
+          return _when('moduleParts');
         },
         filter: common.getSetFromArr
       };
     }
 
-    function moduleeeNameList() {
+    function moduleNameList() {
       var questionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       return {
         type: 'list',
-        name: 'moduleeeName',
-        message: uiText.messages.moduleeeName,
+        name: 'moduleName',
+        message: uiText.messages.moduleName,
         when: function when() {
-          return _when('moduleeeName');
+          return _when('moduleName');
         },
         choices: function choices(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
-          var moduleeeNames = lister.listModules(finalPackageName);
-          return [].concat(_toConsumableArray(moduleeeNames));
+          var moduleNames = lister.listModules(finalPackageName);
+          return [].concat(_toConsumableArray(moduleNames));
         },
         default: function _default(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
-          var moduleeeNames = lister.listModules(finalPackageName);
-          return common.getDefaultChoiceIndex(moduleeeNames, options.moduleeeName);
+          var moduleNames = lister.listModules(finalPackageName);
+          return common.getDefaultChoiceIndex(moduleNames, options.moduleName);
         }
       };
     }
@@ -452,12 +452,12 @@ function setup(generatorSetup) {
           return packageNameList({ isWithNumModules: true });
         case 'packageNameWithAllList':
           return packageNameList({ isAllAllowed: true });
-        case 'moduleeeName':
-          returmoduleleleName();
-        case 'moduleeeParts':
-          returmoduleleleParts();
-        case 'moduleeeNameList':
-          returmoduleleleNameList();
+        case 'moduleName':
+          return moduleName();
+        case 'moduleParts':
+          return moduleParts();
+        case 'moduleNameList':
+          return moduleNameList();
         case 'componentName':
           return componentName();
         case 'componentType':

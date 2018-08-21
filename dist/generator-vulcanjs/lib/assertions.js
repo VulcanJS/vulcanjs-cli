@@ -62,7 +62,7 @@ function setup(generatorSetup) {
 
     function hasNonZeroPackages() {
       var packageNames = lister.listPackages();
-      if (packageNames.length) {
+      if (!packageNames.length) {
         errors.isZeroPackages = {
           message: uiText.errors.isZeroPackages
         };

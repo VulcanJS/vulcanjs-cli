@@ -6,7 +6,6 @@ function setup (generatorSetup) {
     function getPath (options, ...args) {
       const relativeToProjectRootPath = path.join(...args);
       const absolutePath = generator.destinationPath(relativeToProjectRootPath);
-      console.log('getPath aboslutePath', absolutePath);
       if (options.relativeTo) return path.relative(options.relativeTo, absolutePath);
       return options.isAbsolute ? absolutePath : relativeToProjectRootPath;
     }
@@ -52,27 +51,11 @@ function setup (generatorSetup) {
       );
     }
 
-    // module = module in Vulcan
-    function modulesPath (options, ...args) {
-      return modulesPath(
-        options,
-        'modules',
-        ...args
-      );
-    }
-
     function modulesIndexPath (options, ...args) {
       return modulesPath(
         options,
         'index.js',
         ...args
-      );
-    }
-
-    function modulesIndexPath (options) {
-      return modulesPath(
-        options,
-        'index.js'
       );
     }
 
@@ -175,9 +158,7 @@ function setup (generatorSetup) {
       case 'package': return packagePath(wrappedOptions, ...wrappedArgs);
       case 'lib': return libPath(wrappedOptions, ...wrappedArgs);
       case 'modules': return modulesPath(wrappedOptions, ...wrappedArgs);
-      case 'modules': return modulesPath(wrappedOptions, ...wrappedArgs);
       case 'packageTests': return packageTestsPath(wrappedOptions, ...wrappedArgs);
-      case 'modulesIndex': return modulesIndexPath(wrappedOptions, ...wrappedArgs);
       case 'modulesIndex': return modulesIndexPath(wrappedOptions, ...wrappedArgs);
       case 'componentsIndex': return componentsIndexPath(wrappedOptions, ...wrappedArgs);
       case 'module': return modulePath(wrappedOptions, ...wrappedArgs);

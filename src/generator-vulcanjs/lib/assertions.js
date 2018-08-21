@@ -3,12 +3,12 @@ const makeLister = require('./lister');
 
 const errors = {};
 
-function setup(generatorSetup) {
+function setup (generatorSetup) {
   const generator = generatorSetup;
   const lister = makeLister.setup(generator);
 
-  function assert(assertion, ...args) {
-    function isVulcan() {
+  function assert (assertion, ...args) {
+    function isVulcan () {
       // TODO: not imlemented yet
       // Idea: check for a package.json file?
       // if (!store.is('vulcan')) {
@@ -18,7 +18,7 @@ function setup(generatorSetup) {
       // }
     }
 
-    function notVulcan() {
+    function notVulcan () {
       // if (store.is('vulcan')) {
       //  errors.isVulcan = {
       //    message: uiText.errors.isVulcan,
@@ -26,7 +26,7 @@ function setup(generatorSetup) {
       // }
     }
 
-    function isPackageExists(packageName) {
+    function isPackageExists (packageName) {
       if (!lister.packageExists(packageName)) {
         errors.notPackageExists = {
           message: uiText.errors.notPackageExists(packageName),
@@ -34,7 +34,7 @@ function setup(generatorSetup) {
       }
     }
 
-    function notPackageExists(packageName) {
+    function notPackageExists (packageName) {
       if (lister.packageExists(packageName)) {
         errors.isPackageExists = {
           message: uiText.errors.isPackageExists(packageName),
@@ -42,7 +42,7 @@ function setup(generatorSetup) {
       }
     }
 
-    function isModuleExists(packageName, moduleName) {
+    function isModuleExists (packageName, moduleName) {
       if (!lister.moduleExists(packageName, moduleName)) {
         errors.notModuleExists = {
           message: uiText.errors.notModuleExists(packageName, moduleName),
@@ -50,7 +50,7 @@ function setup(generatorSetup) {
       }
     }
 
-    function notModuleExists(packageName, moduleName) {
+    function notModuleExists (packageName, moduleName) {
       if (lister.moduleExists(packageName, moduleName)) {
         errors.isModuleExists = {
           message: uiText.errors.isModuleExists(packageName, moduleName),
@@ -58,16 +58,16 @@ function setup(generatorSetup) {
       }
     }
 
-    function hasNonZeroPackages() {
+    function hasNonZeroPackages () {
       const packageNames = lister.listPackages();
-      if (packageNames.length) {
+      if (!packageNames.length) {
         errors.isZeroPackages = {
           message: uiText.errors.isZeroPackages,
         };
       }
     }
 
-    function packageHasNonZeroModules(packageName) {
+    function packageHasNonZeroModules (packageName) {
       this._assertIsPackageExists(packageName);
       if (!this._packageHasNonZeroModules(packageName)) {
         errors.hasZeroModules = {
@@ -76,7 +76,7 @@ function setup(generatorSetup) {
       }
     }
 
-    function isDelete(isDeleting) {
+    function isDelete (isDeleting) {
       if (!isDeleting) {
         errors.hasZeroModules = {
           message: uiText.errors.isDelete,

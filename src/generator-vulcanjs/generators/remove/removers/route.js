@@ -44,13 +44,7 @@ module.exports = class extends VulcanGenerator {
 
   writing () {
     if (!this._canWrite()) { return false; }
-    this._dispatch({
-      type: 'REMOVE_ROUTE',
-      packageName: this.props.packageName,
-      routeName: this.props.routeName,
-    });
     this._updateRoutes();
-    return this._commitStore();
   }
 
   end () {

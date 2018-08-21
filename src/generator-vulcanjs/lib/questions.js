@@ -3,19 +3,19 @@ const common = require('./common');
 const validations = require('./validations');
 const makeLister = require('./lister');
 
-function setup(generatorSetup) {
+function setup (generatorSetup) {
   const generator = generatorSetup;
   const lister = makeLister.setup(generatorSetup);
   const validator = validations.setup(generatorSetup);
 
-  function get(...questionNames) {
+  function get (...questionNames) {
     const options = generator.options;
 
-    function when(fieldName, answers, questionOptions) {
+    function when (fieldName, answers, questionOptions) {
       return (!(options.dontAsk && options[fieldName]));
     }
 
-    function appName() {
+    function appName () {
       return {
         type: 'input',
         name: 'appName',
@@ -26,7 +26,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function doShallowClone() {
+    function doShallowClone () {
       return {
         type: 'list',
         name: 'doShallowClone',
@@ -36,7 +36,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function isDelete() {
+    function isDelete () {
       return {
         type: 'confirm',
         name: 'isDelete',
@@ -46,7 +46,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function reactExtension() {
+    function reactExtension () {
       return {
         type: 'list',
         name: 'reactExtension',
@@ -56,7 +56,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function packageManager() {
+    function packageManager () {
       return {
         type: 'list',
         name: 'packageManager',
@@ -70,7 +70,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function packageName(questionOptions) {
+    function packageName (questionOptions) {
       return {
         type: 'input',
         name: 'packageName',
@@ -84,7 +84,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function vulcanDependencies() {
+    function vulcanDependencies () {
       return {
         type: 'checkbox',
         name: 'vulcanDependencies',
@@ -107,7 +107,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function isPackageAutoAdd() {
+    function isPackageAutoAdd () {
       return {
         type: 'confirm',
         name: 'isPackageAutoAdd',
@@ -116,7 +116,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function packageNameList(questionOptions = {}) {
+    function packageNameList (questionOptions = {}) {
       return {
         type: 'list',
         name: 'packageName',
@@ -145,13 +145,13 @@ function setup(generatorSetup) {
       };
     }
 
-    function moduleeeName(questionOptions = {}) {
+    function moduleName (questionOptions = {}) {
       return {
         type: 'input',
-        name: 'moduleeeName',
-        message: uiText.messages.moduleeeName,
-        when: (answers) => when('moduleeeName', answers, questionOptions),
-        default: options.moduleeeName,
+        name: 'moduleName',
+        message: uiText.messages.moduleName,
+        when: (answers) => when('moduleName', answers, questionOptions),
+        default: options.moduleName,
         validate: (input, answers) => {
           const combinedValidator = validations.combineValidators(
             validator.assertNonEmpty,
@@ -164,10 +164,10 @@ function setup(generatorSetup) {
       };
     }
 
-    function moduleeeParts() {
+    function moduleParts () {
       return {
         type: 'checkbox',
-        name: 'moduleeeParts',
+        name: 'moduleParts',
         message: 'Create with',
         choices: [
           { name: 'Fragments', value: 'fragments', checked: true },
@@ -177,34 +177,34 @@ function setup(generatorSetup) {
           { name: 'Resolvers', value: 'resolvers', checked: true },
           { name: 'Schema', value: 'schema', checked: true },
         ],
-        when: () => when('moduleeeParts'),
+        when: () => when('moduleParts'),
         filter: common.getSetFromArr,
       };
     }
 
-    function moduleeeNameList(questionOptions = {}) {
+    function moduleNameList (questionOptions = {}) {
       return {
         type: 'list',
-        name: 'moduleeeName',
-        message: uiText.messages.moduleeeName,
-        when: () => when('moduleeeName'),
+        name: 'moduleName',
+        message: uiText.messages.moduleName,
+        when: () => when('moduleName'),
         choices: (answers) => {
           const finalPackageName = generator._finalize('packageName', answers);
-          const moduleeeNames = lister.listModules(finalPackageName);
-          return [...moduleeeNames];
+          const moduleNames = lister.listModules(finalPackageName);
+          return [...moduleNames];
         },
         default: (answers) => {
           const finalPackageName = generator._finalize('packageName', answers);
-          const moduleeeNames = lister.listModules(finalPackageName);
+          const moduleNames = lister.listModules(finalPackageName);
           return common.getDefaultChoiceIndex(
-            moduleeeNames,
-            options.moduleeeName
+            moduleNames,
+            options.moduleName
           );
         },
       };
     }
 
-    function defaultResolvers() {
+    function defaultResolvers () {
       return {
         type: 'checkbox',
         name: 'defaultResolvers',
@@ -219,7 +219,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function componentName() {
+    function componentName () {
       return {
         type: 'input',
         name: 'componentName',
@@ -230,7 +230,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function componentType() {
+    function componentType () {
       return {
         type: 'list',
         name: 'componentType',
@@ -243,7 +243,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function isRegisterComponent() {
+    function isRegisterComponent () {
       return {
         type: 'confirm',
         name: 'isRegister',
@@ -252,7 +252,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function routeName(questionOptions = {}) {
+    function routeName (questionOptions = {}) {
       return {
         type: 'input',
         name: 'routeName',
@@ -264,7 +264,7 @@ function setup(generatorSetup) {
     }
 
 
-    function routePath() {
+    function routePath () {
       return {
         type: 'input',
         name: 'routePath',
@@ -275,7 +275,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function layoutName() {
+    function layoutName () {
       return {
         type: 'input',
         name: 'layoutName',
@@ -285,7 +285,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function isAddCustomSchemaProperty() {
+    function isAddCustomSchemaProperty () {
       return {
         type: 'confirm',
         name: 'isAddCustomSchemaProperty',
@@ -295,7 +295,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function schemaPropertyName() {
+    function schemaPropertyName () {
       return {
         type: 'input',
         name: 'schemaPropertyName',
@@ -305,7 +305,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function isSchemaPropertyHidden() {
+    function isSchemaPropertyHidden () {
       return {
         type: 'confirm',
         name: 'isSchemaPropertyHidden',
@@ -314,7 +314,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function schemaPropertyLabel() {
+    function schemaPropertyLabel () {
       return {
         type: 'input',
         name: 'schemaPropertyLabel',
@@ -327,7 +327,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function schemaPropertyType() {
+    function schemaPropertyType () {
       return {
         type: 'list',
         name: 'schemaPropertyType',
@@ -337,7 +337,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function isSchemaPropertyOptional() {
+    function isSchemaPropertyOptional () {
       return {
         type: 'confirm',
         name: 'isSchemaPropertyOptional',
@@ -346,7 +346,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function schemaPropertyViewableBy() {
+    function schemaPropertyViewableBy () {
       return {
         type: 'checkbox',
         name: 'schemaPropertyViewableBy',
@@ -356,7 +356,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function schemaPropertyInsertableBy() {
+    function schemaPropertyInsertableBy () {
       return {
         type: 'checkbox',
         name: 'schemaPropertyInsertableBy',
@@ -366,7 +366,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function schemaPropertyEditableBy() {
+    function schemaPropertyEditableBy () {
       return {
         type: 'checkbox',
         name: 'schemaPropertyEditableBy',
@@ -376,7 +376,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function isAddAnotherCustomSchemaProperty() {
+    function isAddAnotherCustomSchemaProperty () {
       return {
         type: 'confirm',
         name: 'isAddAnotherCustomSchemaProperty',
@@ -385,7 +385,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function vulcanjsRemovableComponentsList() {
+    function vulcanjsRemovableComponentsList () {
       return {
         type: 'list',
         name: 'vulcanjsComponent',
@@ -399,7 +399,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function vulcanjsListableComponentsList() {
+    function vulcanjsListableComponentsList () {
       return {
         type: 'list',
         name: 'vulcanjsComponent',
@@ -413,7 +413,7 @@ function setup(generatorSetup) {
       };
     }
 
-    function getSingleQuestion(questionName) {
+    function getSingleQuestion (questionName) {
       switch (questionName) {
         case 'appName': return appName();
         case 'doShallowClone': return doShallowClone();
@@ -425,9 +425,9 @@ function setup(generatorSetup) {
         case 'packageNameList': return packageNameList();
         case 'packageNameWithNumModulesList': return packageNameList({ isWithNumModules: true });
         case 'packageNameWithAllList': return packageNameList({ isAllAllowed: true });
-        case 'moduleeeName': returmoduleleleName();
-        case 'moduleeeParts': returmoduleleleParts();
-        case 'moduleeeNameList': returmoduleleleNameList();
+        case 'moduleName': return moduleName();
+        case 'moduleParts': return moduleParts();
+        case 'moduleNameList': return moduleNameList();
         case 'componentName': return componentName();
         case 'componentType': return componentType();
         case 'isRegisterComponent': return isRegisterComponent();

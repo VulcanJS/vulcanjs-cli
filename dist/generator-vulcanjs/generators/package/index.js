@@ -56,14 +56,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: 'configuring',
     value: function configuring() {
-      if (!this._canConfigure()) {
-        return;
-      }
-      this._dispatch({
-        type: 'ADD_PACKAGE',
-        packageName: this.props.packageName
-      });
-      this._commitStore();
+      if (!this._canConfigure()) {}
     }
   }, {
     key: '_writePackageJs',

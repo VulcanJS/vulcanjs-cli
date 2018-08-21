@@ -11,13 +11,19 @@
 
 ## Warning
 
-This tool is very new and is still under development. Use with caution. Always commit your code before using any program that modifies it.
+This project is young. Use with caution. Always commit your code before using any program that modifies it.
 
 ## Table of Contents
 
+- [Warning](#warning)
+- [Table of Contents](#table-of-contents)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
+  - [Create](#create)
+  - [Generate](#generate)
+  - [Remove](#remove)
+  - [List](#list)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
@@ -25,7 +31,7 @@ This tool is very new and is still under development. Use with caution. Always c
 ## Background
 <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a> is a full stack javascript framework, built on Meteor, React and GraphQL. If you aren't familiar with VulcanJS, we highly recommend that you check out the website and read the docs.
 
-With this cli, you'll be able to easily generate `packages`, `models`, `components`, and `routes` for your VulcanJS project.
+With this cli, you'll be able to easily generate `packages`, `modules`, `components`, and `routes` for your VulcanJS project.
 
 ## Install
 
@@ -103,11 +109,15 @@ $ vulcan list routes
 
 [@SachaG](https://github.com/SachaG)
 
+[@eric-burel](https://github.com/eric-burel)
+
 ## Contribute
 
 See [CONTRIBUTE.md](./CONTRIBUTE.md)!
 
-PRs are always welcome.
+This package is in very low maintenance mode. If you encounter a bug or have a suggestion, feel free to open an issue, but we won't guarantee any fix.
+
+PRs are always welcome however, even if incomplete or just a draft.
 
 ## License
 

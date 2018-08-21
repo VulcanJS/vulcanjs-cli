@@ -68,14 +68,8 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canWrite()) {
         return false;
       }
-      this._dispatch({
-        type: 'REMOVE_MODULE',
-        packageName: this.props.packageName,
-        moduleName: this.props.moduleName
-      });
       this._removeModuleDir();
       this._updateModulesIndex();
-      return this._commitStore();
     }
   }, {
     key: 'end',

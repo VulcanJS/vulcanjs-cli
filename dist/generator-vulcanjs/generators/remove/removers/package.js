@@ -54,11 +54,6 @@ module.exports = function (_VulcanGenerator) {
       }
       var sourceDir = this._getPath({ isAbsolute: true }, 'package');
       this.fs.delete(sourceDir);
-      this._dispatch({
-        type: 'REMOVE_PACKAGE',
-        packageName: this.props.packageName
-      });
-      return this._commitStore();
     }
   }, {
     key: 'end',

@@ -64,19 +64,12 @@ module.exports = class extends VulcanGenerator {
   }
 
   configuring() {
-    if (!this._canConfigure()) { return; }
-    this._dispatch({
-      type: 'ADD_ROUTE',
-      packageName: this.props.packageName,
-      routeName: this.props.routeName,
-      routePath: this.props.routePath,
-    });
+    if (!this._canConfigure()) { }
   }
 
   writing() {
     if (!this._canWrite()) { return; }
     this._updateRoutes();
-    this._commitStore();
   }
 
   end() {

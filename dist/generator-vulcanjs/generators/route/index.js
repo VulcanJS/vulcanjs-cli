@@ -75,15 +75,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: 'configuring',
     value: function configuring() {
-      if (!this._canConfigure()) {
-        return;
-      }
-      this._dispatch({
-        type: 'ADD_ROUTE',
-        packageName: this.props.packageName,
-        routeName: this.props.routeName,
-        routePath: this.props.routePath
-      });
+      if (!this._canConfigure()) {}
     }
   }, {
     key: 'writing',
@@ -92,7 +84,6 @@ module.exports = function (_VulcanGenerator) {
         return;
       }
       this._updateRoutes();
-      this._commitStore();
     }
   }, {
     key: 'end',

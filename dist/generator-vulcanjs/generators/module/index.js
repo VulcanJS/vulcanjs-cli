@@ -50,6 +50,7 @@ module.exports = function (_VulcanGenerator) {
       if (this._needArg('moduleName')) {
         questions = [].concat(_toConsumableArray(questions), _toConsumableArray(this._getQuestions('moduleName')));
       }
+      console.log('HERE', questions);
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
@@ -77,15 +78,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: 'configuring',
     value: function configuring() {
-      if (!this._canConfigure()) {
-        return;
-      }
-      this._dispatch({
-        type: 'ADD_MODULE',
-        packageName: this.props.packageName,
-        moduleName: this.props.moduleName
-      });
-      this._commitStore();
+      if (!this._canConfigure()) {}
     }
   }, {
     key: '_writeCollection',

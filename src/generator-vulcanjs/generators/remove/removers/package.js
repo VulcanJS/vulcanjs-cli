@@ -32,11 +32,6 @@ module.exports = class extends VulcanGenerator {
       'package'
     );
     this.fs.delete(sourceDir);
-    this._dispatch({
-      type: 'REMOVE_PACKAGE',
-      packageName: this.props.packageName,
-    });
-    return this._commitStore();
   }
 
   end () {
