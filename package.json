@@ -7,7 +7,7 @@
   },
   "scripts": {
     "watch": "grunt watch",
-    "build": "grunt build"
+    "build": "grunt"
   },
   "repository": {
     "type": "git",
