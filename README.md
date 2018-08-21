@@ -61,14 +61,14 @@ Generates a project component
 $ vulcan g package <packageName>
 ```
 
-- Generate Model
+- Generate Module
 ```sh
-$ vulcan g model <packageName> <modelName>
+$ vulcan g module <packageName> <moduleName>
 ```
 
 - Generate Component
 ```sh
-$ vulcan g component <packageName> <modelName> <componentName>
+$ vulcan g component <packageName> <moduleName> <componentName>
 ```
 
 - Generate Route
@@ -83,9 +83,9 @@ $ vulcan g route <packageName> <routeName> <routePath>
 $ vulcan remove package <packageName>
 ```
 
-- Remove Model
+- Remove Module
 ```sh
-$ vulcan remove model <packageName> <modelName>
+$ vulcan remove module <packageName> <moduleName>
 ```
 
 ### List
