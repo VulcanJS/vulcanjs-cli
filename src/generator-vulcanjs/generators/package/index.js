@@ -2,17 +2,17 @@ const chalk = require('chalk');
 const VulcanGenerator = require('../../lib/VulcanGenerator');
 
 module.exports = class extends VulcanGenerator {
-  initializing () {
+  initializing() {
     this._assert('isVulcan');
   }
 
-  _registerArguments () {
+  _registerArguments() {
     this._registerOptions(
       'packageName'
     );
   }
 
-  prompting () {
+  prompting() {
     if (!this._canPrompt()) { return false; }
     let questions = [];
     if (!this.options.packageName) {
@@ -30,11 +30,11 @@ module.exports = class extends VulcanGenerator {
     });
   }
 
-  configuring () {
+  configuring() {
     if (!this._canConfigure()) { }
   }
 
-  _writePackageJs () {
+  _writePackageJs() {
     this.fs.copyTpl(
       this.templatePath('package.js'),
       this._getPath(
@@ -46,7 +46,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeClientMain () {
+  _writeClientMain() {
     this.fs.copyTpl(
       this.templatePath('client.js'),
       this._getPath(
@@ -58,7 +58,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeServerMain () {
+  _writeServerMain() {
     this.fs.copyTpl(
       this.templatePath('server.js'),
       this._getPath(
@@ -70,7 +70,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeServerSeed () {
+  _writeServerSeed() {
     this.fs.copyTpl(
       this.templatePath('seed.js'),
       this._getPath(
@@ -82,7 +82,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeModulesIndex () {
+  _writeModulesIndex() {
     this.fs.copyTpl(
       this.templatePath('modules.index.js'),
       this._getPath(
@@ -93,7 +93,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeComponentsIndex () {
+  _writeComponentsIndex() {
     this.fs.copyTpl(
       this.templatePath('components.js'),
       this._getPath(
@@ -104,7 +104,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeRoutes () {
+  _writeRoutes() {
     this.fs.copyTpl(
       this.templatePath('routes.js'),
       this._getPath(
@@ -127,7 +127,7 @@ module.exports = class extends VulcanGenerator {
   //   );
   // }
 
-  writing () {
+  writing() {
     if (!this._canWrite()) { return; }
     this._writePackageJs();
     this._writeClientMain();
@@ -139,7 +139,7 @@ module.exports = class extends VulcanGenerator {
     this._writeRoutes();
   }
 
-  end () {
+  end() {
     this._end();
     if (!this._hasNoErrors()) { return; }
     this.log(`\nTo activate your package, run: ${chalk.green(`meteor add ${this.props.packageName}`)}`);
