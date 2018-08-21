@@ -47,12 +47,7 @@ module.exports = class extends VulcanGenerator {
         dontAsk: true,
       };
       this.composeWith(generator, nextOptions);
-    }
-    const boundCompose = composeWithModelPart.bind(this);
-    const modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
-    if (this.props.isAddCustomResolvers) modelParts.push('resolvers');
-    if (this.props.isAddCustomMutations) modelParts.push('mutations');
-    modelParts.forEach(boundCompose);
+    });
   }
 
   configuring () {

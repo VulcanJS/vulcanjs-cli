@@ -13,7 +13,6 @@ var componentGenerator = require.resolve('./generator-vulcanjs/generators/compon
 var routeGenerator = require.resolve('./generator-vulcanjs/generators/route');
 var remover = require.resolve('./generator-vulcanjs/generators/remove');
 var lister = require.resolve('./generator-vulcanjs/generators/list');
-var _unshallow = require.resolve('./generator-vulcanjs/generators/unshallow');
 
 var env = yeoman.createEnv();
 
@@ -47,9 +46,6 @@ var componentNamesToGeneratorRegisters = {
   },
   list: function list() {
     env.register(lister, 'list');
-  },
-  unshallow: function unshallow() {
-    env.register(_unshallow, 'unshallow');
   }
 };
 

@@ -71,13 +71,8 @@ module.exports = function (_VulcanGenerator) {
         var nextOptions = _extends({}, _this3.options, _this3.props, {
           dontAsk: true
         });
-        this.composeWith(generator, nextOptions);
-      }
-      var boundCompose = composeWithModelPart.bind(this);
-      var modelParts = ['fragments', 'schema', 'permissions', 'parameters'];
-      if (this.props.isAddCustomResolvers) modelParts.push('resolvers');
-      if (this.props.isAddCustomMutations) modelParts.push('mutations');
-      modelParts.forEach(boundCompose);
+        _this3.composeWith(generator, nextOptions);
+      });
     }
   }, {
     key: 'configuring',

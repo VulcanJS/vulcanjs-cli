@@ -134,6 +134,7 @@ module.exports = function (_Generator) {
         var errorNo = 'Error (' + index + ')';
         var message = '\n' + errorNo + ': ' + chalk.red(error.message);
         _this3.log(message);
+        //      this.env.error(message);
       });
       process.exit(1);
     }

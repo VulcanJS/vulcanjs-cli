@@ -12,7 +12,6 @@ const componentGenerator = require.resolve('./generator-vulcanjs/generators/comp
 const routeGenerator = require.resolve('./generator-vulcanjs/generators/route');
 const remover = require.resolve('./generator-vulcanjs/generators/remove');
 const lister = require.resolve('./generator-vulcanjs/generators/list');
-const unshallow = require.resolve('./generator-vulcanjs/generators/unshallow');
 
 const env = yeoman.createEnv();
 
@@ -33,7 +32,6 @@ const componentNamesToGeneratorRegisters = {
   route: () => { env.register(routeGenerator, 'route'); },
   remove: () => { env.register(remover, 'remove'); },
   list: () => { env.register(lister, 'list'); },
-  unshallow: () => { env.register(unshallow, 'unshallow'); },
 };
 
 function registerGenerator (componentName) {

@@ -14,7 +14,8 @@ var recognizedActions = {
   list: 'list',
   l: 'list',
   un: 'unshallow',
-  unshallow: 'unshallow'
+  unshallow: 'unshallow',
+  start: 'start'
 };
 
 var genericProcessor = function genericProcessor(args) {
@@ -56,8 +57,8 @@ function usage() {
   console.log('    <action>   Operation to perform ');
   console.log('    <object>   Asset type (contextual to action)');
   console.log('    <...>      Parameters. If not provided, interactively entered');
-  console.log(chalk.grey('\nProject run'));
-  console.log('  vulcan start');
+  //  console.log(chalk.grey('\nProject run'));
+  //  console.log('  vulcan start');
   console.log(chalk.grey('\nProject initialisation'));
   console.log('  vulcan create <appName>');
   // console.log('  vulcan unshallow ');
