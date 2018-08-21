@@ -81,10 +81,6 @@ function get(checkType) {
     return packageNamesWithModules;
   }
 
-  function storyBookSetupStatus() {
-    return store.getState().storyBook.setupStatus;
-  }
-
   function routeNames(packageName) {
     var thePackage = getPackage(packageName);
     var theRoutes = thePackage.routes;
@@ -120,8 +116,6 @@ function get(checkType) {
       return getPackage.apply(undefined, args);
     case 'routes':
       return getRoutes.apply(undefined, args);
-    case 'storyBookSetupStatus':
-      return storyBookSetupStatus.apply(undefined, args);
     case 'packageNamesWithNumModules':
       return packageNamesWithNumModules.apply(undefined, args);
     default:

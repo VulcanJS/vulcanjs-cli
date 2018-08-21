@@ -2,19 +2,19 @@ const VulcanGenerator = require('../../lib/VulcanGenerator');
 const ast = require('../../lib/ast');
 
 module.exports = class extends VulcanGenerator {
-  initializing() {
+  initializing () {
     this._assert('isVulcan');
     this._assert('hasNonZeroPackages');
   }
 
-  _registerArguments() {
+  _registerArguments () {
     this._registerOptions(
       'packageName',
       'componentName'
     );
   }
 
-  prompting() {
+  prompting () {
     if (!this._canPrompt()) { return false; }
     let questions = [];
     if (this._needArg('packageName')) {
@@ -42,7 +42,7 @@ module.exports = class extends VulcanGenerator {
       });
   }
 
-  _writeComponent() {
+  _writeComponent () {
     const templatePath = this.props.componentType === 'pure' ?
       this.templatePath('pureFunctionComponent.js') :
       this.templatePath('classComponent.js');
@@ -57,7 +57,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _updateComponentsIndex() {
+  _updateComponentsIndex () {
     if (!this.props.isRegister) return;
     const componentsIndexPath = this._getPath(
       { isAbsolute: true },
@@ -74,13 +74,13 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  writing() {
+  writing () {
     if (!this._canWrite()) { return; }
     this._writeComponent();
     this._updateComponentsIndex();
   }
 
-  end() {
+  end () {
     this._end();
   }
 };
