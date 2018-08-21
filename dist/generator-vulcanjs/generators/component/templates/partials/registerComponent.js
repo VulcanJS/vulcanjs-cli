@@ -1,1 +1,0 @@
-registerComponent('<%= componentName %>', <%= componentName %>);

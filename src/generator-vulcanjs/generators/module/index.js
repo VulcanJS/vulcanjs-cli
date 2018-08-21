@@ -2,19 +2,19 @@ const VulcanGenerator = require('../../lib/VulcanGenerator');
 const ast = require('../../lib/ast');
 
 module.exports = class extends VulcanGenerator {
-  initializing() {
+  initializing () {
     this._assert('isVulcan');
     this._assert('hasNonZeroPackages');
   }
 
-  _registerArguments() {
+  _registerArguments () {
     this._registerOptions(
       'packageName',
       'moduleName'
     );
   }
 
-  prompting() {
+  prompting () {
     if (!this._canPrompt()) { return false; }
     let questions = [];
     if (this._needArg('packageName')) {
@@ -25,7 +25,6 @@ module.exports = class extends VulcanGenerator {
     if (this._needArg('moduleName')) {
       questions = [...questions, ...this._getQuestions('moduleName')];
     }
-    console.log('HERE', questions);
     return this.prompt(questions)
       .then((answers) => {
         this.props = {
@@ -38,7 +37,7 @@ module.exports = class extends VulcanGenerator {
       });
   }
 
-  _composeGenerators() {
+  _composeGenerators () {
     const moduleParts = ['fragments', 'schema', 'permissions'];
     moduleParts.forEach((modulePart) => {
       const generator = require.resolve(`./${modulePart}`);
@@ -51,11 +50,11 @@ module.exports = class extends VulcanGenerator {
     });
   }
 
-  configuring() {
+  configuring () {
     if (!this._canConfigure()) { }
   }
 
-  _writeCollection() {
+  _writeCollection () {
     this.fs.copyTpl(
       this.templatePath('collection.js'),
       this._getPath(
@@ -67,7 +66,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _writeTestCollection() {
+  _writeTestCollection () {
     const testProps = {
       ...this.props,
       subjectName: 'collection',
@@ -84,7 +83,7 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  _updateModulesIndex() {
+  _updateModulesIndex () {
     const modulesIndexPath = this._getPath(
       { isAbsolute: true },
       'modulesIndex'
@@ -100,14 +99,14 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  writing() {
+  writing () {
     if (!this._canWrite()) { return; }
     this._writeCollection();
     this._updateModulesIndex();
     // this._writeTestCollection();
   }
 
-  end() {
+  end () {
     this._end();
   }
 };

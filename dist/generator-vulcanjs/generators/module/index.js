@@ -50,7 +50,6 @@ module.exports = function (_VulcanGenerator) {
       if (this._needArg('moduleName')) {
         questions = [].concat(_toConsumableArray(questions), _toConsumableArray(this._getQuestions('moduleName')));
       }
-      console.log('HERE', questions);
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),

@@ -1,8 +1,8 @@
 const uiText = require('./ui-text');
 const makeLister = require('./lister');
 
-function combineValidators (...fns) {
-  return function reducedValidator (input) {
+function combineValidators(...fns) {
+  return function reducedValidator(input) {
     return fns.reduce(
       (acc, curValidator) => {
         if (typeof acc === 'string') return acc;
@@ -13,7 +13,7 @@ function combineValidators (...fns) {
   };
 }
 
-function setup (generatorSetup) {
+function setup(generatorSetup) {
   const generator = generatorSetup;
   const lister = makeLister.setup(generator);
 

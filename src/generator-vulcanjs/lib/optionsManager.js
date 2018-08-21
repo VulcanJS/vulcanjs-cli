@@ -69,16 +69,15 @@ const allOptions = {
   },
 };
 
-function setup(generatorSetup) {
+function setup (generatorSetup) {
   const generator = generatorSetup;
-  function register(...optionNames) {
-    function registerSingleOption(optionName) {
-      generator.option(
-        optionName,
-        allOptions[optionName]
-      );
-    }
-
+  function registerSingleOption (optionName) {
+    generator.option(
+      optionName,
+      allOptions[optionName]
+    );
+  }
+  function register (...optionNames) {
     optionNames.forEach((optionName) => {
       registerSingleOption(optionName);
     });

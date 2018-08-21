@@ -44,7 +44,7 @@ const argsProcessors = {
   unshallow: genericProcessor,
 };
 
-function usage () {
+function usage() {
   const values = _.uniq(_.values(recognizedActions));
   console.log(chalk.green('\nvulcan usage:'));
   console.log(chalk.grey('\nSynopsis'));
@@ -64,12 +64,11 @@ function usage () {
   console.log('  vulcan (remove|r) package');
   console.log('  vulcan (remove|r) module');
   console.log(chalk.grey('\nAssets listing'));
-  console.log('  vulcan (list|l) routes');
   console.log('  vulcan (list|l) packages');
   process.exit();
 }
 
-function getAction () {
+function getAction() {
   const args = minimist(process.argv.slice(2))._;
 
   if (!recognizedActions[args[0]]) {

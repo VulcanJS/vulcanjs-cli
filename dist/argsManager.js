@@ -68,7 +68,6 @@ function usage() {
   console.log('  vulcan (remove|r) package');
   console.log('  vulcan (remove|r) module');
   console.log(chalk.grey('\nAssets listing'));
-  console.log('  vulcan (list|l) routes');
   console.log('  vulcan (list|l) packages');
   process.exit();
 }

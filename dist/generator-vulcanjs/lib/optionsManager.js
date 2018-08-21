@@ -73,11 +73,10 @@ var allOptions = {
 
 function setup(generatorSetup) {
   var generator = generatorSetup;
+  function registerSingleOption(optionName) {
+    generator.option(optionName, allOptions[optionName]);
+  }
   function register() {
-    function registerSingleOption(optionName) {
-      generator.option(optionName, allOptions[optionName]);
-    }
-
     for (var _len = arguments.length, optionNames = Array(_len), _key = 0; _key < _len; _key++) {
       optionNames[_key] = arguments[_key];
     }
