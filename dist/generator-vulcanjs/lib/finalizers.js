@@ -69,8 +69,8 @@ function setup(generatorSetup) {
     }
 
     function componentFileName(answers) {
-      var filteredComponentName = filter('componentName', answers.componentName);
-      return filteredComponentName + '.' + store.get('reactExtension');
+      var finalizedComponentName = componentName(answers);
+      return finalizedComponentName + '.' + store.get('reactExtension');
     }
 
     function componentPath(answers) {

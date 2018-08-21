@@ -44,7 +44,7 @@ const argsProcessors = {
   unshallow: genericProcessor,
 };
 
-function usage() {
+function usage () {
   const values = _.uniq(_.values(recognizedActions));
   console.log(chalk.green('\nvulcan usage:'));
   console.log(chalk.grey('\nSynopsis'));
@@ -58,7 +58,7 @@ function usage() {
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
   console.log('  vulcan (generate|g) module <packageName> <moduleName>');
-  console.log('  vulcan (generate|g) component <packageName> <moduleName> <componentName>');
+  console.log('  vulcan (generate|g) component <packageName> <componentName>');
   console.log('  vulcan (generate|g) route <packageName> <routeName> <routePath>');
   console.log(chalk.grey('\nAssets removal'));
   console.log('  vulcan (remove|r) package');
@@ -68,7 +68,7 @@ function usage() {
   process.exit();
 }
 
-function getAction() {
+function getAction () {
   const args = minimist(process.argv.slice(2))._;
 
   if (!recognizedActions[args[0]]) {

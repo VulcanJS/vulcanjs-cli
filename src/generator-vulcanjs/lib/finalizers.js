@@ -12,12 +12,12 @@ const arrayToEjsString = (arr) => {
   return `[${quotedAndCsv}]`;
 };
 
-function setup(generatorSetup) {
+function setup (generatorSetup) {
   const generator = generatorSetup;
   const lister = makeLister.setup(generator);
 
-  function finalize(propName, ...args) {
-    function getRaw(keyBeforeRaw, answers = {}) {
+  function finalize (propName, ...args) {
+    function getRaw (keyBeforeRaw, answers = {}) {
       return (
         generator.options[keyBeforeRaw] ||
         generator.props[keyBeforeRaw] ||
@@ -25,49 +25,49 @@ function setup(generatorSetup) {
       );
     }
 
-    function pluralPascalModuleName(answers) {
+    function pluralPascalModuleName (answers) {
       const moduleNameRaw = getRaw('moduleName', answers);
       const pluralModuleName = pluralize.plural(moduleNameRaw);
       return pascalCase(pluralModuleName);
     }
 
-    function singularPascalModuleName(answers) {
+    function singularPascalModuleName (answers) {
       const moduleNameRaw = getRaw('moduleName', answers);
       const pluralModuleName = pluralize.singular(moduleNameRaw);
       return pascalCase(pluralModuleName);
     }
 
-    function permissionTo(permissionType, answers) {
+    function permissionTo (permissionType, answers) {
       const permissionsArr = answers[permissionType].map((s) => s.toLowerCase());
       return arrayToEjsString(permissionsArr);
     }
 
-    function appName(answers) {
+    function appName (answers) {
       const appNameRaw = getRaw.bind(this)('appName', answers);
       return filter('appName', appNameRaw);
     }
 
-    function packageName(answers) {
+    function packageName (answers) {
       const packageNameRaw = getRaw('packageName', answers);
       return filter('packageName', packageNameRaw);
     }
 
-    function moduleName(answers) {
+    function moduleName (answers) {
       const moduleNameRaw = getRaw('moduleName', answers);
       return filter('moduleName', moduleNameRaw);
     }
 
-    function componentName(answers) {
+    function componentName (answers) {
       const componentNameRaw = getRaw('componentName', answers);
       return filter('componentName', componentNameRaw);
     }
 
-    function componentFileName(answers) {
-      const filteredComponentName = filter('componentName', answers.componentName);
-      return `${filteredComponentName}.${store.get('reactExtension')}`;
+    function componentFileName (answers) {
+      const finalizedComponentName = componentName(answers);
+      return `${finalizedComponentName}.${store.get('reactExtension')}`;
     }
 
-    function componentPath(answers) {
+    function componentPath (answers) {
       return generator._getPath(
         { isAbsolute: false },
         'components',
@@ -75,56 +75,56 @@ function setup(generatorSetup) {
       );
     }
 
-    function pascalModuleName(answers) {
+    function pascalModuleName (answers) {
       const moduleNameRaw = getRaw('moduleName', answers);
       return pascalCase(moduleNameRaw);
     }
 
-    function typeName(answers) {
+    function typeName (answers) {
       return singularPascalModuleName(answers);
     }
 
-    function collectionName(answers) {
+    function collectionName (answers) {
       return pluralPascalModuleName(answers);
     }
 
-    function camelModuleName(answers) {
+    function camelModuleName (answers) {
       const moduleNameRaw = getRaw('moduleName', answers);
       return camelCase(moduleNameRaw);
     }
 
-    function moduleParts(answers) {
+    function moduleParts (answers) {
       return Object.keys(answers.moduleParts);
     }
 
-    function mutationName(mutationType, answers) {
+    function mutationName (mutationType, answers) {
       const moduleNamePart = pluralPascalModuleName(answers);
       const mutationTypePart = pascalCase(mutationType);
       return `${moduleNamePart}${mutationTypePart}`;
     }
 
-    function permissionName(permission, answers) {
+    function permissionName (permission, answers) {
       const moduleNamePart = pluralPascalModuleName(answers);
       const permissionAppendage = permission.join('.');
       return `${moduleNamePart}.${permissionAppendage}`;
     }
 
-    function vulcanDependencies(answers) {
+    function vulcanDependencies (answers) {
       const rawDependencies = getRaw('vulcanDependencies', answers);
       return rawDependencies.map((dep) => (`'${dep}'`));
     }
 
-    function resolverName(resolverType, answers) {
+    function resolverName (resolverType, answers) {
       const moduleNamePart = pluralPascalModuleName(answers);
       return `${moduleNamePart}${resolverType}`;
     }
 
-    function hasResolver(resolverType, answers) {
+    function hasResolver (resolverType, answers) {
       const defaultResolvers = getRaw('defaultResolvers', answers);
       return defaultResolvers[resolverType];
     }
 
-    function addRouteStatement(answers) {
+    function addRouteStatement (answers) {
       const routeName = getRaw('routeName', answers);
       const routePath = getRaw('routePath', answers);
       const layoutName = getRaw('layoutName', answers);
@@ -138,7 +138,7 @@ function setup(generatorSetup) {
       });`;
     }
 
-    function prettyPackage(inputPackageName, id) {
+    function prettyPackage (inputPackageName, id) {
       const packageNameRaw = getRaw('packageName', { packageName: inputPackageName });
       return {
         no: id,
@@ -148,11 +148,11 @@ function setup(generatorSetup) {
       };
     }
 
-    function prettyPackages(packageNames) {
+    function prettyPackages (packageNames) {
       return packageNames.map(prettyPackage);
     }
 
-    function addNo(arr) {
+    function addNo (arr) {
       return arr.map((obj, index) => ({ no: index, ...obj }));
     }
 

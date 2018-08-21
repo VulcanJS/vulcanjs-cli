@@ -58,8 +58,7 @@ function run () {
       registerGenerator('component');
       return runWithOptions('component', {
         packageName: action.args[0],
-        moduleName: action.args[1],
-        componentName: action.args[2],
+        componentName: action.args[1],
       });
     } else if (action.component === 'route') {
       registerGenerator('route');

@@ -62,7 +62,7 @@ function usage() {
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
   console.log('  vulcan (generate|g) module <packageName> <moduleName>');
-  console.log('  vulcan (generate|g) component <packageName> <moduleName> <componentName>');
+  console.log('  vulcan (generate|g) component <packageName> <componentName>');
   console.log('  vulcan (generate|g) route <packageName> <routeName> <routePath>');
   console.log(chalk.grey('\nAssets removal'));
   console.log('  vulcan (remove|r) package');
