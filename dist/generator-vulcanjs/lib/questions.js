@@ -4,19 +4,18 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var uiText = require('./ui-text');
 var common = require('./common');
-var store = require('./store');
 var validations = require('./validations');
+var makeLister = require('./lister');
 
 function setup(generatorSetup) {
   var generator = generatorSetup;
+  var lister = makeLister.setup(generatorSetup);
+  var validator = validations.setup(generatorSetup);
 
   function get() {
     var options = generator.options;
 
     function _when(fieldName, answers, questionOptions) {
-      if (questionOptions && questionOptions.isManual) {
-        return answers[fieldName] === common.manualChoiceValue;
-      }
       return !(options.dontAsk && options[fieldName]);
     }
 
@@ -29,7 +28,7 @@ function setup(generatorSetup) {
           return _when('appName');
         },
         default: options.appName,
-        validate: validations.assertNonEmpty
+        validate: validator.assertNonEmpty
       };
     }
 
@@ -91,7 +90,7 @@ function setup(generatorSetup) {
           return _when('packageName', answers, questionOptions);
         },
         default: options.packageName,
-        validate: validations.combineValidators(validations.assertNonEmpty, validations.assertNotPackageExists)
+        validate: validations.combineValidators(validator.assertNonEmpty, validator.assertNotPackageExists)
       };
     }
 
@@ -130,84 +129,77 @@ function setup(generatorSetup) {
         },
         choices: function choices() {
           var packageNames = void 0;
-          if (questionOptions && questionOptions.isWithNumModels) {
-            packageNames = store.get('packageNamesWithNumModels').sort(common.numModelsSort).map(function (_ref) {
+          if (questionOptions && questionOptions.isWithNumModules) {
+            packageNames = lister.listPackagesWithNbModules().sort(common.numModulesSort).map(function (_ref) {
               var name = _ref.name,
-                  numModels = _ref.numModels;
+                  numModules = _ref.numModules;
 
-              if (numModels > 0) return name;
+              if (numModules > 0) return name;
               return { name: name, value: name, disabled: true };
             });
           } else {
-            packageNames = store.get('packageNames');
+            packageNames = lister.listPackages();
           }
           var preProcessedChoices = [].concat(_toConsumableArray(packageNames));
           if (questionOptions.isAllAllowed) {
             preProcessedChoices.push(common.allChoice);
           }
-          if (questionOptions.isManualAllowed) {
-            preProcessedChoices.push(common.manualChoice);
-          }
           return preProcessedChoices;
         },
-        default: common.getDefaultChoiceIndex(store.get('packageNames'), options.packageName)
+        default: common.getDefaultChoiceIndex(lister.listPackages(), options.packageName)
       };
     }
 
-    function modelName() {
+    function moduleName() {
       var questionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       return {
         type: 'input',
-        name: 'modelName',
-        message: uiText.messages.modelName,
+        name: 'moduleName',
+        message: uiText.messages.moduleName,
         when: function when(answers) {
-          return _when('modelName', answers, questionOptions);
+          return _when('moduleName', answers, questionOptions);
         },
-        default: options.modelName,
+        default: options.moduleName,
         validate: function validate(input, answers) {
-          var combinedValidator = validations.combineValidators(validations.assertNonEmpty, validations.generateNotModelExists(generator._finalize('packageName', answers)));
+          var combinedValidator = validations.combineValidators(validator.assertNonEmpty, validator.generateNotModuleExists(generator._finalize('packageName', answers)));
           return combinedValidator(input, answers);
         }
       };
     }
 
-    function modelParts() {
+    function moduleParts() {
       return {
         type: 'checkbox',
-        name: 'modelParts',
+        name: 'moduleParts',
         message: 'Create with',
         choices: [{ name: 'Fragments', value: 'fragments', checked: true }, { name: 'Mutations', value: 'mutations', checked: true }, { name: 'Parameters', value: 'parameters', checked: true }, { name: 'Permissions', value: 'permissions', checked: true }, { name: 'Resolvers', value: 'resolvers', checked: true }, { name: 'Schema', value: 'schema', checked: true }],
         when: function when() {
-          return _when('modelParts');
+          return _when('moduleParts');
         },
         filter: common.getSetFromArr
       };
     }
 
-    function modelNameList() {
+    function moduleNameList() {
       var questionOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       return {
         type: 'list',
-        name: 'modelName',
-        message: uiText.messages.modelName,
+        name: 'moduleName',
+        message: uiText.messages.moduleName,
         when: function when() {
-          return _when('modelName');
+          return _when('moduleName');
         },
         choices: function choices(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
-          var modelNames = store.get('modelNames', finalPackageName);
-          var preProcessedChoices = [].concat(_toConsumableArray(modelNames));
-          if (questionOptions.isManualAllowed) {
-            preProcessedChoices.push(common.manualChoice);
-          }
-          return [].concat(_toConsumableArray(modelNames));
+          var moduleNames = lister.listModules(finalPackageName);
+          return [].concat(_toConsumableArray(moduleNames));
         },
         default: function _default(answers) {
           var finalPackageName = generator._finalize('packageName', answers);
-          var modelNames = store.get('modelNames', finalPackageName);
-          return common.getDefaultChoiceIndex(modelNames, options.modelName);
+          var moduleNames = lister.listModules(finalPackageName);
+          return common.getDefaultChoiceIndex(moduleNames, options.moduleName);
         }
       };
     }
@@ -233,7 +225,7 @@ function setup(generatorSetup) {
         when: function when() {
           return _when('componentName');
         },
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.componentName
       };
     }
@@ -269,32 +261,8 @@ function setup(generatorSetup) {
         when: function when(answers) {
           return _when('routeName', answers, questionOptions);
         },
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.routeName
-      };
-    }
-
-    function routeNameList() {
-      return {
-        type: 'list',
-        name: 'routeName',
-        message: uiText.messages.routeName,
-        when: function when() {
-          return _when('routeName');
-        },
-        choices: function choices(answers) {
-          var finalPackageName = generator._finalize('packageName', answers);
-          var routeNames = store.get('routeNames', finalPackageName);
-          return [].concat(_toConsumableArray(routeNames), [common.manualChoice]);
-        }
-        // default: (answers) => {
-        //   const finalPackageName = generator._finalize('packageName', answers);
-        //   const modelNames = store.get('modelNames', finalPackageName);
-        //   return common.getDefaultChoiceIndex(
-        //     modelNames,
-        //     options.modelName
-        //   );
-        // },
       };
     }
 
@@ -304,7 +272,7 @@ function setup(generatorSetup) {
         name: 'routePath',
         message: uiText.messages.routePath,
         when: _when('routePath'),
-        validate: validations.assertNonEmpty,
+        validate: validator.assertNonEmpty,
         default: options.routePath
       };
     }
@@ -363,7 +331,7 @@ function setup(generatorSetup) {
         when: function when() {
           return _when('schemaPropertyName');
         },
-        validate: validations.assertNonEmpty
+        validate: validator.assertNonEmpty
       };
     }
 
@@ -386,7 +354,7 @@ function setup(generatorSetup) {
         when: function when(answers) {
           return !answers.isSchemaPropertyHidden && _when('schemaPropertyLabel');
         },
-        validate: validations.assertNonEmpty
+        validate: validator.assertNonEmpty
       };
     }
 
@@ -498,30 +466,22 @@ function setup(generatorSetup) {
           return packageManager();
         case 'packageName':
           return packageName();
-        case 'packageNameIfManual':
-          return packageName({ isManual: true });
         case 'vulcanDependencies':
           return vulcanDependencies();
         case 'isPackageAutoAdd':
           return isPackageAutoAdd();
         case 'packageNameList':
           return packageNameList();
-        case 'packageNameWithNumModelsList':
-          return packageNameList({ isWithNumModels: true, isManualAllowed: true });
-        case 'packageNameWithManualList':
-          return packageNameList({ isManualAllowed: true });
+        case 'packageNameWithNumModulesList':
+          return packageNameList({ isWithNumModules: true });
         case 'packageNameWithAllList':
           return packageNameList({ isAllAllowed: true });
-        case 'modelName':
-          return modelName();
-        case 'modelNameIfManual':
-          return modelName({ isManual: true });
-        case 'modelParts':
-          return modelParts();
-        case 'modelNameList':
-          return modelNameList();
-        case 'modelNameWithManualList':
-          return modelNameList({ isManual: true });
+        case 'moduleName':
+          return moduleName();
+        case 'moduleParts':
+          return moduleParts();
+        case 'moduleNameList':
+          return moduleNameList();
         case 'componentName':
           return componentName();
         case 'componentType':
@@ -534,10 +494,6 @@ function setup(generatorSetup) {
           return isDelete();
         case 'routeName':
           return routeName();
-        case 'routeNameIfManual':
-          return routeName({ isManual: true });
-        case 'routeNameList':
-          return routeNameList();
         case 'routePath':
           return routePath();
         case 'layoutName':

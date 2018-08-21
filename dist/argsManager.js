@@ -13,9 +13,8 @@ var recognizedActions = {
   r: 'remove',
   list: 'list',
   l: 'list',
-  i: 'init',
-  init: 'init',
-  start: 'start'
+  un: 'unshallow',
+  unshallow: 'unshallow'
 };
 
 var genericProcessor = function genericProcessor(args) {
@@ -42,7 +41,6 @@ var createProcessor = function createProcessor(args) {
 };
 
 var argsProcessors = {
-  init: genericProcessor,
   generate: genericProcessor,
   remove: genericProcessor,
   list: genericProcessor,
@@ -62,17 +60,16 @@ function usage() {
   console.log('  vulcan start');
   console.log(chalk.grey('\nProject initialisation'));
   console.log('  vulcan create <appName>');
-  console.log('  vulcan init <appName>');
+  // console.log('  vulcan unshallow ');
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
-  console.log('  vulcan (generate|g) model <packageName> <modelName>');
-  console.log('  vulcan (generate|g) component <packageName> <modelName> <componentName>');
+  console.log('  vulcan (generate|g) module <packageName> <moduleName>');
+  console.log('  vulcan (generate|g) component <packageName> <componentName>');
   console.log('  vulcan (generate|g) route <packageName> <routeName> <routePath>');
   console.log(chalk.grey('\nAssets removal'));
   console.log('  vulcan (remove|r) package');
-  console.log('  vulcan (remove|r) model');
+  console.log('  vulcan (remove|r) module');
   console.log(chalk.grey('\nAssets listing'));
-  console.log('  vulcan (list|l) routes');
   console.log('  vulcan (list|l) packages');
   process.exit();
 }

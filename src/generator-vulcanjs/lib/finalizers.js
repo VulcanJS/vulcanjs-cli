@@ -4,6 +4,7 @@ const filter = require('./filters').filter;
 const store = require('./store');
 const flatten = require('lodash/flatten');
 const pluralize = require('pluralize');
+const makeLister = require('./lister');
 
 const arrayToEjsString = (arr) => {
   const quotedList = arr.map((elem) => `'${elem}'`);
@@ -13,6 +14,7 @@ const arrayToEjsString = (arr) => {
 
 function setup (generatorSetup) {
   const generator = generatorSetup;
+  const lister = makeLister.setup(generator);
 
   function finalize (propName, ...args) {
     function getRaw (keyBeforeRaw, answers = {}) {
@@ -23,16 +25,16 @@ function setup (generatorSetup) {
       );
     }
 
-    function pluralPascalModelName (answers) {
-      const modelNameRaw = getRaw('modelName', answers);
-      const pluralModelName = pluralize.plural(modelNameRaw);
-      return pascalCase(pluralModelName);
+    function pluralPascalModuleName (answers) {
+      const moduleNameRaw = getRaw('moduleName', answers);
+      const pluralModuleName = pluralize.plural(moduleNameRaw);
+      return pascalCase(pluralModuleName);
     }
 
-    function singularPascalModelName (answers) {
-      const modelNameRaw = getRaw('modelName', answers);
-      const pluralModelName = pluralize.singular(modelNameRaw);
-      return pascalCase(pluralModelName);
+    function singularPascalModuleName (answers) {
+      const moduleNameRaw = getRaw('moduleName', answers);
+      const pluralModuleName = pluralize.singular(moduleNameRaw);
+      return pascalCase(pluralModuleName);
     }
 
     function permissionTo (permissionType, answers) {
@@ -50,9 +52,9 @@ function setup (generatorSetup) {
       return filter('packageName', packageNameRaw);
     }
 
-    function modelName (answers) {
-      const modelNameRaw = getRaw('modelName', answers);
-      return filter('modelName', modelNameRaw);
+    function moduleName (answers) {
+      const moduleNameRaw = getRaw('moduleName', answers);
+      return filter('moduleName', moduleNameRaw);
     }
 
     function componentName (answers) {
@@ -61,8 +63,8 @@ function setup (generatorSetup) {
     }
 
     function componentFileName (answers) {
-      const filteredComponentName = filter('componentName', answers.componentName);
-      return `${filteredComponentName}.${store.get('reactExtension')}`;
+      const finalizedComponentName = componentName(answers);
+      return `${finalizedComponentName}.${store.get('reactExtension')}`;
     }
 
     function componentPath (answers) {
@@ -73,38 +75,38 @@ function setup (generatorSetup) {
       );
     }
 
-    function pascalModelName (answers) {
-      const modelNameRaw = getRaw('modelName', answers);
-      return pascalCase(modelNameRaw);
+    function pascalModuleName (answers) {
+      const moduleNameRaw = getRaw('moduleName', answers);
+      return pascalCase(moduleNameRaw);
     }
 
     function typeName (answers) {
-      return singularPascalModelName(answers);
+      return singularPascalModuleName(answers);
     }
 
     function collectionName (answers) {
-      return pluralPascalModelName(answers);
+      return pluralPascalModuleName(answers);
     }
 
-    function camelModelName (answers) {
-      const modelNameRaw = getRaw('modelName', answers);
-      return camelCase(modelNameRaw);
+    function camelModuleName (answers) {
+      const moduleNameRaw = getRaw('moduleName', answers);
+      return camelCase(moduleNameRaw);
     }
 
-    function modelParts (answers) {
-      return Object.keys(answers.modelParts);
+    function moduleParts (answers) {
+      return Object.keys(answers.moduleParts);
     }
 
     function mutationName (mutationType, answers) {
-      const modelNamePart = pluralPascalModelName(answers);
+      const moduleNamePart = pluralPascalModuleName(answers);
       const mutationTypePart = pascalCase(mutationType);
-      return `${modelNamePart}${mutationTypePart}`;
+      return `${moduleNamePart}${mutationTypePart}`;
     }
 
     function permissionName (permission, answers) {
-      const modelNamePart = pluralPascalModelName(answers);
+      const moduleNamePart = pluralPascalModuleName(answers);
       const permissionAppendage = permission.join('.');
-      return `${modelNamePart}.${permissionAppendage}`;
+      return `${moduleNamePart}.${permissionAppendage}`;
     }
 
     function vulcanDependencies (answers) {
@@ -113,8 +115,8 @@ function setup (generatorSetup) {
     }
 
     function resolverName (resolverType, answers) {
-      const modelNamePart = pluralPascalModelName(answers);
-      return `${modelNamePart}${resolverType}`;
+      const moduleNamePart = pluralPascalModuleName(answers);
+      return `${moduleNamePart}${resolverType}`;
     }
 
     function hasResolver (resolverType, answers) {
@@ -141,8 +143,8 @@ function setup (generatorSetup) {
       return {
         no: id,
         name: packageNameRaw,
-        models: store.num('models', packageNameRaw),
-        routes: store.num('routes', packageNameRaw),
+        modules: lister.countModules(packageNameRaw),
+        routes: lister.countRoutes(packageNameRaw),
       };
     }
 
@@ -154,51 +156,28 @@ function setup (generatorSetup) {
       return arr.map((obj, index) => ({ no: index, ...obj }));
     }
 
-    function getPrettyRoutesWithoutNumbers (inputPackageName) {
-      const theRoutes = store.get('routes', inputPackageName);
-      const prettyRoutes = theRoutes.map((theRoute) => ({
-        package: inputPackageName,
-        name: theRoute.name,
-        path: theRoute.content.routePath,
-      }));
-      return prettyRoutes;
-    }
-
-    function prettyRoutesForPackage (inputPackageName) {
-      const prettyRoutesWithoutNumbers = getPrettyRoutesWithoutNumbers(inputPackageName);
-      return addNo(prettyRoutesWithoutNumbers);
-    }
-
-    function allPrettyRoutes () {
-      const allPackageNames = store.get('packageNames');
-      const prettyRoutes = allPackageNames.map(getPrettyRoutesWithoutNumbers);
-      const flattenedRoutes = flatten(prettyRoutes);
-      return addNo(flattenedRoutes);
-    }
 
     switch (propName) {
-      case 'appName' : return appName(...args);
-      case 'packageName' : return packageName(...args);
-      case 'modelName' : return modelName(...args);
-      case 'modelParts': return modelParts(...args);
-      case 'componentName' : return componentName(...args);
-      case 'componentFileName' : return componentFileName(...args);
-      case 'componentPath' : return componentPath(...args);
-      case 'typeName' : return typeName(...args);
-      case 'pascalModelName' : return pascalModelName(...args);
-      case 'camelModelName' : return camelModelName(...args);
-      case 'collectionName' : return collectionName(...args);
-      case 'mutationName' : return mutationName(...args);
-      case 'permissionName' : return permissionName(...args);
-      case 'vulcanDependencies' : return vulcanDependencies(...args);
-      case 'resolverName' : return resolverName(...args);
-      case 'hasResolver' : return hasResolver(...args);
-      case 'addRouteStatement' : return addRouteStatement(...args);
+      case 'appName': return appName(...args);
+      case 'packageName': return packageName(...args);
+      case 'moduleName': return moduleName(...args);
+      case 'moduleParts': return moduleParts(...args);
+      case 'componentName': return componentName(...args);
+      case 'componentFileName': return componentFileName(...args);
+      case 'componentPath': return componentPath(...args);
+      case 'typeName': return typeName(...args);
+      case 'pascalModuleName': return pascalModuleName(...args);
+      case 'camelModuleName': return camelModuleName(...args);
+      case 'collectionName': return collectionName(...args);
+      case 'mutationName': return mutationName(...args);
+      case 'permissionName': return permissionName(...args);
+      case 'vulcanDependencies': return vulcanDependencies(...args);
+      case 'resolverName': return resolverName(...args);
+      case 'hasResolver': return hasResolver(...args);
+      case 'addRouteStatement': return addRouteStatement(...args);
       case 'permissionTo': return permissionTo(...args);
       case 'prettyPackages': return prettyPackages(...args);
-      case 'prettyRoutesForPackage': return prettyRoutesForPackage(...args);
-      case 'allPrettyRoutes': return allPrettyRoutes(...args);
-      case 'raw' : return getRaw(...args);
+      case 'raw': return getRaw(...args);
       default: return undefined;
     }
   }

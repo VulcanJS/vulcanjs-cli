@@ -1,25 +1,26 @@
 const VulcanGenerator = require('../../../lib/VulcanGenerator');
-const store = require('../../../lib/store');
 const nodePrint = require('node-print');
+const makeLister = require('../../../lib/lister');
 
 module.exports = class extends VulcanGenerator {
-  initializing () {
+  initializing() {
     this._assert('isVulcan');
+    this._lister = makeLister.setup(this);
   }
 
-  prompting () {
-    const packageNames = store.get('packageNames');
+  prompting() {
+    const packageNames = this._lister.listPackages();
     this.props = {
       packageNames,
       prettyPackages: this._finalize('prettyPackages', packageNames),
     };
   }
 
-  listing () {
+  listing() {
     nodePrint.pt(this.props.prettyPackages);
   }
 
-  end () {
+  end() {
     this._end();
   }
 };

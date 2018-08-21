@@ -2,12 +2,12 @@ const VulcanGenerator = require('../../lib/VulcanGenerator');
 const ast = require('../../lib/ast');
 
 module.exports = class extends VulcanGenerator {
-  initializing () {
+  initializing() {
     this._assert('isVulcan');
     this._assert('hasNonZeroPackages');
   }
 
-  _registerArguments () {
+  _registerArguments() {
     this._registerOptions(
       'packageName',
       'routeName',
@@ -17,31 +17,36 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  prompting () {
+  prompting() {
     if (!this._canPrompt()) { return false; }
-    const questions = this._getQuestions(
-      'packageNameList',
-      'packageNameIfManual',
-      'routeName',
-      'routePath',
-      'componentName',
-      'layoutName'
-      // ,'parentRoute'
-    );
+    const argsAndQuestions = [
+      { arg: 'packageName', question: 'packageNameList' },
+      { arg: 'routeName' },
+      { arg: 'routePath' },
+      { arg: 'componentName' },
+      { arg: 'layoutName' },
+    ];
+    const questions = argsAndQuestions.reduce((currentQuestions, { arg, question }) => {
+      if (this._needArg(arg)) {
+        const questionName = question || arg;
+        return [...currentQuestions, ...this._getQuestions(questionName)];
+      }
+      return currentQuestions;
+    }, []);
     return this.prompt(questions)
-    .then((answers) => {
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        componentName: this._finalize('componentName', answers),
-        routeName: this._finalize('raw', 'routeName', answers),
-        routePath: this._finalize('raw', 'routePath', answers),
-        layoutName: this._finalize('raw', 'layoutName', answers),
-        addRouteStatement: this._finalize('addRouteStatement', answers),
-      };
-    });
+      .then((answers) => {
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+          componentName: this._finalize('componentName', answers),
+          routeName: this._finalize('raw', 'routeName', answers),
+          routePath: this._finalize('raw', 'routePath', answers),
+          layoutName: this._finalize('raw', 'layoutName', answers),
+          addRouteStatement: this._finalize('addRouteStatement', answers),
+        };
+      });
   }
 
-  _updateRoutes () {
+  _updateRoutes() {
     const routesPath = this._getPath(
       { isAbsolute: true },
       'routes'
@@ -58,23 +63,16 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
-  configuring () {
-    if (!this._canConfigure()) { return; }
-    this._dispatch({
-      type: 'ADD_ROUTE',
-      packageName: this.props.packageName,
-      routeName: this.props.routeName,
-      routePath: this.props.routePath,
-    });
+  configuring() {
+    if (!this._canConfigure()) { }
   }
 
-  writing () {
+  writing() {
     if (!this._canWrite()) { return; }
     this._updateRoutes();
-    this._commitStore();
   }
 
-  end () {
+  end() {
     this._end();
   }
 };

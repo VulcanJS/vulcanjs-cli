@@ -8,13 +8,12 @@ var argsManager = require('./argsManager');
 
 var appGenerator = require.resolve('./generator-vulcanjs/generators/app');
 var packageGenerator = require.resolve('./generator-vulcanjs/generators/package');
-var modelGenerator = require.resolve('./generator-vulcanjs/generators/model');
+var moduleGenerator = require.resolve('./generator-vulcanjs/generators/module');
 var componentGenerator = require.resolve('./generator-vulcanjs/generators/component');
 var routeGenerator = require.resolve('./generator-vulcanjs/generators/route');
 var remover = require.resolve('./generator-vulcanjs/generators/remove');
 var lister = require.resolve('./generator-vulcanjs/generators/list');
-var _init = require.resolve('./generator-vulcanjs/generators/init');
-var _start = require.resolve('./generator-vulcanjs/generators/start');
+var _unshallow = require.resolve('./generator-vulcanjs/generators/unshallow');
 
 var env = yeoman.createEnv();
 
@@ -34,8 +33,8 @@ var componentNamesToGeneratorRegisters = {
   app: function app() {
     env.register(appGenerator, 'app');
   },
-  model: function model() {
-    env.register(modelGenerator, 'model');
+  module: function module() {
+    env.register(moduleGenerator, 'module');
   },
   component: function component() {
     env.register(componentGenerator, 'component');
@@ -49,11 +48,8 @@ var componentNamesToGeneratorRegisters = {
   list: function list() {
     env.register(lister, 'list');
   },
-  init: function init() {
-    env.register(_init, 'init');
-  },
-  start: function start() {
-    env.register(_start, 'start');
+  unshallow: function unshallow() {
+    env.register(_unshallow, 'unshallow');
   }
 };
 
@@ -69,18 +65,17 @@ function run() {
       return runWithOptions('package', {
         packageName: action.args[0]
       });
-    } else if (action.component === 'model') {
-      registerGenerator('model');
-      return runWithOptions('model', {
+    } else if (action.component === 'module') {
+      registerGenerator('module');
+      return runWithOptions('module', {
         packageName: action.args[0],
-        modelName: action.args[1]
+        moduleName: action.args[1]
       });
     } else if (action.component === 'component') {
       registerGenerator('component');
       return runWithOptions('component', {
         packageName: action.args[0],
-        modelName: action.args[1],
-        componentName: action.args[2]
+        componentName: action.args[1]
       });
     } else if (action.component === 'route') {
       registerGenerator('route');
@@ -99,11 +94,11 @@ function run() {
         vulcanjsComponent: 'package',
         packageName: action.args[0]
       });
-    } else if (action.component === 'model') {
+    } else if (action.component === 'module') {
       return runWithOptions('remove', {
-        vulcanjsComponent: 'model',
+        vulcanjsComponent: 'module',
         packageName: action.args[0],
-        modelName: action.args[1]
+        moduleName: action.args[1]
       });
     } else if (action.component === 'route') {
       return runWithOptions('remove', {
@@ -124,14 +119,11 @@ function run() {
       vulcanjsComponent: action.component,
       packageName: action.args[0]
     });
-  } else if (action.type === 'init') {
-    registerGenerator('init');
-    return runWithOptions('init', {
+  } else if (action.type === 'unshallow') {
+    registerGenerator('unshallow');
+    return runWithOptions('unshallow', {
       vulcanjsComponent: action.component
     });
-  } else if (action.type === 'start') {
-    registerGenerator('start');
-    return runWithOptions('start', {});
   }
 }
 

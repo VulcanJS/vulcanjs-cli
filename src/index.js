@@ -7,13 +7,12 @@ const argsManager = require('./argsManager');
 
 const appGenerator = require.resolve('./generator-vulcanjs/generators/app');
 const packageGenerator = require.resolve('./generator-vulcanjs/generators/package');
-const modelGenerator = require.resolve('./generator-vulcanjs/generators/model');
+const moduleGenerator = require.resolve('./generator-vulcanjs/generators/module');
 const componentGenerator = require.resolve('./generator-vulcanjs/generators/component');
 const routeGenerator = require.resolve('./generator-vulcanjs/generators/route');
 const remover = require.resolve('./generator-vulcanjs/generators/remove');
 const lister = require.resolve('./generator-vulcanjs/generators/list');
-const init = require.resolve('./generator-vulcanjs/generators/init');
-const start = require.resolve('./generator-vulcanjs/generators/start');
+const unshallow = require.resolve('./generator-vulcanjs/generators/unshallow');
 
 const env = yeoman.createEnv();
 
@@ -29,13 +28,12 @@ const action = argsManager.getAction();
 const componentNamesToGeneratorRegisters = {
   package: () => { env.register(packageGenerator, 'package'); },
   app: () => { env.register(appGenerator, 'app'); },
-  model: () => { env.register(modelGenerator, 'model'); },
+  module: () => { env.register(moduleGenerator, 'module'); },
   component: () => { env.register(componentGenerator, 'component'); },
   route: () => { env.register(routeGenerator, 'route'); },
   remove: () => { env.register(remover, 'remove'); },
   list: () => { env.register(lister, 'list'); },
-  init: () => { env.register(init, 'init'); },
-  start: () => { env.register(start, 'start'); },
+  unshallow: () => { env.register(unshallow, 'unshallow'); },
 };
 
 function registerGenerator (componentName) {
@@ -50,18 +48,17 @@ function run () {
       return runWithOptions('package', {
         packageName: action.args[0],
       });
-    } else if (action.component === 'model') {
-      registerGenerator('model');
-      return runWithOptions('model', {
+    } else if (action.component === 'module') {
+      registerGenerator('module');
+      return runWithOptions('module', {
         packageName: action.args[0],
-        modelName: action.args[1],
+        moduleName: action.args[1],
       });
     } else if (action.component === 'component') {
       registerGenerator('component');
       return runWithOptions('component', {
         packageName: action.args[0],
-        modelName: action.args[1],
-        componentName: action.args[2],
+        componentName: action.args[1],
       });
     } else if (action.component === 'route') {
       registerGenerator('route');
@@ -80,11 +77,11 @@ function run () {
         vulcanjsComponent: 'package',
         packageName: action.args[0],
       });
-    } else if (action.component === 'model') {
+    } else if (action.component === 'module') {
       return runWithOptions('remove', {
-        vulcanjsComponent: 'model',
+        vulcanjsComponent: 'module',
         packageName: action.args[0],
-        modelName: action.args[1],
+        moduleName: action.args[1],
       });
     } else if (action.component === 'route') {
       return runWithOptions('remove', {
@@ -105,14 +102,10 @@ function run () {
       vulcanjsComponent: action.component,
       packageName: action.args[0],
     });
-  } else if (action.type === 'init') {
-    registerGenerator('init');
-    return runWithOptions('init', {
+  } else if (action.type === 'unshallow') {
+    registerGenerator('unshallow');
+    return runWithOptions('unshallow', {
       vulcanjsComponent: action.component,
-    });
-  } else if (action.type === 'start') {
-    registerGenerator('start');
-    return runWithOptions('start', {
     });
   }
 }

@@ -6,13 +6,13 @@ const alphabeticalSort = (a, b) => {
   return 0;
 };
 
-const numModelsSort = (a, b) => {
-  const aHasNonZero = a.numModels > 0;
-  const bHasNonZero = b.numModels > 0;
+const numModulesSort = (a, b) => {
+  const aHasNonZero = a.numModules > 0;
+  const bHasNonZero = b.numModules > 0;
   if (aHasNonZero && bHasNonZero) return 0;
   if (!aHasNonZero && !bHasNonZero) return 0;
   if (!aHasNonZero && bHasNonZero) return 1;
-  /* if (aHasNonZero && !bHasNonZero)*/ return -1;
+  /* if (aHasNonZero && !bHasNonZero) */ return -1;
 };
 
 const getSetFromArr = (arr) => {
@@ -33,21 +33,19 @@ const visitorTypes = ['Guests', 'Members', 'Admins'];
 
 const schemaPropertyTypes = ['String', 'Number', 'Boolean', 'Array', 'Object', 'Custom'];
 
-const modelParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
+const moduleParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
 
 const vulcanjsRemovableComponents = [
   'route',
-  'model',
+  'module',
   'package',
 ];
 
 const vulcanjsListableComponents = [
   'packages',
-  'routes',
+  //'routes',
 ];
 
-const manualChoiceValue = '__vjs_manual';
-const manualChoice = { name: '[MANUAL]', value: manualChoiceValue };
 const allChoiceValue = '__vjs_all';
 const allChoice = { name: '[ALL]', value: allChoiceValue };
 
@@ -59,7 +57,7 @@ const getDefaultChoiceIndex = (choices, option) => {
 
 const exposed = {
   alphabeticalSort,
-  numModelsSort,
+  numModulesSort,
   reactExtensions,
   packageManagers,
   visitorTypes,
@@ -68,12 +66,10 @@ const exposed = {
   getSetFromArr,
   vulcanjsRemovableComponents,
   vulcanjsListableComponents,
-  modelParts,
-  manualChoiceValue,
-  manualChoice,
+  moduleParts,
   allChoiceValue,
   allChoice,
-  cloningOptions
+  cloningOptions,
 };
 
 module.exports = exposed;

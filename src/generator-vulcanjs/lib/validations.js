@@ -1,8 +1,8 @@
-const store = require('./store');
 const uiText = require('./ui-text');
+const makeLister = require('./lister');
 
-function combineValidators (...fns) {
-  return function reducedValidator (input) {
+function combineValidators(...fns) {
+  return function reducedValidator(input) {
     return fns.reduce(
       (acc, curValidator) => {
         if (typeof acc === 'string') return acc;
@@ -13,28 +13,37 @@ function combineValidators (...fns) {
   };
 }
 
-const assertNonEmpty = (input) => {
-  if (input) return true;
-  return uiText.errors.isEmpty;
-};
+function setup(generatorSetup) {
+  const generator = generatorSetup;
+  const lister = makeLister.setup(generator);
 
-const assertNotPackageExists = (packageName) => {
-  if (!store.is('packageExists', packageName)) return true;
-  return uiText.errors.isPackageExists(packageName);
-};
+  const assertNonEmpty = (input) => {
+    if (input) return true;
+    return uiText.errors.isEmpty;
+  };
 
-const assertNotModelExists = (packageName, modelName) => {
-  if (!store.is('modelExists', packageName, modelName)) return true;
-  return uiText.errors.isModelExists(packageName, modelName);
-};
+  const assertNotPackageExists = (packageName) => {
+    if (!lister.packageExists(packageName)) return true;
+    return uiText.errors.isPackageExists(packageName);
+  };
 
-const generateNotModelExists = (packageName) => (
-  (input) => assertNotModelExists(packageName, input)
-);
+  const assertNotModuleExists = (packageName, moduleName) => {
+    if (!lister.moduleExists(packageName, moduleName)) return true;
+    return uiText.errors.isModuleExists(packageName, moduleName);
+  };
+
+  const generateNotModuleExists = (packageName) => (
+    (input) => assertNotModuleExists(packageName, input)
+  );
+  return {
+    assertNonEmpty,
+    assertNotPackageExists,
+    assertNotModuleExists,
+    generateNotModuleExists,
+  };
+}
 
 module.exports = {
   combineValidators,
-  assertNonEmpty,
-  assertNotPackageExists,
-  generateNotModelExists,
+  setup,
 };

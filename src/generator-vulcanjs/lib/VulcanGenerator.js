@@ -2,7 +2,7 @@ const Generator = require('yeoman-generator');
 const beautify = require('gulp-beautify');
 const questions = require('./questions');
 const finalizers = require('./finalizers');
-const assertions = require('./assertions');
+const makeAssertions = require('./assertions');
 const storeFactory = require('./store');
 const pathFinder = require('./path-finder');
 const optionsManager = require('./optionsManager');
@@ -18,6 +18,8 @@ module.exports = class VulcanGenerator extends Generator {
       const allConfig = this.config.getAll();
       store = storeFactory.init(allConfig);
     }
+
+    const assertions = makeAssertions.setup(this);
     if (!errors) {
       errors = assertions.errors;
     }
@@ -42,6 +44,12 @@ module.exports = class VulcanGenerator extends Generator {
     this.props = {};
   }
 
+  /*
+  Helper to test if a question is necessary
+  */
+  _needArg (argument) {
+    return typeof this.options[argument] === 'undefined';
+  }
   /*
     State management
   */
@@ -94,6 +102,7 @@ module.exports = class VulcanGenerator extends Generator {
       const errorNo = `Error (${index})`;
       const message = `\n${errorNo}: ${chalk.red(error.message)}`;
       this.log(message);
+      //      this.env.error(message);
     });
     process.exit(1);
   }
@@ -106,6 +115,6 @@ module.exports = class VulcanGenerator extends Generator {
     if (!this._hasNoErrors) { this._logAllErrors(); }
   }
 
-  _registerArguments () {}
+  _registerArguments () { }
 
 };

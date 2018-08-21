@@ -1,4 +1,5 @@
 const VulcanGenerator = require('../../lib/VulcanGenerator');
+const vulcanjsRemovableComponents = require('../../lib/common').vulcanjsRemovableComponents;
 
 module.exports = class extends VulcanGenerator {
   initializing () {
@@ -12,17 +13,24 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
+  _isComponentRemovable () {
+    return vulcanjsRemovableComponents.includes(this.options.vulcanjsComponent);
+  }
+
   prompting () {
     if (!this._canPrompt()) { return false; }
-    const questions = this._getQuestions(
-      'vulcanjsRemovableComponentsList'
-    );
+    let questions = [];
+    if (this._needArg('vulcanjsComponent') || !this._isComponentRemovable()) {
+      questions = [...questions, ...this._getQuestions(
+        'vulcanjsRemovableComponentsList'
+      )];
+    }
     return this.prompt(questions)
-    .then((answers) => {
-      this.props = {
-        vulcanjsComponent: this._finalize('raw', 'vulcanjsComponent', answers),
-      };
-    });
+      .then((answers) => {
+        this.props = {
+          vulcanjsComponent: this._finalize('raw', 'vulcanjsComponent', answers),
+        };
+      });
   }
 
   composing () {
