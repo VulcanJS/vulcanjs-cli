@@ -27,9 +27,9 @@ function is(checkType) {
     return !!store.getState().packages[filteredPackageName];
   }
 
-  function modelExists(packageName, modelName) {
-    var filteredModelName = filter('modelName', modelName);
-    return packageExists(packageName) && !!store.getState().packages[packageName].models[filteredModelName];
+  function moduleExists(packageName, moduleName) {
+    var filteredModuleName = filter('moduleName', moduleName);
+    return packageExists(packageName) && !!store.getState().packages[packageName].modules[filteredModuleName];
   }
 
   for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -39,8 +39,8 @@ function is(checkType) {
   switch (checkType) {
     case 'packageExists':
       return packageExists.apply(undefined, args);
-    case 'modelExists':
-      return modelExists.apply(undefined, args);
+    case 'moduleExists':
+      return moduleExists.apply(undefined, args);
     case 'vulcan':
       return vulcan.apply(undefined, args);
     default:
@@ -63,26 +63,22 @@ function get(checkType) {
     return store.getState().packages[packageName];
   }
 
-  function modelNames(packageName) {
+  function moduleNames(packageName) {
     var thePackage = getPackage(packageName);
-    var models = is('packageExists', packageName) ? thePackage.models : {};
-    var modelNamesToGet = Object.keys(models);
-    return modelNamesToGet.sort(common.alphabeticalSort);
+    var modules = is('packageExists', packageName) ? thePackage.modules : {};
+    var moduleNamesToGet = Object.keys(modules);
+    return moduleNamesToGet.sort(common.alphabeticalSort);
   }
 
-  function packageNamesWithNumModels() {
+  function packageNamesWithNumModules() {
     var packageNamesList = packageNames();
-    var packageNamesWithModels = packageNamesList.map(function (packageName) {
+    var packageNamesWithModules = packageNamesList.map(function (packageName) {
       return {
         name: packageName,
-        numModels: modelNames(packageName).length
+        numModules: moduleNames(packageName).length
       };
     });
-    return packageNamesWithModels;
-  }
-
-  function storyBookSetupStatus() {
-    return store.getState().storyBook.setupStatus;
+    return packageNamesWithModules;
   }
 
   function routeNames(packageName) {
@@ -112,18 +108,16 @@ function get(checkType) {
       return reactExtension.apply(undefined, args);
     case 'packageNames':
       return packageNames.apply(undefined, args);
-    case 'modelNames':
-      return modelNames.apply(undefined, args);
+    case 'moduleNames':
+      return moduleNames.apply(undefined, args);
     case 'routeNames':
       return routeNames.apply(undefined, args);
     case 'package':
       return getPackage.apply(undefined, args);
     case 'routes':
       return getRoutes.apply(undefined, args);
-    case 'storyBookSetupStatus':
-      return storyBookSetupStatus.apply(undefined, args);
-    case 'packageNamesWithNumModels':
-      return packageNamesWithNumModels.apply(undefined, args);
+    case 'packageNamesWithNumModules':
+      return packageNamesWithNumModules.apply(undefined, args);
     default:
       return undefined;
   }
@@ -135,9 +129,9 @@ function num(checkType) {
     return routeNames.length;
   }
 
-  function models(packageName) {
-    var modelNames = get('modelNames', packageName);
-    return modelNames.length;
+  function modules(packageName) {
+    var moduleNames = get('moduleNames', packageName);
+    return moduleNames.length;
   }
 
   for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
@@ -147,8 +141,8 @@ function num(checkType) {
   switch (checkType) {
     case 'routes':
       return routes.apply(undefined, args);
-    case 'models':
-      return models.apply(undefined, args);
+    case 'modules':
+      return modules.apply(undefined, args);
     default:
       return undefined;
   }
@@ -160,11 +154,11 @@ function has(checkType) {
     return Object.keys(packageNames).length > 0;
   }
 
-  function nonZeroModelsInPackage(packageName) {
+  function nonZeroModulesInPackage(packageName) {
     if (!this._isPackageExists(packageName)) return false;
     var thePackage = this._getPackage(packageName);
-    var modelNames = Object.keys(thePackage.models);
-    return modelNames.length > 0;
+    var moduleNames = Object.keys(thePackage.modules);
+    return moduleNames.length > 0;
   }
 
   for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
@@ -172,8 +166,8 @@ function has(checkType) {
   }
 
   switch (checkType) {
-    case 'nonZeroModelsInPackage':
-      return nonZeroModelsInPackage.apply(undefined, args);
+    case 'nonZeroModulesInPackage':
+      return nonZeroModulesInPackage.apply(undefined, args);
     case 'nonZeroPackages':
       return nonZeroPackages.apply(undefined, args);
     default:

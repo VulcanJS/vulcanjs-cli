@@ -2,29 +2,29 @@ const dashify = require('dashify');
 const camelCase = require('camelcase');
 const pascalCase = require('pascal-case');
 
-function packageName (toFilter) {
+function packageName(toFilter) {
   return dashify(toFilter);
 }
 
-function appName (toFilter) {
+function appName(toFilter) {
   return dashify(toFilter);
 }
 
-function modelName (toFilter) {
+function moduleName(toFilter) {
   return camelCase(toFilter);
 }
 
-function componentName (toFilter) {
+function componentName(toFilter) {
   return pascalCase(toFilter);
 }
 
-function filter (filterType, toFilter) {
+function filter(filterType, toFilter) {
   switch (filterType) {
-    case 'packageName' : return packageName(toFilter);
-    case 'appName' : return appName(toFilter);
-    case 'modelName' : return modelName(toFilter);
-    case 'componentName' : return componentName(toFilter);
-    default : return toFilter;
+    case 'packageName': return packageName(toFilter);
+    case 'appName': return appName(toFilter);
+    case 'moduleName': return moduleName(toFilter);
+    case 'componentName': return componentName(toFilter);
+    default: return toFilter;
   }
 }
 

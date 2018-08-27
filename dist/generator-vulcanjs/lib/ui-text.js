@@ -7,11 +7,11 @@ var descriptions = {
   reactExtension: 'Default react component extension',
   packageManager: 'Preferred package manager',
   packageName: 'The name of the package',
-  modelName: 'The name of the model',
+  moduleName: 'The name of the module',
   componentName: 'The name of your component',
   routeName: 'The name of your route',
   routePath: 'The path of your route',
-  layoutName: 'The layot that will wrap this route\'s component',
+  layoutName: 'The layout that will wrap this route\'s component',
   isRegisterComponent: 'Set to true of you want to register the component to Vulcan.',
   isAddComponentToStoryBook: 'Set to true of you want to add the component to storybook.',
   componentType: 'The type of the component. Is it a pure function, or a class?',
@@ -27,7 +27,7 @@ var messages = {
   reactExtension: 'React extension',
   packageManager: 'Package manager',
   packageName: 'Package name',
-  modelName: 'Model name',
+  moduleName: 'Module name',
   componentName: 'Component name',
   isRegisterComponent: 'Register component',
   componentType: 'Component type',
@@ -64,15 +64,15 @@ var errors = {
   isPackageExists: function isPackageExists(packageName) {
     return 'A package with the name: \'' + packageName + '\' already exists.';
   },
-  notModelExists: function notModelExists(packageName, modelName) {
-    return 'A model with the name: \'' + modelName + '\' under the package \'' + packageName + '\' does not exist. \nIf you\'d like to work on this model, you should first run ' + chalk.green('vulcan g model ' + packageName + ' ' + modelName) + '.';
+  notModuleExists: function notModuleExists(packageName, moduleName) {
+    return 'A module with the name: \'' + moduleName + '\' under the package \'' + packageName + '\' does not exist. \nIf you\'d like to work on this module, you should first run ' + chalk.green('vulcan g module ' + packageName + ' ' + moduleName) + '.';
   },
-  isModelExists: function isModelExists(packageName, modelName) {
-    return 'A model with the name \'' + modelName + '\' under the package \'' + packageName + '\' already exists.';
+  isModuleExists: function isModuleExists(packageName, moduleName) {
+    return 'A module with the name \'' + moduleName + '\' under the package \'' + packageName + '\' already exists.';
   },
   isZeroPackages: 'The command you just ran requires at least 1 custom package to be present in your app. \nTo create a package, run ' + chalk.green('vulcan g package'),
-  hasZeroModels: function hasZeroModels(packageName) {
-    return 'The package \'' + packageName + ' has no models.)}';
+  hasZeroModules: function hasZeroModules(packageName) {
+    return 'The package \'' + packageName + ' has no modules.)}';
   },
   isEmpty: 'This cannot be empty.',
   isDelete: 'Cannot delete uncommitted code'

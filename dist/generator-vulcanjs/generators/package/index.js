@@ -2,6 +2,8 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -38,7 +40,10 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageName');
+      var questions = [];
+      if (!this.options.packageName) {
+        questions = [].concat(_toConsumableArray(questions), _toConsumableArray(this._getQuestions('packageName')));
+      }
       return this.prompt(questions).then(function (answers) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
@@ -51,14 +56,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: 'configuring',
     value: function configuring() {
-      if (!this._canConfigure()) {
-        return;
-      }
-      this._dispatch({
-        type: 'ADD_PACKAGE',
-        packageName: this.props.packageName
-      });
-      this._commitStore();
+      if (!this._canConfigure()) {}
     }
   }, {
     key: '_writePackageJs',
@@ -88,7 +86,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_writeComponentsIndex',
     value: function _writeComponentsIndex() {
-      this.fs.copyTpl(this.templatePath('components.index.js'), this._getPath({ isAbsolute: true }, 'componentsIndex'), this.props);
+      this.fs.copyTpl(this.templatePath('components.js'), this._getPath({ isAbsolute: true }, 'componentsIndex'), this.props);
     }
   }, {
     key: '_writeRoutes',

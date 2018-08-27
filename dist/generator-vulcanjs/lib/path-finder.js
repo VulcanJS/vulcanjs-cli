@@ -24,60 +24,56 @@ function setup(generatorSetup) {
       return getPath.apply(undefined, [options, '.stories'].concat(args));
     }
 
-    function packagePath(options) {
+    function packagesPath(options) {
       for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
         args[_key4 - 1] = arguments[_key4];
+      }
+
+      return getPath.apply(undefined, [options, 'packages'].concat(args));
+    }
+
+    function packagePath(options) {
+      for (var _len5 = arguments.length, args = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+        args[_key5 - 1] = arguments[_key5];
       }
 
       return getPath.apply(undefined, [options, 'packages', generator.props.packageName].concat(args));
     }
 
     function libPath(options) {
-      for (var _len5 = arguments.length, args = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-        args[_key5 - 1] = arguments[_key5];
+      for (var _len6 = arguments.length, args = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
+        args[_key6 - 1] = arguments[_key6];
       }
 
       return packagePath.apply(undefined, [options, 'lib'].concat(args));
     }
 
     function modulesPath(options) {
-      for (var _len6 = arguments.length, args = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
-        args[_key6 - 1] = arguments[_key6];
+      for (var _len7 = arguments.length, args = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
+        args[_key7 - 1] = arguments[_key7];
       }
 
       return libPath.apply(undefined, [options, 'modules'].concat(args));
     }
 
-    function modelsPath(options) {
-      for (var _len7 = arguments.length, args = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
-        args[_key7 - 1] = arguments[_key7];
-      }
-
-      return modulesPath.apply(undefined, [options, 'models'].concat(args));
-    }
-
-    function modelsIndexPath(options) {
+    function modulesIndexPath(options) {
       for (var _len8 = arguments.length, args = Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
         args[_key8 - 1] = arguments[_key8];
       }
 
-      return modelsPath.apply(undefined, [options, 'index.js'].concat(args));
-    }
-
-    function modulesIndexPath(options) {
-      return modulesPath(options, 'index.js');
+      return modulesPath.apply(undefined, [options, 'index.js'].concat(args));
     }
 
     function routesPath(options) {
       return modulesPath(options, 'routes.js');
     }
 
-    function modelPath(options) {
+    function modulePath(options) {
       for (var _len9 = arguments.length, args = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
         args[_key9 - 1] = arguments[_key9];
       }
 
-      return modulesPath.apply(undefined, [options, generator.props.modelName].concat(args));
+      return modulesPath.apply(undefined, [options, generator.props.moduleName].concat(args));
     }
 
     function componentsPath(options) {
@@ -89,7 +85,7 @@ function setup(generatorSetup) {
     }
 
     function componentsIndexPath(options) {
-      return componentsPath(options, 'index.js');
+      return modulesPath(options, 'components.js');
     }
 
     function packageTestsPath(options) {
@@ -100,20 +96,20 @@ function setup(generatorSetup) {
       return packagePath.apply(undefined, [options, 'tests'].concat(args));
     }
 
-    function modelTestsPath(options) {
+    function moduleTestsPath(options) {
       for (var _len12 = arguments.length, args = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
         args[_key12 - 1] = arguments[_key12];
       }
 
-      return packageTestsPath.apply(undefined, [options, 'models'].concat(args));
+      return packageTestsPath.apply(undefined, [options, 'modules'].concat(args));
     }
 
-    function modelTestPath(options) {
+    function moduleTestPath(options) {
       for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
         args[_key13 - 1] = arguments[_key13];
       }
 
-      return modelTestsPath.apply(undefined, [options, generator.props.modelName].concat(args));
+      return moduleTestsPath.apply(undefined, [options, generator.props.moduleName].concat(args));
     }
 
     function packageStoriesPath(options) {
@@ -124,16 +120,16 @@ function setup(generatorSetup) {
       return componentsPath.apply(undefined, [options, '.stories.js'].concat(args));
     }
 
-    function modelInComponentsPath(options) {
+    function moduleInComponentsPath(options) {
       for (var _len15 = arguments.length, args = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
         args[_key15 - 1] = arguments[_key15];
       }
 
-      return componentsPath.apply(undefined, [options, generator.props.modelName].concat(args));
+      return componentsPath.apply(undefined, [options, generator.props.moduleName].concat(args));
     }
 
-    function modelStoriesPath(options) {
-      return modelInComponentsPath(options, '.stories.js');
+    function moduleStoriesPath(options) {
+      return moduleInComponentsPath(options, '.stories.js');
     }
 
     function clientPath(options) {
@@ -159,34 +155,32 @@ function setup(generatorSetup) {
     switch (pathType) {
       case 'rootStories':
         return rootStoriesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'packages':
+        return packagesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'package':
         return packagePath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'lib':
         return libPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'models':
-        return modelsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modules':
         return modulesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'packageTests':
         return packageTestsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modulesIndex':
         return modulesIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'modelsIndex':
-        return modelsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'componentsIndex':
         return componentsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'model':
-        return modelPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'module':
+        return modulePath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'components':
         return componentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'modelTest':
-        return modelTestPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'moduleTest':
+        return moduleTestPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'packageStories':
         return packageStoriesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'modelInComponents':
-        return modelInComponentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
-      case 'modelStories':
-        return modelStoriesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'moduleInComponents':
+        return moduleInComponentsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'moduleStories':
+        return moduleStoriesPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'client':
         return clientPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'server':
@@ -200,6 +194,36 @@ function setup(generatorSetup) {
   return get;
 }
 
+function makeGetPath(generator) {
+  function getPath(options) {
+    for (var _len18 = arguments.length, args = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
+      args[_key18 - 1] = arguments[_key18];
+    }
+
+    var relativeToProjectRootPath = path.join.apply(path, args);
+    var absolutePath = generator.destinationPath(relativeToProjectRootPath);
+    if (options.relativeTo) return path.relative(options.relativeTo, absolutePath);
+    return options.isAbsolute ? absolutePath : relativeToProjectRootPath;
+  }
+  return getPath;
+}
+function findModules(generator, options, packageName) {
+  var getPath = makeGetPath(generator);
+
+  for (var _len19 = arguments.length, args = Array(_len19 > 3 ? _len19 - 3 : 0), _key19 = 3; _key19 < _len19; _key19++) {
+    args[_key19 - 3] = arguments[_key19];
+  }
+
+  return getPath.apply(undefined, [options, 'packages', packageName, 'lib', 'modules'].concat(args));
+}
+
+// TODO: we should also tolerate a .jsx extension
+function findRoutes(generator, options, packageName) {
+  return findModules(generator, options, packageName, 'routes.js');
+}
+
 module.exports = {
-  setup: setup
+  setup: setup,
+  findModules: findModules,
+  findRoutes: findRoutes
 };

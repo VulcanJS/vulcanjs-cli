@@ -10,34 +10,36 @@ module.exports = class extends VulcanGenerator {
   _registerArguments () {
     this._registerOptions(
       'packageName',
-      // 'modelName',
       'componentName'
     );
   }
 
   prompting () {
     if (!this._canPrompt()) { return false; }
-    const questions = this._getQuestions(
-      'packageNameList',
-      'packageNameIfManual',
-      // 'modelNameList',
-      // 'modelNameIfManual',
-      'componentName',
+    let questions = [];
+    if (this._needArg('packageName')) {
+      questions = [...questions, ...this._getQuestions(
+        'packageNameList'
+      )];
+    }
+    if (this._needArg('componentName')) {
+      questions = [...questions, ...this._getQuestions('componentName')];
+    }
+    questions = [...questions, ...this._getQuestions(
       'componentType',
       'isRegisterComponent'
-    );
+    )];
     return this.prompt(questions)
-    .then((answers) => {
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        // modelName: this._finalize('modelName', answers),
-        componentName: this._finalize('componentName', answers),
-        componentFileName: this._finalize('componentFileName', answers),
-        componentType: this._finalize('raw', 'componentType', answers),
-        isRegister: this._finalize('raw', 'isRegister', answers),
-      };
-      this.props.componentPath = this._finalize('componentPath', answers);
-    });
+      .then((answers) => {
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+          componentName: this._finalize('componentName', answers),
+          componentFileName: this._finalize('componentFileName', answers),
+          componentType: this._finalize('raw', 'componentType', answers),
+          isRegister: this._finalize('raw', 'isRegister', answers),
+        };
+        this.props.componentPath = this._finalize('componentPath', answers);
+      });
   }
 
   _writeComponent () {

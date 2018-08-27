@@ -18,6 +18,14 @@ function setup (generatorSetup) {
       );
     }
 
+    function packagesPath (options, ...args) {
+      return getPath(
+        options,
+        'packages',
+        ...args
+      );
+    }
+
     function packagePath (options, ...args) {
       return getPath(
         options,
@@ -43,26 +51,11 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelsPath (options, ...args) {
+    function modulesIndexPath (options, ...args) {
       return modulesPath(
-        options,
-        'models',
-        ...args
-      );
-    }
-
-    function modelsIndexPath (options, ...args) {
-      return modelsPath(
         options,
         'index.js',
         ...args
-      );
-    }
-
-    function modulesIndexPath (options) {
-      return modulesPath(
-        options,
-        'index.js'
       );
     }
 
@@ -73,10 +66,10 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelPath (options, ...args) {
+    function modulePath (options, ...args) {
       return modulesPath(
         options,
-        generator.props.modelName,
+        generator.props.moduleName,
         ...args
       );
     }
@@ -90,9 +83,9 @@ function setup (generatorSetup) {
     }
 
     function componentsIndexPath (options) {
-      return componentsPath(
+      return modulesPath(
         options,
-        'index.js'
+        'components.js'
       );
     }
 
@@ -104,18 +97,18 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelTestsPath (options, ...args) {
+    function moduleTestsPath (options, ...args) {
       return packageTestsPath(
         options,
-        'models',
+        'modules',
         ...args
       );
     }
 
-    function modelTestPath (options, ...args) {
-      return modelTestsPath(
+    function moduleTestPath (options, ...args) {
+      return moduleTestsPath(
         options,
-        generator.props.modelName,
+        generator.props.moduleName,
         ...args
       );
     }
@@ -128,16 +121,16 @@ function setup (generatorSetup) {
       );
     }
 
-    function modelInComponentsPath (options, ...args) {
+    function moduleInComponentsPath (options, ...args) {
       return componentsPath(
         options,
-        generator.props.modelName,
+        generator.props.moduleName,
         ...args
       );
     }
 
-    function modelStoriesPath (options) {
-      return modelInComponentsPath(
+    function moduleStoriesPath (options) {
+      return moduleInComponentsPath(
         options,
         '.stories.js'
       );
@@ -161,20 +154,19 @@ function setup (generatorSetup) {
 
     switch (pathType) {
       case 'rootStories': return rootStoriesPath(wrappedOptions, ...wrappedArgs);
+      case 'packages': return packagesPath(wrappedOptions, ...wrappedArgs);
       case 'package': return packagePath(wrappedOptions, ...wrappedArgs);
       case 'lib': return libPath(wrappedOptions, ...wrappedArgs);
-      case 'models': return modelsPath(wrappedOptions, ...wrappedArgs);
       case 'modules': return modulesPath(wrappedOptions, ...wrappedArgs);
       case 'packageTests': return packageTestsPath(wrappedOptions, ...wrappedArgs);
       case 'modulesIndex': return modulesIndexPath(wrappedOptions, ...wrappedArgs);
-      case 'modelsIndex': return modelsIndexPath(wrappedOptions, ...wrappedArgs);
       case 'componentsIndex': return componentsIndexPath(wrappedOptions, ...wrappedArgs);
-      case 'model': return modelPath(wrappedOptions, ...wrappedArgs);
+      case 'module': return modulePath(wrappedOptions, ...wrappedArgs);
       case 'components': return componentsPath(wrappedOptions, ...wrappedArgs);
-      case 'modelTest': return modelTestPath(wrappedOptions, ...wrappedArgs);
+      case 'moduleTest': return moduleTestPath(wrappedOptions, ...wrappedArgs);
       case 'packageStories': return packageStoriesPath(wrappedOptions, ...wrappedArgs);
-      case 'modelInComponents': return modelInComponentsPath(wrappedOptions, ...wrappedArgs);
-      case 'modelStories': return modelStoriesPath(wrappedOptions, ...wrappedArgs);
+      case 'moduleInComponents': return moduleInComponentsPath(wrappedOptions, ...wrappedArgs);
+      case 'moduleStories': return moduleStoriesPath(wrappedOptions, ...wrappedArgs);
       case 'client': return clientPath(wrappedOptions, ...wrappedArgs);
       case 'server': return serverPath(wrappedOptions, ...wrappedArgs);
       case 'routes': return routesPath(wrappedOptions, ...wrappedArgs);
@@ -184,6 +176,34 @@ function setup (generatorSetup) {
   return get;
 }
 
+function makeGetPath (generator) {
+  function getPath (options, ...args) {
+    const relativeToProjectRootPath = path.join(...args);
+    const absolutePath = generator.destinationPath(relativeToProjectRootPath);
+    if (options.relativeTo) return path.relative(options.relativeTo, absolutePath);
+    return options.isAbsolute ? absolutePath : relativeToProjectRootPath;
+  }
+  return getPath;
+}
+function findModules (generator, options, packageName, ...args) {
+  const getPath = makeGetPath(generator);
+  return getPath(
+    options,
+    'packages',
+    packageName,
+    'lib',
+    'modules',
+    ...args
+  );
+}
+
+// TODO: we should also tolerate a .jsx extension
+function findRoutes (generator, options, packageName) {
+  return findModules(generator, options, packageName, 'routes.js');
+}
+
 module.exports = {
   setup,
+  findModules,
+  findRoutes,
 };

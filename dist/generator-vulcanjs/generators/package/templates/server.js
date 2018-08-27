@@ -1,2 +1,2 @@
-import '../modules/index.js';
-import './seed.js';
+import '../modules';
+import './seed';

@@ -3,7 +3,7 @@ import { newMutation } from 'meteor/vulcan:core';
 
 const seedData = [];
 
-Meteor.startup(function () {
+Meteor.startup(() => {
   // if (Users.find().count() === 0) {
   //   Accounts.createUser({
   //     username: 'DemoUser',

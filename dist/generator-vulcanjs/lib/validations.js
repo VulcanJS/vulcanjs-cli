@@ -1,7 +1,7 @@
 'use strict';
 
-var store = require('./store');
 var uiText = require('./ui-text');
+var makeLister = require('./lister');
 
 function combineValidators() {
   for (var _len = arguments.length, fns = Array(_len), _key = 0; _key < _len; _key++) {
@@ -16,30 +16,39 @@ function combineValidators() {
   };
 }
 
-var assertNonEmpty = function assertNonEmpty(input) {
-  if (input) return true;
-  return uiText.errors.isEmpty;
-};
+function setup(generatorSetup) {
+  var generator = generatorSetup;
+  var lister = makeLister.setup(generator);
 
-var assertNotPackageExists = function assertNotPackageExists(packageName) {
-  if (!store.is('packageExists', packageName)) return true;
-  return uiText.errors.isPackageExists(packageName);
-};
-
-var assertNotModelExists = function assertNotModelExists(packageName, modelName) {
-  if (!store.is('modelExists', packageName, modelName)) return true;
-  return uiText.errors.isModelExists(packageName, modelName);
-};
-
-var generateNotModelExists = function generateNotModelExists(packageName) {
-  return function (input) {
-    return assertNotModelExists(packageName, input);
+  var assertNonEmpty = function assertNonEmpty(input) {
+    if (input) return true;
+    return uiText.errors.isEmpty;
   };
-};
+
+  var assertNotPackageExists = function assertNotPackageExists(packageName) {
+    if (!lister.packageExists(packageName)) return true;
+    return uiText.errors.isPackageExists(packageName);
+  };
+
+  var assertNotModuleExists = function assertNotModuleExists(packageName, moduleName) {
+    if (!lister.moduleExists(packageName, moduleName)) return true;
+    return uiText.errors.isModuleExists(packageName, moduleName);
+  };
+
+  var generateNotModuleExists = function generateNotModuleExists(packageName) {
+    return function (input) {
+      return assertNotModuleExists(packageName, input);
+    };
+  };
+  return {
+    assertNonEmpty: assertNonEmpty,
+    assertNotPackageExists: assertNotPackageExists,
+    assertNotModuleExists: assertNotModuleExists,
+    generateNotModuleExists: generateNotModuleExists
+  };
+}
 
 module.exports = {
   combineValidators: combineValidators,
-  assertNonEmpty: assertNonEmpty,
-  assertNotPackageExists: assertNotPackageExists,
-  generateNotModelExists: generateNotModelExists
+  setup: setup
 };

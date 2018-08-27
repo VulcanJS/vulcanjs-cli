@@ -9,8 +9,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var VulcanGenerator = require('../../../lib/VulcanGenerator');
-var store = require('../../../lib/store');
 var nodePrint = require('node-print');
+var makeLister = require('../../../lib/lister');
 
 module.exports = function (_VulcanGenerator) {
   _inherits(_class, _VulcanGenerator);
@@ -25,11 +25,12 @@ module.exports = function (_VulcanGenerator) {
     key: 'initializing',
     value: function initializing() {
       this._assert('isVulcan');
+      this._lister = makeLister.setup(this);
     }
   }, {
     key: 'prompting',
     value: function prompting() {
-      var packageNames = store.get('packageNames');
+      var packageNames = this._lister.listPackages();
       this.props = {
         packageNames: packageNames,
         prettyPackages: this._finalize('prettyPackages', packageNames)

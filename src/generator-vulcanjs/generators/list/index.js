@@ -14,15 +14,18 @@ module.exports = class extends VulcanGenerator {
 
   prompting () {
     if (!this._canPrompt()) { return false; }
-    const questions = this._getQuestions(
-      'vulcanjsListableComponentsList'
-    );
+    let questions = [];
+    if (!this.options.vulcanjsComponent) {
+      questions = [...questions, this._getQuestions(
+        'vulcanjsListableComponentsList'
+      )];
+    }
     return this.prompt(questions)
-    .then((answers) => {
-      this.props = {
-        vulcanjsComponent: this._finalize('raw', 'vulcanjsComponent', answers),
-      };
-    });
+      .then((answers) => {
+        this.props = {
+          vulcanjsComponent: this._finalize('raw', 'vulcanjsComponent', answers),
+        };
+      });
   }
 
   composing () {

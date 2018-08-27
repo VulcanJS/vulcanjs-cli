@@ -28,7 +28,7 @@ module.exports = function (_VulcanGenerator) {
   }, {
     key: '_registerArguments',
     value: function _registerArguments() {
-      //TODO: add arguments for remove
+      // TODO: add arguments for remove
     }
   }, {
     key: 'prompting',
@@ -38,7 +38,7 @@ module.exports = function (_VulcanGenerator) {
       if (!this._canPrompt()) {
         return false;
       }
-      var questions = this._getQuestions('packageNameWithManualList', 'isDelete');
+      var questions = this._getQuestions('packageNameList', 'isDelete');
       return this.prompt(questions).then(function (answers) {
         _this2._assert('isDelete', answers.isDelete);
         _this2.props = {
@@ -54,11 +54,6 @@ module.exports = function (_VulcanGenerator) {
       }
       var sourceDir = this._getPath({ isAbsolute: true }, 'package');
       this.fs.delete(sourceDir);
-      this._dispatch({
-        type: 'REMOVE_PACKAGE',
-        packageName: this.props.packageName
-      });
-      return this._commitStore();
     }
   }, {
     key: 'end',

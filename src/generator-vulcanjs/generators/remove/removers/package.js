@@ -7,22 +7,22 @@ module.exports = class extends VulcanGenerator {
   }
 
   _registerArguments () {
-    //TODO: add arguments for remove
+    // TODO: add arguments for remove
   }
 
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithManualList',
+      'packageNameList',
       'isDelete'
     );
     return this.prompt(questions)
-    .then((answers) => {
-      this._assert('isDelete', answers.isDelete);
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-      };
-    });
+      .then((answers) => {
+        this._assert('isDelete', answers.isDelete);
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+        };
+      });
   }
 
   writing () {
@@ -32,11 +32,6 @@ module.exports = class extends VulcanGenerator {
       'package'
     );
     this.fs.delete(sourceDir);
-    this._dispatch({
-      type: 'REMOVE_PACKAGE',
-      packageName: this.props.packageName,
-    });
-    return this._commitStore();
   }
 
   end () {

@@ -8,6 +8,7 @@ var filter = require('./filters').filter;
 var store = require('./store');
 var flatten = require('lodash/flatten');
 var pluralize = require('pluralize');
+var makeLister = require('./lister');
 
 var arrayToEjsString = function arrayToEjsString(arr) {
   var quotedList = arr.map(function (elem) {
@@ -19,6 +20,7 @@ var arrayToEjsString = function arrayToEjsString(arr) {
 
 function setup(generatorSetup) {
   var generator = generatorSetup;
+  var lister = makeLister.setup(generator);
 
   function finalize(propName) {
     function getRaw(keyBeforeRaw) {
@@ -27,16 +29,16 @@ function setup(generatorSetup) {
       return generator.options[keyBeforeRaw] || generator.props[keyBeforeRaw] || answers[keyBeforeRaw];
     }
 
-    function pluralPascalModelName(answers) {
-      var modelNameRaw = getRaw('modelName', answers);
-      var pluralModelName = pluralize.plural(modelNameRaw);
-      return pascalCase(pluralModelName);
+    function pluralPascalModuleName(answers) {
+      var moduleNameRaw = getRaw('moduleName', answers);
+      var pluralModuleName = pluralize.plural(moduleNameRaw);
+      return pascalCase(pluralModuleName);
     }
 
-    function singularPascalModelName(answers) {
-      var modelNameRaw = getRaw('modelName', answers);
-      var pluralModelName = pluralize.singular(modelNameRaw);
-      return pascalCase(pluralModelName);
+    function singularPascalModuleName(answers) {
+      var moduleNameRaw = getRaw('moduleName', answers);
+      var pluralModuleName = pluralize.singular(moduleNameRaw);
+      return pascalCase(pluralModuleName);
     }
 
     function permissionTo(permissionType, answers) {
@@ -56,9 +58,9 @@ function setup(generatorSetup) {
       return filter('packageName', packageNameRaw);
     }
 
-    function modelName(answers) {
-      var modelNameRaw = getRaw('modelName', answers);
-      return filter('modelName', modelNameRaw);
+    function moduleName(answers) {
+      var moduleNameRaw = getRaw('moduleName', answers);
+      return filter('moduleName', moduleNameRaw);
     }
 
     function componentName(answers) {
@@ -67,46 +69,46 @@ function setup(generatorSetup) {
     }
 
     function componentFileName(answers) {
-      var filteredComponentName = filter('componentName', answers.componentName);
-      return filteredComponentName + '.' + store.get('reactExtension');
+      var finalizedComponentName = componentName(answers);
+      return finalizedComponentName + '.' + store.get('reactExtension');
     }
 
     function componentPath(answers) {
       return generator._getPath({ isAbsolute: false }, 'components', componentFileName(answers));
     }
 
-    function pascalModelName(answers) {
-      var modelNameRaw = getRaw('modelName', answers);
-      return pascalCase(modelNameRaw);
+    function pascalModuleName(answers) {
+      var moduleNameRaw = getRaw('moduleName', answers);
+      return pascalCase(moduleNameRaw);
     }
 
     function typeName(answers) {
-      return singularPascalModelName(answers);
+      return singularPascalModuleName(answers);
     }
 
     function collectionName(answers) {
-      return pluralPascalModelName(answers);
+      return pluralPascalModuleName(answers);
     }
 
-    function camelModelName(answers) {
-      var modelNameRaw = getRaw('modelName', answers);
-      return camelCase(modelNameRaw);
+    function camelModuleName(answers) {
+      var moduleNameRaw = getRaw('moduleName', answers);
+      return camelCase(moduleNameRaw);
     }
 
-    function modelParts(answers) {
-      return Object.keys(answers.modelParts);
+    function moduleParts(answers) {
+      return Object.keys(answers.moduleParts);
     }
 
     function mutationName(mutationType, answers) {
-      var modelNamePart = pluralPascalModelName(answers);
+      var moduleNamePart = pluralPascalModuleName(answers);
       var mutationTypePart = pascalCase(mutationType);
-      return '' + modelNamePart + mutationTypePart;
+      return '' + moduleNamePart + mutationTypePart;
     }
 
     function permissionName(permission, answers) {
-      var modelNamePart = pluralPascalModelName(answers);
+      var moduleNamePart = pluralPascalModuleName(answers);
       var permissionAppendage = permission.join('.');
-      return modelNamePart + '.' + permissionAppendage;
+      return moduleNamePart + '.' + permissionAppendage;
     }
 
     function vulcanDependencies(answers) {
@@ -117,8 +119,8 @@ function setup(generatorSetup) {
     }
 
     function resolverName(resolverType, answers) {
-      var modelNamePart = pluralPascalModelName(answers);
-      return '' + modelNamePart + resolverType;
+      var moduleNamePart = pluralPascalModuleName(answers);
+      return '' + moduleNamePart + resolverType;
     }
 
     function hasResolver(resolverType, answers) {
@@ -140,8 +142,8 @@ function setup(generatorSetup) {
       return {
         no: id,
         name: packageNameRaw,
-        models: store.num('models', packageNameRaw),
-        routes: store.num('routes', packageNameRaw)
+        modules: lister.countModules(packageNameRaw),
+        routes: lister.countRoutes(packageNameRaw)
       };
     }
 
@@ -155,30 +157,6 @@ function setup(generatorSetup) {
       });
     }
 
-    function getPrettyRoutesWithoutNumbers(inputPackageName) {
-      var theRoutes = store.get('routes', inputPackageName);
-      var prettyRoutes = theRoutes.map(function (theRoute) {
-        return {
-          package: inputPackageName,
-          name: theRoute.name,
-          path: theRoute.content.routePath
-        };
-      });
-      return prettyRoutes;
-    }
-
-    function prettyRoutesForPackage(inputPackageName) {
-      var prettyRoutesWithoutNumbers = getPrettyRoutesWithoutNumbers(inputPackageName);
-      return addNo(prettyRoutesWithoutNumbers);
-    }
-
-    function allPrettyRoutes() {
-      var allPackageNames = store.get('packageNames');
-      var prettyRoutes = allPackageNames.map(getPrettyRoutesWithoutNumbers);
-      var flattenedRoutes = flatten(prettyRoutes);
-      return addNo(flattenedRoutes);
-    }
-
     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
     }
@@ -188,10 +166,10 @@ function setup(generatorSetup) {
         return appName.apply(undefined, args);
       case 'packageName':
         return packageName.apply(undefined, args);
-      case 'modelName':
-        return modelName.apply(undefined, args);
-      case 'modelParts':
-        return modelParts.apply(undefined, args);
+      case 'moduleName':
+        return moduleName.apply(undefined, args);
+      case 'moduleParts':
+        return moduleParts.apply(undefined, args);
       case 'componentName':
         return componentName.apply(undefined, args);
       case 'componentFileName':
@@ -200,10 +178,10 @@ function setup(generatorSetup) {
         return componentPath.apply(undefined, args);
       case 'typeName':
         return typeName.apply(undefined, args);
-      case 'pascalModelName':
-        return pascalModelName.apply(undefined, args);
-      case 'camelModelName':
-        return camelModelName.apply(undefined, args);
+      case 'pascalModuleName':
+        return pascalModuleName.apply(undefined, args);
+      case 'camelModuleName':
+        return camelModuleName.apply(undefined, args);
       case 'collectionName':
         return collectionName.apply(undefined, args);
       case 'mutationName':
@@ -222,10 +200,6 @@ function setup(generatorSetup) {
         return permissionTo.apply(undefined, args);
       case 'prettyPackages':
         return prettyPackages.apply(undefined, args);
-      case 'prettyRoutesForPackage':
-        return prettyRoutesForPackage.apply(undefined, args);
-      case 'allPrettyRoutes':
-        return allPrettyRoutes.apply(undefined, args);
       case 'raw':
         return getRaw.apply(undefined, args);
       default:

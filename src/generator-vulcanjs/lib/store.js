@@ -32,17 +32,17 @@ function is (checkType, ...args) {
     return !!store.getState().packages[filteredPackageName];
   }
 
-  function modelExists (packageName, modelName) {
-    const filteredModelName = filter('modelName', modelName);
+  function moduleExists (packageName, moduleName) {
+    const filteredModuleName = filter('moduleName', moduleName);
     return (packageExists(packageName)) &&
-    !!store.getState().packages[packageName].models[filteredModelName];
+      !!store.getState().packages[packageName].modules[filteredModuleName];
   }
 
   switch (checkType) {
-    case 'packageExists' : return packageExists(...args);
-    case 'modelExists' : return modelExists(...args);
-    case 'vulcan' : return vulcan(...args);
-    default : return undefined;
+    case 'packageExists': return packageExists(...args);
+    case 'moduleExists': return moduleExists(...args);
+    case 'vulcan': return vulcan(...args);
+    default: return undefined;
   }
 }
 
@@ -61,26 +61,22 @@ function get (checkType, ...args) {
     return store.getState().packages[packageName];
   }
 
-  function modelNames (packageName) {
+  function moduleNames (packageName) {
     const thePackage = getPackage(packageName);
-    const models = is('packageExists', packageName) ?
-      thePackage.models :
+    const modules = is('packageExists', packageName) ?
+      thePackage.modules :
       {};
-    const modelNamesToGet = Object.keys(models);
-    return modelNamesToGet.sort(common.alphabeticalSort);
+    const moduleNamesToGet = Object.keys(modules);
+    return moduleNamesToGet.sort(common.alphabeticalSort);
   }
 
-  function packageNamesWithNumModels () {
+  function packageNamesWithNumModules () {
     const packageNamesList = packageNames();
-    const packageNamesWithModels = packageNamesList.map((packageName) => ({
+    const packageNamesWithModules = packageNamesList.map((packageName) => ({
       name: packageName,
-      numModels: modelNames(packageName).length,
+      numModules: moduleNames(packageName).length,
     }));
-    return packageNamesWithModels;
-  }
-
-  function storyBookSetupStatus () {
-    return store.getState().storyBook.setupStatus;
+    return packageNamesWithModules;
   }
 
   function routeNames (packageName) {
@@ -100,15 +96,14 @@ function get (checkType, ...args) {
   }
 
   switch (checkType) {
-    case 'reactExtension' : return reactExtension(...args);
-    case 'packageNames' : return packageNames(...args);
-    case 'modelNames' : return modelNames(...args);
-    case 'routeNames' : return routeNames(...args);
-    case 'package' : return getPackage(...args);
-    case 'routes' : return getRoutes(...args);
-    case 'storyBookSetupStatus' : return storyBookSetupStatus(...args);
-    case 'packageNamesWithNumModels' : return packageNamesWithNumModels(...args);
-    default : return undefined;
+    case 'reactExtension': return reactExtension(...args);
+    case 'packageNames': return packageNames(...args);
+    case 'moduleNames': return moduleNames(...args);
+    case 'routeNames': return routeNames(...args);
+    case 'package': return getPackage(...args);
+    case 'routes': return getRoutes(...args);
+    case 'packageNamesWithNumModules': return packageNamesWithNumModules(...args);
+    default: return undefined;
   }
 }
 
@@ -118,14 +113,14 @@ function num (checkType, ...args) {
     return routeNames.length;
   }
 
-  function models (packageName) {
-    const modelNames = get('modelNames', packageName);
-    return modelNames.length;
+  function modules (packageName) {
+    const moduleNames = get('moduleNames', packageName);
+    return moduleNames.length;
   }
 
   switch (checkType) {
     case 'routes': return routes(...args);
-    case 'models': return models(...args);
+    case 'modules': return modules(...args);
     default: return undefined;
   }
 }
@@ -136,17 +131,17 @@ function has (checkType, ...args) {
     return Object.keys(packageNames).length > 0;
   }
 
-  function nonZeroModelsInPackage (packageName) {
+  function nonZeroModulesInPackage (packageName) {
     if (!this._isPackageExists(packageName)) return false;
     const thePackage = this._getPackage(packageName);
-    const modelNames = Object.keys(thePackage.models);
-    return modelNames.length > 0;
+    const moduleNames = Object.keys(thePackage.modules);
+    return moduleNames.length > 0;
   }
 
   switch (checkType) {
-    case 'nonZeroModelsInPackage': return nonZeroModelsInPackage(...args);
+    case 'nonZeroModulesInPackage': return nonZeroModulesInPackage(...args);
     case 'nonZeroPackages': return nonZeroPackages(...args);
-    default : return undefined;
+    default: return undefined;
   }
 }
 

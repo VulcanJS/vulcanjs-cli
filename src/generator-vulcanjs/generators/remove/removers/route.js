@@ -8,26 +8,24 @@ module.exports = class extends VulcanGenerator {
   }
 
   _registerArguments () {
-    //TODO: add arguments for remove
+    // TODO: add arguments for remove
   }
 
   prompting () {
     if (!this._canPrompt()) { return false; }
     const questions = this._getQuestions(
-      'packageNameWithNumModelsList',
-      'packageNameIfManual',
+      'packageNameWithNumModulesList',
       'routeNameList',
-      'routeNameIfManual',
       'isDelete'
     );
     return this.prompt(questions)
-    .then((answers) => {
-      this._assert('isDelete', answers.isDelete);
-      this.props = {
-        packageName: this._finalize('packageName', answers),
-        routeName: this._finalize('raw', 'routeName', answers),
-      };
-    });
+      .then((answers) => {
+        this._assert('isDelete', answers.isDelete);
+        this.props = {
+          packageName: this._finalize('packageName', answers),
+          routeName: this._finalize('raw', 'routeName', answers),
+        };
+      });
   }
 
   _updateRoutes () {
@@ -46,13 +44,7 @@ module.exports = class extends VulcanGenerator {
 
   writing () {
     if (!this._canWrite()) { return false; }
-    this._dispatch({
-      type: 'REMOVE_ROUTE',
-      packageName: this.props.packageName,
-      routeName: this.props.routeName,
-    });
     this._updateRoutes();
-    return this._commitStore();
   }
 
   end () {
