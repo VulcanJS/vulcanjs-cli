@@ -8,44 +8,41 @@ module.exports = class extends VulcanGenerator {
   }
 
   _registerArguments () {
-    this._registerOptions(
-      'packageName',
-      'componentName'
-    );
+    this._registerOptions('packageName', 'componentName');
   }
 
   prompting () {
-    if (!this._canPrompt()) { return false; }
+    if (!this._canPrompt()) {
+      return false;
+    }
     let questions = [];
     if (this._needArg('packageName')) {
-      questions = [...questions, ...this._getQuestions(
-        'packageNameList'
-      )];
+      questions = [...questions, ...this._getQuestions('packageNameList')];
     }
     if (this._needArg('componentName')) {
       questions = [...questions, ...this._getQuestions('componentName')];
     }
-    questions = [...questions, ...this._getQuestions(
-      'componentType',
-      'isRegisterComponent'
-    )];
-    return this.prompt(questions)
-      .then((answers) => {
-        this.props = {
-          packageName: this._finalize('packageName', answers),
-          componentName: this._finalize('componentName', answers),
-          componentFileName: this._finalize('componentFileName', answers),
-          componentType: this._finalize('raw', 'componentType', answers),
-          isRegister: this._finalize('raw', 'isRegister', answers),
-        };
-        this.props.componentPath = this._finalize('componentPath', answers);
-      });
+    questions = [
+      ...questions,
+      ...this._getQuestions('componentType', 'isRegisterComponent'),
+    ];
+    return this.prompt(questions).then((answers) => {
+      this.props = {
+        packageName: this._finalize('packageName', answers),
+        componentName: this._finalize('componentName', answers),
+        componentFileName: this._finalize('componentFileName', answers),
+        componentType: this._finalize('raw', 'componentType', answers),
+        isRegister: this._finalize('raw', 'isRegister', answers),
+      };
+      this.props.componentPath = this._finalize('componentPath', answers);
+    });
   }
 
   _writeComponent () {
-    const templatePath = this.props.componentType === 'pure' ?
-      this.templatePath('pureFunctionComponent.js') :
-      this.templatePath('classComponent.js');
+    const templatePath =
+      this.props.componentType === 'pure'
+        ? this.templatePath('pureFunctionComponent.js')
+        : this.templatePath('classComponent.js');
     this.fs.copyTpl(
       templatePath,
       this._getPath(
@@ -66,16 +63,15 @@ module.exports = class extends VulcanGenerator {
     const fileText = this.fs.read(componentsIndexPath);
     const fileWithImportText = ast.addImportStatement(
       fileText,
-      `./${this.props.componentFileName}`
+      `../components/${this.props.componentFileName}`
     );
-    this.fs.write(
-      componentsIndexPath,
-      fileWithImportText
-    );
+    this.fs.write(componentsIndexPath, fileWithImportText);
   }
 
   writing () {
-    if (!this._canWrite()) { return; }
+    if (!this._canWrite()) {
+      return;
+    }
     this._writeComponent();
     this._updateComponentsIndex();
   }

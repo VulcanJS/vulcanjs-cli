@@ -72,7 +72,7 @@ module.exports = function (_VulcanGenerator) {
       if (!this.props.isRegister) return;
       var componentsIndexPath = this._getPath({ isAbsolute: true }, 'componentsIndex');
       var fileText = this.fs.read(componentsIndexPath);
-      var fileWithImportText = ast.addImportStatement(fileText, './' + this.props.componentFileName);
+      var fileWithImportText = ast.addImportStatement(fileText, '../components/' + this.props.componentFileName);
       this.fs.write(componentsIndexPath, fileWithImportText);
     }
   }, {
