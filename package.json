@@ -1,6 +1,6 @@
 {
   "name": "vulcanjs-cli",
-  "version": "3.0.10",
+  "version": "3.1.0",
   "description": "The official cli scaffolding tool for VulcanJS",
   "bin": {
     "vulcan": "./dist/index.js"
