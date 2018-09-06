@@ -6,6 +6,8 @@ total: {
       {},
       context.currentUser
     );
-    return context.<%= collectionName %>.find(selector, options).count();
+    return {
+      result: context.<%= collectionName %>.find(selector, options).count();
+    }
   },
 }

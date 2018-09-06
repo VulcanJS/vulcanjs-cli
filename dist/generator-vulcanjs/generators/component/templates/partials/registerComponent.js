@@ -1,1 +1,1 @@
-registerComponent('<%= componentName %>', <%= componentName %>);
+registerComponent({name:'<%= componentName %>', component:<%= componentName %>});

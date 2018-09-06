@@ -4,20 +4,20 @@ const schema = {
   _id: {
     type: String,
     optional: true,
-    viewableBy: ['guests'],
+    canRead: ['guests'],
   },
   createdAt: {
     type: Date,
     optional: true,
-    viewableBy: ['guests'],
-    onInsert: (document, currentUser) => {
+    canRead: ['guests'],
+    onCreate: ({ newDocument, currentUser}) => {
       return new Date();
     }
   },
   // userId: {
   //   type: String,
   //   optional: true,
-  //   viewableBy: ['guests'],
+  //   canRead: ['guests'],
   //   resolveAs: {
   //     fieldName: 'user',
   //     type: 'User',

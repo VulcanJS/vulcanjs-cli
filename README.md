@@ -8,10 +8,11 @@
 
 <h4 align="center">The official CLI scaffolding tool for <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a>.</h4>
 
-
 ## Warning
 
 This project is young. Use with caution. Always commit your code before using any program that modifies it.
+
+Last tested on [Vulcan 1.12](https://medium.com/@sachagreif/vulcan-js-1-12-a-better-graphql-api-for-crud-operations-fae82e03a7e9).
 
 ## Table of Contents
 
@@ -29,6 +30,7 @@ This project is young. Use with caution. Always commit your code before using an
 - [License](#license)
 
 ## Background
+
 <a href="http://vulcanjs.org/" target="_blank_" >VulcanJS</a> is a full stack javascript framework, built on Meteor, React and GraphQL. If you aren't familiar with VulcanJS, we highly recommend that you check out the website and read the docs.
 
 With this cli, you'll be able to easily generate `packages`, `modules`, `components`, and `routes` for your VulcanJS project.
@@ -36,42 +38,51 @@ With this cli, you'll be able to easily generate `packages`, `modules`, `compone
 ## Install
 
 Npm:
+
 ```sh
 $ npm install -g vulcanjs-cli
 ```
 
 Yarn:
+
 ```sh
 $ yarn global add vulcanjs-cli
 ```
 
-
 ## Usage
+
 ### Create
+
 Creates a new project with the given app name:
+
 ```sh
 $ vulcan create <appName>
 ```
 
 ### Generate
+
 Generates a project component
 
 - Generate Package
+
 ```sh
 $ vulcan g package <packageName>
 ```
 
 - Generate Module
+
 ```sh
 $ vulcan g module <packageName> <moduleName>
 ```
 
 - Generate Component
+
 ```sh
 $ vulcan g component <packageName> <moduleName> <componentName>
 ```
 
 - Generate Route
+
 ```sh
 $ vulcan g route <packageName> <routeName> <routePath>
 ```
@@ -79,11 +90,13 @@ $ vulcan g route <packageName> <routeName> <routePath>
 ### Remove
 
 - Remove Package
+
 ```sh
 $ vulcan remove package <packageName>
 ```
 
 - Remove Module
+
 ```sh
 $ vulcan remove module <packageName> <moduleName>
 ```
@@ -91,15 +104,16 @@ $ vulcan remove module <packageName> <moduleName>
 ### List
 
 - List Packages
+
 ```sh
 $ vulcan list packages
 ```
 
 - List Routes
+
 ```sh
 $ vulcan list routes
 ```
-
 
 ## Maintainers
 

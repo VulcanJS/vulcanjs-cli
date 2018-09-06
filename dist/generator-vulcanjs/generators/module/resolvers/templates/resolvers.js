@@ -7,18 +7,22 @@ const resolvers = {
         {},
         context.currentUser
       );
-      return context.<%= collectionName %>.find(selector, options).fetch();
+      return {
+        results: context.<%= collectionName %>.find(selector, options).fetch();
+      }
     },
   },
   single: {
     name: '<%= singleResolverName %>',
     resolver(root, {documentId}, context) {
       const document = context.<%= collectionName %>.findOne({_id: documentId});
-      return context.Users.restrictViewableFields(
-        context.currentUser,
-        context.<%= collectionName %>,
-        document
-      );
+      return {
+        result: context.Users.restrictViewableFields(
+          context.currentUser,
+          context.<%= collectionName %>,
+          document
+        );
+      }
     },
   },
   total: {
@@ -29,7 +33,9 @@ const resolvers = {
         {},
         context.currentUser
       );
-      return context.<%= collectionName %>.find(selector, options).count();
+      return {
+        result: context.<%= collectionName %>.find(selector, options).count();
+      }
     },
   },
 };

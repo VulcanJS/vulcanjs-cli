@@ -31,3 +31,6 @@ vulcan r package poacher
 
 echo "Packages summary"
 vulcan list packages
+meteor add zoo
+meteor remove getting-started
+npm run start

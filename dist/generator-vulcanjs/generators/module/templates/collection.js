@@ -7,8 +7,8 @@ const <%= collectionName %> = createCollection({
   collectionName: '<%= collectionName %>',
   typeName: '<%= typeName %>',
   schema,
-  resolvers: getDefaultResolvers('<%= collectionName %>'),
-  mutations: getDefaultMutations('<%= collectionName %>')
+  resolvers: getDefaultResolvers({ typeName: '<%= typeName %>'}),
+  //mutations: getDefaultMutations({typeName: '<%= typeName %>'})
 });
 
 <%= collectionName %>.addDefaultView(terms => {

@@ -45,11 +45,11 @@ module.exports = function (_VulcanGenerator) {
         _this2.props = {
           packageName: _this2._finalize('packageName', answers),
           moduleName: _this2._finalize('moduleName', answers),
-          newPermission: _this2._finalize('permissionName', ['new'], answers),
-          editOwnPermission: _this2._finalize('permissionName', ['edit', 'own'], answers),
-          editAllPermission: _this2._finalize('permissionName', ['edit', 'all'], answers),
-          removeOwnPermission: _this2._finalize('permissionName', ['remove', 'own'], answers),
-          removeAllPermission: _this2._finalize('permissionName', ['remove', 'all'], answers)
+          newPermission: _this2._finalize('permissionName', ['create'], answers),
+          editOwnPermission: _this2._finalize('permissionName', ['update', 'own'], answers),
+          editAllPermission: _this2._finalize('permissionName', ['update', 'all'], answers),
+          removeOwnPermission: _this2._finalize('permissionName', ['delete', 'own'], answers),
+          removeAllPermission: _this2._finalize('permissionName', ['delete', 'all'], answers)
         };
       });
     }

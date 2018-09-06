@@ -6,6 +6,8 @@ list: {
       {},
       context.currentUser
     );
-    return context.<%= collectionName %>.find(selector, options).fetch();
+    return {
+      results: context.<%= collectionName %>.find(selector, options).fetch();
+    }
   },
 },
