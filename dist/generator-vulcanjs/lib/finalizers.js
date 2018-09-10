@@ -106,7 +106,7 @@ function setup(generatorSetup) {
     }
 
     function permissionName(permission, answers) {
-      var moduleNamePart = pluralPascalModuleName(answers);
+      var moduleNamePart = camelModuleName(answers);
       var permissionAppendage = permission.join('.');
       return moduleNamePart + '.' + permissionAppendage;
     }
@@ -138,7 +138,9 @@ function setup(generatorSetup) {
     }
 
     function prettyPackage(inputPackageName, id) {
-      var packageNameRaw = getRaw('packageName', { packageName: inputPackageName });
+      var packageNameRaw = getRaw('packageName', {
+        packageName: inputPackageName
+      });
       return {
         no: id,
         name: packageNameRaw,

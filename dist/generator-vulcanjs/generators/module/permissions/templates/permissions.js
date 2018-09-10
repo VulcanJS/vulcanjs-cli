@@ -8,5 +8,5 @@ Users.groups.members.can([
 
 Users.groups.admins.can([
   '<%= editAllPermission %>',
-  '<%= removeAllPermission %>,'
+  '<%= removeAllPermission %>',
 ]);

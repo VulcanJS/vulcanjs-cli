@@ -104,14 +104,14 @@ function setup (generatorSetup) {
     }
 
     function permissionName (permission, answers) {
-      const moduleNamePart = pluralPascalModuleName(answers);
+      const moduleNamePart = camelModuleName(answers);
       const permissionAppendage = permission.join('.');
       return `${moduleNamePart}.${permissionAppendage}`;
     }
 
     function vulcanDependencies (answers) {
       const rawDependencies = getRaw('vulcanDependencies', answers);
-      return rawDependencies.map((dep) => (`'${dep}'`));
+      return rawDependencies.map((dep) => `'${dep}'`);
     }
 
     function resolverName (resolverType, answers) {
@@ -129,7 +129,9 @@ function setup (generatorSetup) {
       const routePath = getRaw('routePath', answers);
       const layoutName = getRaw('layoutName', answers);
       const routeComponentName = componentName(answers);
-      const layoutNameKeyValuePair = layoutName ? `layoutName: '${layoutName}',` : '';
+      const layoutNameKeyValuePair = layoutName
+        ? `layoutName: '${layoutName}',`
+        : '';
       return `addRoute({
         name: '${routeName}',
         path: '${routePath}',
@@ -139,7 +141,9 @@ function setup (generatorSetup) {
     }
 
     function prettyPackage (inputPackageName, id) {
-      const packageNameRaw = getRaw('packageName', { packageName: inputPackageName });
+      const packageNameRaw = getRaw('packageName', {
+        packageName: inputPackageName,
+      });
       return {
         no: id,
         name: packageNameRaw,
@@ -156,29 +160,49 @@ function setup (generatorSetup) {
       return arr.map((obj, index) => ({ no: index, ...obj }));
     }
 
-
     switch (propName) {
-      case 'appName': return appName(...args);
-      case 'packageName': return packageName(...args);
-      case 'moduleName': return moduleName(...args);
-      case 'moduleParts': return moduleParts(...args);
-      case 'componentName': return componentName(...args);
-      case 'componentFileName': return componentFileName(...args);
-      case 'componentPath': return componentPath(...args);
-      case 'typeName': return typeName(...args);
-      case 'pascalModuleName': return pascalModuleName(...args);
-      case 'camelModuleName': return camelModuleName(...args);
-      case 'collectionName': return collectionName(...args);
-      case 'mutationName': return mutationName(...args);
-      case 'permissionName': return permissionName(...args);
-      case 'vulcanDependencies': return vulcanDependencies(...args);
-      case 'resolverName': return resolverName(...args);
-      case 'hasResolver': return hasResolver(...args);
-      case 'addRouteStatement': return addRouteStatement(...args);
-      case 'permissionTo': return permissionTo(...args);
-      case 'prettyPackages': return prettyPackages(...args);
-      case 'raw': return getRaw(...args);
-      default: return undefined;
+      case 'appName':
+        return appName(...args);
+      case 'packageName':
+        return packageName(...args);
+      case 'moduleName':
+        return moduleName(...args);
+      case 'moduleParts':
+        return moduleParts(...args);
+      case 'componentName':
+        return componentName(...args);
+      case 'componentFileName':
+        return componentFileName(...args);
+      case 'componentPath':
+        return componentPath(...args);
+      case 'typeName':
+        return typeName(...args);
+      case 'pascalModuleName':
+        return pascalModuleName(...args);
+      case 'camelModuleName':
+        return camelModuleName(...args);
+      case 'collectionName':
+        return collectionName(...args);
+      case 'mutationName':
+        return mutationName(...args);
+      case 'permissionName':
+        return permissionName(...args);
+      case 'vulcanDependencies':
+        return vulcanDependencies(...args);
+      case 'resolverName':
+        return resolverName(...args);
+      case 'hasResolver':
+        return hasResolver(...args);
+      case 'addRouteStatement':
+        return addRouteStatement(...args);
+      case 'permissionTo':
+        return permissionTo(...args);
+      case 'prettyPackages':
+        return prettyPackages(...args);
+      case 'raw':
+        return getRaw(...args);
+      default:
+        return undefined;
     }
   }
 
