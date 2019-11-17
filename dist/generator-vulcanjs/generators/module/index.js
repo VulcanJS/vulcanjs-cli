@@ -65,7 +65,7 @@ module.exports = function (_VulcanGenerator) {
     value: function _composeGenerators() {
       var _this3 = this;
 
-      var moduleParts = ['fragments', 'schema', 'permissions'];
+      var moduleParts = ['fragments', 'schema'];
       moduleParts.forEach(function (modulePart) {
         var generator = require.resolve('./' + modulePart);
         var nextOptions = _extends({}, _this3.options, _this3.props, {

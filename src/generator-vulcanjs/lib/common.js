@@ -33,7 +33,7 @@ const visitorTypes = ['Guests', 'Members', 'Admins'];
 
 const schemaPropertyTypes = ['String', 'Number', 'Boolean', 'Array', 'Object', 'Custom'];
 
-const moduleParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
+const moduleParts = ['fragments', 'resolvers', 'mutations', 'schema'];
 
 const vulcanjsRemovableComponents = [
   'route',

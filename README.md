@@ -12,7 +12,7 @@
 
 This project is young. Use with caution. Always commit your code before using any program that modifies it.
 
-Last tested on [Vulcan 1.12](https://medium.com/@sachagreif/vulcan-js-1-12-a-better-graphql-api-for-crud-operations-fae82e03a7e9).
+Last tested on [Vulcan 1.14] (except for custom mutations and resolvers)
 
 ## Table of Contents
 

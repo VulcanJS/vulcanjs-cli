@@ -105,12 +105,6 @@ function setup(generatorSetup) {
       return '' + moduleNamePart + mutationTypePart;
     }
 
-    function permissionName(permission, answers) {
-      var moduleNamePart = pluralPascalModuleName(answers);
-      var permissionAppendage = permission.join('.');
-      return moduleNamePart + '.' + permissionAppendage;
-    }
-
     function vulcanDependencies(answers) {
       var rawDependencies = getRaw('vulcanDependencies', answers);
       return rawDependencies.map(function (dep) {

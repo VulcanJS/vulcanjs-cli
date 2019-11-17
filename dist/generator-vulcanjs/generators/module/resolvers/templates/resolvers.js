@@ -1,12 +1,9 @@
 const resolvers = {
-  list: {
+  multi: {
     name: '<%= listResolverName %>',
-    resolver(root, {terms = {}}, context, info) {
-      let { selector, options } = context.<%= collectionName %>.getParameters(
-        terms,
-        {},
-        context.currentUser
-      );
+    resolver(root, {input = {}}, context, info) {
+      // get selector and options from terms and perform Mongo query
+      let { selector, options } = await Connectors.filter(collection, input, context);
       return {
         results: context.<%= collectionName %>.find(selector, options).fetch();
       }
@@ -14,30 +11,16 @@ const resolvers = {
   },
   single: {
     name: '<%= singleResolverName %>',
-    resolver(root, {documentId}, context) {
-      const document = context.<%= collectionName %>.findOne({_id: documentId});
-      return {
-        result: context.Users.restrictViewableFields(
-          context.currentUser,
-          context.<%= collectionName %>,
-          document
-        );
-      }
-    },
-  },
-  total: {
-    name: '<%= totalResolverName %>',
-    resolver(root, {terms = {}}, context) {
-      const {selector, options} = context.<%= collectionName %>.getParameters(
-        terms,
-        {},
-        context.currentUser
+    resolver(root, { _id }, context) {
+      const document = context.<%= collectionName %>.findOne({ _id });
+      const result = context.Users.restrictViewableFields(
+        context.currentUser,
+        context.<%= collectionName %>,
+        document
       );
-      return {
-        result: context.<%= collectionName %>.find(selector, options).count();
-      }
-    },
-  },
+      return { result }
+    }
+  }
 };
 
 export default resolvers;

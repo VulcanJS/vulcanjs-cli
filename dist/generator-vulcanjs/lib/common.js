@@ -35,7 +35,7 @@ var visitorTypes = ['Guests', 'Members', 'Admins'];
 
 var schemaPropertyTypes = ['String', 'Number', 'Boolean', 'Array', 'Object', 'Custom'];
 
-var moduleParts = ['fragments', 'resolvers', 'mutations', 'schema', 'permissions', 'parameters'];
+var moduleParts = ['fragments', 'resolvers', 'mutations', 'schema'];
 
 var vulcanjsRemovableComponents = ['route', 'module', 'package'];
 

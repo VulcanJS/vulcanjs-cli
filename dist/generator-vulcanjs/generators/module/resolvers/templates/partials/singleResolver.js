@@ -1,7 +1,7 @@
 single: {
   name: '<%= singleResolverName %>',
-  resolver(root, {documentId}, context) {
-    const document = context.<%= collectionName %>.findOne({_id: documentId});
+  resolver(root, { _id }, context) {
+    const document = context.<%= collectionName %>.findOne({ _id });
     const result = context.Users.restrictViewableFields(
       context.currentUser,
       context.<%= collectionName %>,
