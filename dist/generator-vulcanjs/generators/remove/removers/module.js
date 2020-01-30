@@ -49,12 +49,12 @@ module.exports = function (_VulcanGenerator) {
       });
     }
   }, {
-    key: '_updateModulesIndex',
-    value: function _updateModulesIndex() {
-      var modulesIndexPath = this._getPath({ isAbsolute: true }, 'modulesIndex');
-      var fileText = this.fs.read(modulesIndexPath);
+    key: '_updateCollectionsIndex',
+    value: function _updateCollectionsIndex() {
+      var modulesCollectionsPath = this._getPath({ isAbsolute: true }, 'collectionsIndex');
+      var fileText = this.fs.read(collectionsIndexPath);
       var fileWithImportText = ast.removeImportStatement(fileText, './' + this.props.moduleName + '/collection.js');
-      this.fs.write(modulesIndexPath, fileWithImportText);
+      this.fs.write(collectionsIndexPath, fileWithImportText);
     }
   }, {
     key: '_removeModuleDir',
@@ -69,7 +69,7 @@ module.exports = function (_VulcanGenerator) {
         return false;
       }
       this._removeModuleDir();
-      this._updateModulesIndex();
+      this._updateCollectionsIndex();
     }
   }, {
     key: 'end',

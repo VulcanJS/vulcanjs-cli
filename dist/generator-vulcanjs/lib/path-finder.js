@@ -64,21 +64,29 @@ function setup(generatorSetup) {
       return modulesPath.apply(undefined, [options, 'index.js'].concat(args));
     }
 
+    function collectionsIndexPath(options) {
+      for (var _len9 = arguments.length, args = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
+        args[_key9 - 1] = arguments[_key9];
+      }
+
+      return modulesPath.apply(undefined, [options, 'collections.js'].concat(args));
+    }
+
     function routesPath(options) {
       return modulesPath(options, 'routes.js');
     }
 
     function modulePath(options) {
-      for (var _len9 = arguments.length, args = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
-        args[_key9 - 1] = arguments[_key9];
+      for (var _len10 = arguments.length, args = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
+        args[_key10 - 1] = arguments[_key10];
       }
 
       return modulesPath.apply(undefined, [options, generator.props.moduleName].concat(args));
     }
 
     function componentsPath(options) {
-      for (var _len10 = arguments.length, args = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
-        args[_key10 - 1] = arguments[_key10];
+      for (var _len11 = arguments.length, args = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
+        args[_key11 - 1] = arguments[_key11];
       }
 
       return libPath.apply(undefined, [options, 'components'].concat(args));
@@ -89,40 +97,40 @@ function setup(generatorSetup) {
     }
 
     function packageTestsPath(options) {
-      for (var _len11 = arguments.length, args = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
-        args[_key11 - 1] = arguments[_key11];
+      for (var _len12 = arguments.length, args = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
+        args[_key12 - 1] = arguments[_key12];
       }
 
       return packagePath.apply(undefined, [options, 'tests'].concat(args));
     }
 
     function moduleTestsPath(options) {
-      for (var _len12 = arguments.length, args = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
-        args[_key12 - 1] = arguments[_key12];
+      for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
+        args[_key13 - 1] = arguments[_key13];
       }
 
       return packageTestsPath.apply(undefined, [options, 'modules'].concat(args));
     }
 
     function moduleTestPath(options) {
-      for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
-        args[_key13 - 1] = arguments[_key13];
+      for (var _len14 = arguments.length, args = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
+        args[_key14 - 1] = arguments[_key14];
       }
 
       return moduleTestsPath.apply(undefined, [options, generator.props.moduleName].concat(args));
     }
 
     function packageStoriesPath(options) {
-      for (var _len14 = arguments.length, args = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
-        args[_key14 - 1] = arguments[_key14];
+      for (var _len15 = arguments.length, args = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
+        args[_key15 - 1] = arguments[_key15];
       }
 
       return componentsPath.apply(undefined, [options, '.stories.js'].concat(args));
     }
 
     function moduleInComponentsPath(options) {
-      for (var _len15 = arguments.length, args = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
-        args[_key15 - 1] = arguments[_key15];
+      for (var _len16 = arguments.length, args = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
+        args[_key16 - 1] = arguments[_key16];
       }
 
       return componentsPath.apply(undefined, [options, generator.props.moduleName].concat(args));
@@ -133,16 +141,16 @@ function setup(generatorSetup) {
     }
 
     function clientPath(options) {
-      for (var _len16 = arguments.length, args = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
-        args[_key16 - 1] = arguments[_key16];
+      for (var _len17 = arguments.length, args = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
+        args[_key17 - 1] = arguments[_key17];
       }
 
       return libPath.apply(undefined, [options, 'client'].concat(args));
     }
 
     function serverPath(options) {
-      for (var _len17 = arguments.length, args = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
-        args[_key17 - 1] = arguments[_key17];
+      for (var _len18 = arguments.length, args = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
+        args[_key18 - 1] = arguments[_key18];
       }
 
       return libPath.apply(undefined, [options, 'server'].concat(args));
@@ -167,6 +175,8 @@ function setup(generatorSetup) {
         return packageTestsPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'modulesIndex':
         return modulesIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
+      case 'collectionsIndex':
+        return collectionsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'componentsIndex':
         return componentsIndexPath.apply(undefined, [wrappedOptions].concat(wrappedArgs));
       case 'module':
@@ -196,8 +206,8 @@ function setup(generatorSetup) {
 
 function makeGetPath(generator) {
   function getPath(options) {
-    for (var _len18 = arguments.length, args = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
-      args[_key18 - 1] = arguments[_key18];
+    for (var _len19 = arguments.length, args = Array(_len19 > 1 ? _len19 - 1 : 0), _key19 = 1; _key19 < _len19; _key19++) {
+      args[_key19 - 1] = arguments[_key19];
     }
 
     var relativeToProjectRootPath = path.join.apply(path, args);
@@ -210,8 +220,8 @@ function makeGetPath(generator) {
 function findModules(generator, options, packageName) {
   var getPath = makeGetPath(generator);
 
-  for (var _len19 = arguments.length, args = Array(_len19 > 3 ? _len19 - 3 : 0), _key19 = 3; _key19 < _len19; _key19++) {
-    args[_key19 - 3] = arguments[_key19];
+  for (var _len20 = arguments.length, args = Array(_len20 > 3 ? _len20 - 3 : 0), _key20 = 3; _key20 < _len20; _key20++) {
+    args[_key20 - 3] = arguments[_key20];
   }
 
   return getPath.apply(undefined, [options, 'packages', packageName, 'lib', 'modules'].concat(args));

@@ -84,6 +84,11 @@ module.exports = function (_VulcanGenerator) {
       this.fs.copyTpl(this.templatePath('modules.index.js'), this._getPath({ isAbsolute: true }, 'modulesIndex'), this.props);
     }
   }, {
+    key: '_writeCollectionsIndex',
+    value: function _writeCollectionsIndex() {
+      this.fs.copyTpl(this.templatePath('collections.js'), this._getPath({ isAbsolute: true }, 'collectionsIndex'), this.props);
+    }
+  }, {
     key: '_writeComponentsIndex',
     value: function _writeComponentsIndex() {
       this.fs.copyTpl(this.templatePath('components.js'), this._getPath({ isAbsolute: true }, 'componentsIndex'), this.props);
@@ -117,6 +122,7 @@ module.exports = function (_VulcanGenerator) {
       this._writeServerMain();
       this._writeServerSeed();
       this._writeModulesIndex();
+      this._writeCollectionsIndex();
       // this._writeTestsIndex();
       this._writeComponentsIndex();
       this._writeRoutes();
@@ -125,7 +131,7 @@ module.exports = function (_VulcanGenerator) {
     key: 'end',
     value: function end() {
       this._end();
-      this.log('\nTo activate your package, run: ' + chalk.green('meteor add ' + this.props.packageName));
+      this.log('\nTo activate your packagez, run: ' + chalk.green('meteor add ' + this.props.packageName));
     }
   }]);
 
