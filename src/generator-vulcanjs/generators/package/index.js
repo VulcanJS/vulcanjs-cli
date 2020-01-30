@@ -153,6 +153,6 @@ module.exports = class extends VulcanGenerator {
 
   end() {
     this._end();
-    this.log(`\nTo activate your packagez, run: ${chalk.green(`meteor add ${this.props.packageName}`)}`);
+    this.log(`\nTo activate your packages, run: ${chalk.green(`meteor add ${this.props.packageName}`)}`);
   }
 };
