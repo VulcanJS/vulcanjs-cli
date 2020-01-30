@@ -93,6 +93,17 @@ module.exports = class extends VulcanGenerator {
     );
   }
 
+  _writeCollectionsIndex() {
+    this.fs.copyTpl(
+      this.templatePath('collections.js'),
+      this._getPath(
+        { isAbsolute: true },
+        'collectionsIndex'
+      ),
+      this.props
+    );
+  }
+
   _writeComponentsIndex() {
     this.fs.copyTpl(
       this.templatePath('components.js'),
@@ -134,6 +145,7 @@ module.exports = class extends VulcanGenerator {
     this._writeServerMain();
     this._writeServerSeed();
     this._writeModulesIndex();
+    this._writeCollectionsIndex();
     // this._writeTestsIndex();
     this._writeComponentsIndex();
     this._writeRoutes();
@@ -141,6 +153,6 @@ module.exports = class extends VulcanGenerator {
 
   end() {
     this._end();
-    this.log(`\nTo activate your package, run: ${chalk.green(`meteor add ${this.props.packageName}`)}`);
+    this.log(`\nTo activate your packages, run: ${chalk.green(`meteor add ${this.props.packageName}`)}`);
   }
 };

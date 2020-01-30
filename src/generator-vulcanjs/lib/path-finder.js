@@ -59,6 +59,14 @@ function setup (generatorSetup) {
       );
     }
 
+    function collectionsIndexPath (options, ...args) {
+      return modulesPath(
+        options,
+        'collections.js',
+        ...args
+      );
+    }
+
     function routesPath (options) {
       return modulesPath(
         options,
@@ -160,6 +168,7 @@ function setup (generatorSetup) {
       case 'modules': return modulesPath(wrappedOptions, ...wrappedArgs);
       case 'packageTests': return packageTestsPath(wrappedOptions, ...wrappedArgs);
       case 'modulesIndex': return modulesIndexPath(wrappedOptions, ...wrappedArgs);
+      case 'collectionsIndex': return collectionsIndexPath(wrappedOptions, ...wrappedArgs);
       case 'componentsIndex': return componentsIndexPath(wrappedOptions, ...wrappedArgs);
       case 'module': return modulePath(wrappedOptions, ...wrappedArgs);
       case 'components': return componentsPath(wrappedOptions, ...wrappedArgs);
