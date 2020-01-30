@@ -131,7 +131,7 @@ module.exports = function (_VulcanGenerator) {
     key: 'end',
     value: function end() {
       this._end();
-      this.log('\nTo activate your packagez, run: ' + chalk.green('meteor add ' + this.props.packageName));
+      this.log('\nTo activate your packages, run: ' + chalk.green('meteor add ' + this.props.packageName));
     }
   }]);
 
