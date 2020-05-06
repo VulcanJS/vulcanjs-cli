@@ -19,6 +19,7 @@ function runWithOptions (generator, extraOptions, callback) {
   const optionsForGenerators = parseArgs(process.argv.slice(2));
   const finalOptions = {};
   Object.assign(finalOptions, optionsForGenerators, extraOptions);
+  console.log("there's a style here -->", finalOptions)
   return env.run(generator, finalOptions, callback);
 }
 
@@ -93,6 +94,7 @@ function run () {
     registerGenerator('app');
     return runWithOptions('app', {
       appName: action.args[0],
+      style: action.args[2]
     });
   } else if (action.type === 'list') {
     registerGenerator('list');

@@ -2,6 +2,10 @@ const chalk = require('chalk');
 const VulcanGenerator = require('../../lib/VulcanGenerator');
 
 const STARTER_REPO_URL = 'https://github.com/VulcanJS/Vulcan-Starter.git';
+const STARTERS = [
+  {name: "bootstrap", github: 'https://github.com/VulcanJS/Vulcan-Starter.git'},
+  {name: "material", github: 'https://github.com/Neobii/Vulcan-Starter-Material.git'}
+]
 
 module.exports = class extends VulcanGenerator {
   _registerArguments () {
@@ -9,7 +13,8 @@ module.exports = class extends VulcanGenerator {
       'appName',
       'doShallowClone',
       'reactExtension',
-      'packageManager'
+      'packageManager',
+      'style'
     );
   }
 
@@ -40,13 +45,28 @@ module.exports = class extends VulcanGenerator {
     if (!this._canInstall()) {
       return;
     }
+    const style = this.props.style && this.props.style.split('=')[1];
+    const found = STARTERS.find( starter => {console.log(starter);return starter.name === style});
+    console.log("no style argument --->", this.props, style)
+    return;
+    if(found) {
+      this.log(chalk.green('\nPulling the most up to date Vulcan-Starter git repository... \n'));
+      this.spawnCommandSync('git', [
+        'clone',
+        found.github,
+        this.props.appName,
+      ]);
+    }
 
-    this.log(chalk.green('\nPulling the most up to date Vulcan-Starter git repository... \n'));
-    this.spawnCommandSync('git', [
-      'clone',
-      STARTER_REPO_URL,
-      this.props.appName,
-    ]);
+    else {
+      this.log(chalk.green('\nPulling the most up to date Vulcan-Starter git repository... \n'));
+      this.spawnCommandSync('git', [
+        'clone',
+        STARTER_REPO_URL,
+        this.props.appName,
+      ]);
+    }
+
     this.destinationRoot(
       this.destinationPath(this.props.appName)
     );
