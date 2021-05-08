@@ -37,7 +37,7 @@ var genericProcessor = function genericProcessor(args) {
 var createProcessor = function createProcessor(args) {
   return {
     type: 'create',
-    args: args.slice(1)
+    args: args.splice(0, 3)
   };
 };
 
@@ -60,7 +60,7 @@ function usage() {
   //  console.log(chalk.grey('\nProject run'));
   //  console.log('  vulcan start');
   console.log(chalk.grey('\nProject initialisation'));
-  console.log('  vulcan create <appName>');
+  console.log('  vulcan create <projectName> --style=(bootstrap|material)');
   // console.log('  vulcan unshallow ');
   console.log(chalk.grey('\nAssets creation'));
   console.log('  vulcan (generate|g) package <packageName>');
